@@ -1,7 +1,12 @@
-#include "camera.h"
+#include "../inc/camera.h"
 #include <iostream>
 #include <print>
+#include <pugixml.hpp>
+
 int main() {
+    pugi::xml_document doc;
+    pugi::xml_parse_result result = doc.load_file("xgconsole.xml");
+
     auto camera = ObjectFactory::CreateInstance("perspective");
 
     std::print("camera class type: {}\n", Object::ClassTypeName(camera->GetClassType()));
