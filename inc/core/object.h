@@ -19,7 +19,8 @@ NAMESPACE_BEGIN
             EScene = 0,
             EIntegrator,
             ECamera,
-            EShape
+            EShape,
+            EPrimitive
         };
 
         virtual ~Object() = default;
