@@ -10,6 +10,10 @@ public:
     PerspectiveCamera(const PropertyList& propertyList){
         std::print("PerspectiveCamera::PerspectiveCamera\n");
     }
+
+    Ray GenerateRay(nrt::Point2f uv) const override{
+        return {};
+    }
 };
 
 REGISTER_CLASS(PerspectiveCamera, "perspective")
