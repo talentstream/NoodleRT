@@ -25,13 +25,24 @@ NAMESPACE_BEGIN
         EInteger,
         EFloat,
         EString,
+        EColor,
+        EPoint,
+        EVector,
         EInvalid,
     };
 
     static std::unordered_map<std::string_view, ETag> ETagMap = {
             {"scene",      ETag::EScene},
             {"camera",     ETag::ECamera},
-            {"integrator", ETag::EIntegrator}
+            {"integrator", ETag::EIntegrator},
+            {"vector",     ETag::EVector},
+            {"point",      ETag::EPoint},
+            {"color",      ETag::EColor},
+            {"string",     ETag::EString},
+            {"float",      ETag::EFloat},
+            {"integer",    ETag::EInteger},
+            {"boolean",    ETag::EBoolean},
+
     };
 
     Object *LoadSceneXML(const std::string_view &filename) {
