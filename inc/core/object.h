@@ -5,7 +5,7 @@
 #pragma once
 
 #include "core/common.h"
-#include "base/propertylist.h"
+#include "propertylist.h"
 #include <functional>
 #include <memory>
 #include <string_view>

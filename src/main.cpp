@@ -2,6 +2,7 @@
 #include <iostream>
 #include <print>
 #include <pugixml.hpp>
+#include "util/parser.h"
 int main() {
     using namespace nrt;
     pugi::xml_document doc;
