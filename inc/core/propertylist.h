@@ -5,7 +5,7 @@
 #pragma once
 
 #include "core/common.h"
-
+#include "core/math.h"
 #include <variant>
 #include <string_view>
 #include <unordered_map>
@@ -32,6 +32,18 @@ NAMESPACE_BEGIN
 
         [[nodiscard]] std::string_view GetString(std::string_view name, std::string_view defaultValue) const;
 
+        void SetColor(std::string_view name, Color3f value);
+
+        [[nodiscard]] Color3f GetColor(std::string_view name, Color3f defaultValue) const;
+
+        void SetPoint(std::string_view name, Point3f value);
+
+        [[nodiscard]] Point3f GetPoint(std::string_view name, Point3f defaultValue) const;
+
+        void SetVector(std::string_view name, Vector3f value);
+
+        [[nodiscard]] Vector3f GetVector(std::string_view name, Vector3f defaultValue) const;
+
     private:
         template<typename T>
         void Set(std::string_view name, T value) {
@@ -48,7 +60,7 @@ NAMESPACE_BEGIN
 
 
     private:
-        using Property = std::variant<Integer, Float, Boolean,std::string_view>;
+        using Property = std::variant<Integer, Float, Boolean, std::string_view, Color3f, Point3f, Vector3f>;
         std::unordered_map<std::string_view, Property> mProperties;
     };
 

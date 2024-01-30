@@ -24,5 +24,12 @@ NAMESPACE_BEGIN
     PROPERTY_ACCESSOR(Boolean, Boolean)
 
     PROPERTY_ACCESSOR(String, std::string_view)
+
+    PROPERTY_ACCESSOR(Color, Color3f)
+
+    PROPERTY_ACCESSOR(Point, Point3f)
+
+    PROPERTY_ACCESSOR(Vector, Vector3f)
+
 NAMESPACE_END
 
