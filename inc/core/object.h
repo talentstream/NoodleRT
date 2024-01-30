@@ -20,7 +20,8 @@ NAMESPACE_BEGIN
             EIntegrator,
             ECamera,
             EShape,
-            EPrimitive
+            EPrimitive,
+            EMaterial
         };
 
         virtual ~Object() = default;
@@ -39,6 +40,12 @@ NAMESPACE_BEGIN
                     return "EIntegrator";
                 case EClassType::ECamera:
                     return "ECamera";
+                case EClassType::EShape:
+                    return "EShape";
+                case EClassType::EPrimitive:
+                    return "EPrimitive";
+                case EClassType::EMaterial:
+                    return "EMaterial";
                 default:
                     return "Unknown";
             };
