@@ -8,8 +8,8 @@
 #define NAMESPACE_END }
 
 using Float = float;
-using Int = int;
-using Bool = bool;
+using Integer = int;
+using Boolean = bool;
 using UInt8 = unsigned char;
 
 #define NON_COPY(ClassName) \
