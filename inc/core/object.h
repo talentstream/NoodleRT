@@ -13,45 +13,49 @@
 
 NAMESPACE_BEGIN
 
-class Object {
-public:
-    enum class EClassType {
-        EScene = 0,
-        EIntegrator,
-        ECamera
+    class Object {
+    public:
+        enum class EClassType {
+            EScene = 0,
+            EIntegrator,
+            ECamera
+        };
+
+        virtual ~Object() = default;
+
+        [[nodiscard]] virtual EClassType GetClassType() const = 0;
+
+        virtual void AddChild(Object *child) {/*throw*/}
+
+        virtual void Initialize() {}
+
+        static std::string ClassTypeName(EClassType type) {
+            switch (type) {
+                case EClassType::EScene:
+                    return "EScene";
+                case EClassType::EIntegrator:
+                    return "EIntegrator";
+                case EClassType::ECamera:
+                    return "ECamera";
+                default:
+                    return "Unknown";
+            };
+        }
+
     };
 
-    virtual ~Object() = default;
+    class ObjectFactory {
+    public:
+        using Creator = std::function<Object *(const PropertyList &)>;
 
-    [[nodiscard]] virtual EClassType GetClassType() const = 0;
+        static void RegisterClass(std::string_view name, const Creator &creator);
 
-    static std::string ClassTypeName(EClassType type) {
-        switch (type) {
-            case EClassType::EScene:
-                return "EScene";
-            case EClassType::EIntegrator:
-                return "EIntegrator";
-            case EClassType::ECamera:
-                return "ECamera";
-            default:
-                return "Unknown";
-        };
-    }
-
-};
-
-class ObjectFactory {
-public:
-    using Creator = std::function<Object *(const PropertyList&)>;
-
-    static void RegisterClass(std::string_view name, const Creator &creator);
-
-    static Object *CreateInstance(std::string_view name, const PropertyList& propertyList);
+        static Object *CreateInstance(std::string_view name, const PropertyList &propertyList);
 
 
-private:
-    static constinit std::unordered_map<std::string_view, Creator> *pCreators;
-};
+    private:
+        static constinit std::unordered_map<std::string_view, Creator> *pCreators;
+    };
 
 #define REGISTER_CLASS(Class, Name) \
 Class *Class ##Create(const PropertyList& propertyList) { return new Class(propertyList); } \
