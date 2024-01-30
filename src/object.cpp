@@ -2,9 +2,11 @@
 // Created by 44772 on 2024/1/27.
 //
 
-#include <object.h>
+#include "base/object.h"
 
 #include <stdexcept>
+
+NAMESPACE_BEGIN
 
 constinit std::unordered_map<std::string_view, ObjectFactory::Creator> *ObjectFactory::pCreators = nullptr;
 
@@ -22,4 +24,4 @@ Object* ObjectFactory::CreateInstance(std::string_view name) {
     return (*pCreators)[name]();
 }
 
-
+NAMESPACE_END

@@ -6,9 +6,13 @@
 
 #include "object.h"
 
+NAMESPACE_BEGIN
+
 class Camera : public Object {
 public:
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::ECamera;
     }
 };
+
+NAMESPACE_END

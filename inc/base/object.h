@@ -4,10 +4,13 @@
 
 #pragma once
 
+#include "core/common.h"
 #include <functional>
 #include <memory>
 #include <string_view>
 #include <map>
+
+NAMESPACE_BEGIN
 
 class Object {
 public:
@@ -50,9 +53,11 @@ private:
 };
 
 #define REGISTER_CLASS(Class, Name) \
-    Class *Class ##Create() { return new Class(); } \
-    static struct Class ##Register { \
-        Class ##Register() { \
-            ObjectFactory::RegisterClass(Name, Class ##Create); \
-        } \
-    } Class ##RegisterInstance;
+Class *Class ##Create() { return new Class(); } \
+static struct Class ##Register { \
+    Class ##Register() { \
+        ObjectFactory::RegisterClass(Name, Class ##Create); \
+    } \
+} Class ##RegisterInstance;
+
+NAMESPACE_END
