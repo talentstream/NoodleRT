@@ -28,6 +28,10 @@ NAMESPACE_BEGIN
 
         [[nodiscard]] Boolean GetBoolean(std::string_view name, Boolean defaultValue) const;
 
+        void SetString(std::string_view name, std::string_view value);
+
+        [[nodiscard]] std::string_view GetString(std::string_view name, std::string_view defaultValue) const;
+
     private:
         template<typename T>
         void Set(std::string_view name, T value) {
@@ -44,7 +48,7 @@ NAMESPACE_BEGIN
 
 
     private:
-        using Property = std::variant<Integer, Float, Boolean>;
+        using Property = std::variant<Integer, Float, Boolean,std::string_view>;
         std::unordered_map<std::string_view, Property> mProperties;
     };
 

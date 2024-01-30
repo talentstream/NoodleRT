@@ -23,5 +23,6 @@ NAMESPACE_BEGIN
 
     PROPERTY_ACCESSOR(Boolean, Boolean)
 
+    PROPERTY_ACCESSOR(String, std::string_view)
 NAMESPACE_END
 
