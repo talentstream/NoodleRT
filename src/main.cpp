@@ -2,7 +2,6 @@
 #include <iostream>
 #include <print>
 #include <pugixml.hpp>
-
 int main() {
     using namespace nrt;
     pugi::xml_document doc;
