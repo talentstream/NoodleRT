@@ -18,7 +18,8 @@ NAMESPACE_BEGIN
         enum class EClassType {
             EScene = 0,
             EIntegrator,
-            ECamera
+            ECamera,
+            EShape
         };
 
         virtual ~Object() = default;

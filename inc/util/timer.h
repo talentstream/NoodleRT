@@ -22,7 +22,7 @@ NAMESPACE_BEGIN
         }
 
 
-        void PrintElapsedMs() const {
+        void PrintElapsedMillSec() const {
             auto now = std::chrono::system_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - mStartTime).count();
             std::print("Elapsed: {}ms\n", elapsed);
