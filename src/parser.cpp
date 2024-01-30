@@ -1,4 +1,3 @@
-//
 // Created by 44772 on 2024/1/30.
 //
 
@@ -11,14 +10,18 @@
 #include <vector>
 #include <stdexcept>
 #include <format>
+#include <print>
 
 NAMESPACE_BEGIN
 
     // 设置 tag name 映射
-    enum class ETag {
-        EScene,
+    enum class ETag : UInt8 {
+        EScene = 0,
         ECamera,
         EIntegrator,
+        EShape,
+        EPrimitive,
+
 
         // Property
         EBoolean,
@@ -35,6 +38,8 @@ NAMESPACE_BEGIN
             {"scene",      ETag::EScene},
             {"camera",     ETag::ECamera},
             {"integrator", ETag::EIntegrator},
+            {"shape",      ETag::EShape},
+            {"primitive",  ETag::EPrimitive},
             {"vector",     ETag::EVector},
             {"point",      ETag::EPoint},
             {"color",      ETag::EColor},
@@ -52,12 +57,14 @@ NAMESPACE_BEGIN
         // 检查属性函数
         auto CheckAttribute = [&](const pugi::xml_node &node, std::unordered_set<std::string_view> attributes) {
             for (auto attr: node.attributes()) {
+
                 if (!attributes.contains(attr.name())) {
                     throw std::runtime_error(std::format("Error while parsing {} : unexpected attribute {} in {}",
                                                          filename.data(), attr.name(), node.name()));
                 }
                 attributes.erase(attr.name());
             }
+
             if (!attributes.empty()) {
                 throw std::runtime_error(std::format("Error while parsing {} : missing attribute {} in {}",
                                                      filename.data(), *attributes.begin(), node.name()));
@@ -81,6 +88,7 @@ NAMESPACE_BEGIN
             }
 
             auto tag = ETagMap[node.name()];
+
             if (tag == ETag::EScene) {
                 node.append_attribute("type") = "scene";
             }
@@ -89,6 +97,7 @@ NAMESPACE_BEGIN
             std::vector<Object *> children;
             for (auto &ch: node.children()) {
                 Object *child = ParseTag(ch, propList, tag);
+
                 if (child != nullptr) {
                     children.push_back(child);
                 }
@@ -107,18 +116,36 @@ NAMESPACE_BEGIN
 //                    result->Activate();
                 } else {
                     CheckAttribute(node, {"name", "value"});
+
                     switch (tag) {
                         case ETag::EBoolean:
-                            propList.SetBoolean(node.attribute("name").value(), node.attribute("value").as_bool());
+                            list.SetBoolean(node.attribute("name").value(), node.attribute("value").as_bool());
                             break;
                         case ETag::EInteger:
-                            propList.SetInteger(node.attribute("name").value(), node.attribute("value").as_int());
+                            list.SetInteger(node.attribute("name").value(), node.attribute("value").as_int());
                             break;
                         case ETag::EFloat:
-                            propList.SetFloat(node.attribute("name").value(), node.attribute("value").as_float());
+                            list.SetFloat(node.attribute("name").value(), node.attribute("value").as_float());
                             break;
                         case ETag::EString:
-                            propList.SetString(node.attribute("name").value(), node.attribute("value").value());
+                            list.SetString(node.attribute("name").value(), node.attribute("value").value());
+                            break;
+                        case ETag::EColor:
+                            list.SetColor(node.attribute("name").value(),
+                                              Color3f{node.attribute("value").as_float(0),
+                                                      node.attribute("value").as_float(1),
+                                                      node.attribute("value").as_float(2)});
+                            break;
+                        case ETag::EPoint:
+                            list.SetPoint(node.attribute("name").value(),
+                                              Point3f{node.attribute("value").as_float(0),
+                                                      node.attribute("value").as_float(1),
+                                                      node.attribute("value").as_float(2)});
+                        case ETag::EVector:
+                            list.SetVector(node.attribute("name").value(),
+                                               Vector3f{node.attribute("value").as_float(0),
+                                                        node.attribute("value").as_float(1),
+                                                        node.attribute("value").as_float(2)});
                             break;
                         default:
                             /*throw*/

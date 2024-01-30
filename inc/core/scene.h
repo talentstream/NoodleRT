@@ -12,6 +12,8 @@ NAMESPACE_BEGIN
     public:
         NON_COPY(Scene)
 
+        explicit Scene(const PropertyList&);
+
         ~Scene();
 
         [[nodiscard]] EClassType GetClassType() const override {

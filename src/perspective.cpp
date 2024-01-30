@@ -8,7 +8,7 @@ NAMESPACE_BEGIN
 class PerspectiveCamera : public Camera {
 public:
     PerspectiveCamera(const PropertyList& propertyList){
-        std::print("PerspectiveCamera::PerspectiveCamera\n");
+        std::print("->PerspectiveCamera\n");
     }
 
     Ray GenerateRay(nrt::Point2f uv) const override{

@@ -5,6 +5,7 @@
 #pragma once
 
 #include "core/object.h"
+#include "core/interaction.h"
 
 NAMESPACE_BEGIN
 
@@ -12,7 +13,7 @@ NAMESPACE_BEGIN
     public:
         virtual ~Shape() = default;
 
-        virtual Boolean Intersect(const Ray &ray, Float tMax) const = 0;
+        virtual Boolean Intersect(const Ray &ray, Float tMax, Interaction &) const = 0;
 
         [[nodiscard]] EClassType GetClassType() const override {
             return EClassType::EShape;
