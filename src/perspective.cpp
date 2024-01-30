@@ -6,7 +6,8 @@
 NAMESPACE_BEGIN
 
 class PerspectiveCamera : public Camera {
-
+public:
+    PerspectiveCamera(const PropertyList& propertyList){}
 };
 
 REGISTER_CLASS(PerspectiveCamera, "perspective")

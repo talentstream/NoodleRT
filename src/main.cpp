@@ -8,7 +8,7 @@ int main() {
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file("xgconsole.xml");
 
-    auto camera = ObjectFactory::CreateInstance("perspective");
+    auto camera = ObjectFactory::CreateInstance("perspective", PropertyList());
 
     std::print("camera class type: {}\n", Object::ClassTypeName(camera->GetClassType()));
 

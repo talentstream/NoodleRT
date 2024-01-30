@@ -5,6 +5,7 @@
 #pragma once
 
 #include "core/common.h"
+#include "base/propertylist.h"
 #include <functional>
 #include <memory>
 #include <string_view>
@@ -41,11 +42,11 @@ public:
 
 class ObjectFactory {
 public:
-    using Creator = std::function<Object *()>;
+    using Creator = std::function<Object *(const PropertyList&)>;
 
     static void RegisterClass(std::string_view name, const Creator &creator);
 
-    static Object *CreateInstance(std::string_view name);
+    static Object *CreateInstance(std::string_view name, const PropertyList& propertyList);
 
 
 private:
@@ -53,7 +54,7 @@ private:
 };
 
 #define REGISTER_CLASS(Class, Name) \
-Class *Class ##Create() { return new Class(); } \
+Class *Class ##Create(const PropertyList& propertyList) { return new Class(propertyList); } \
 static struct Class ##Register { \
     Class ##Register() { \
         ObjectFactory::RegisterClass(Name, Class ##Create); \
