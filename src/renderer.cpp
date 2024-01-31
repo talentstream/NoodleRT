@@ -29,7 +29,7 @@ NAMESPACE_BEGIN
         for (int i = 0; i < 400; i++) {
             for (int j = 0; j < 400; j++) {
                 Ray ray = pCamera->GenerateRay(Point2f(j, i));
-                mFramebuffer[i * 400 + j] = pIntegrator->Li(ray);
+                mFramebuffer[i * 400 + j] = pIntegrator->Li(ray,0);
             }
         }
 

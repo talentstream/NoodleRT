@@ -12,7 +12,7 @@ NAMESPACE_BEGIN
     public:
         virtual ~Integrator() = default;
 
-        virtual Color3f Li(const Ray &ray, Integer depth = 0) const = 0;
+        virtual Color3f Li(const Ray &ray, Integer depth) const = 0;
 
         [[nodiscard]] EClassType GetClassType() const override {
             return EClassType::EIntegrator;

@@ -21,6 +21,7 @@ NAMESPACE_BEGIN
             ECamera,
             EShape,
             EPrimitive,
+            EAggregate,
             EMaterial
         };
 
@@ -44,6 +45,8 @@ NAMESPACE_BEGIN
                     return "EShape";
                 case EClassType::EPrimitive:
                     return "EPrimitive";
+                case EClassType::EAggregate:
+                    return "EAggregate";
                 case EClassType::EMaterial:
                     return "EMaterial";
                 default:

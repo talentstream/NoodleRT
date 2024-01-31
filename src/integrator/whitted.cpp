@@ -3,6 +3,8 @@
 //
 
 #include "base/integrator.h"
+#include "base/primitive.h"
+#include "core/interaction.h"
 #include <print>
 
 NAMESPACE_BEGIN
@@ -14,7 +16,9 @@ NAMESPACE_BEGIN
         }
 
         Color3f Li(const Ray &ray, Integer depth) const override {
-            return {0.5f,0.7f,1.0f};
+            Interaction i;
+
+            return {0.5f, 0.7f, 1.0f};
         }
 
     private:
