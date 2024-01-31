@@ -15,10 +15,13 @@ NAMESPACE_BEGIN
             std::print("->WhittedIntegrator\n");
         }
 
-        Color3f Li(const Ray &ray, Integer depth) const override {
+        Color3f Li(const Ray &ray, const Aggregate &aggregate, Integer depth) const override {
             Interaction i;
-
-            return {0.5f, 0.7f, 1.0f};
+            if(!aggregate.Intersect(ray,i))
+            {
+                return {0.5f, 0.7f, 1.0f};
+            }
+            return {1.0f, 0.0f, 0.0f};
         }
 
     private:

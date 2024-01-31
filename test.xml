@@ -10,7 +10,8 @@
     <aggregate type="naive">
         <primitive type="geometry">
             <shape type="sphere">
-                <float name="radius" value="2.0"/>
+                <float name="radius" value="0.5"/>
+                <point name="center" value="0.0 0.0 -1.0"/>
             </shape>
         </primitive>
     </aggregate>

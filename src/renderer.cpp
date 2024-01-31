@@ -11,8 +11,8 @@
 
 NAMESPACE_BEGIN
     Renderer::Renderer() {
-        Object* obj = LoadSceneXML("../test.xml");
-        pScene = std::unique_ptr<Scene>(static_cast<Scene*>(obj));
+        Object *obj = LoadSceneXML("../test.xml");
+        pScene = std::unique_ptr<Scene>(static_cast<Scene *>(obj));
     }
 
     Renderer::~Renderer() = default;
@@ -25,11 +25,12 @@ NAMESPACE_BEGIN
 
         const Camera *pCamera = pScene->GetCamera();
         const Integrator *pIntegrator = pScene->GetIntegrator();
+        const Aggregate *pAggregate = pScene->GetAggregate();
 
         for (int i = 0; i < 400; i++) {
             for (int j = 0; j < 400; j++) {
                 Ray ray = pCamera->GenerateRay(Point2f(j, i));
-                mFramebuffer[i * 400 + j] = pIntegrator->Li(ray,0);
+                mFramebuffer[i * 400 + j] = pIntegrator->Li(ray, *pAggregate, 0);
             }
         }
 

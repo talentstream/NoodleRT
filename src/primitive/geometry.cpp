@@ -13,6 +13,11 @@ NAMESPACE_BEGIN
             std::print("->GeometryPrimitive\n");
         }
 
+        ~GeometryPrimitive()
+        {
+            delete pShape;
+        }
+
         void AddChild(Object *object) override {
             switch (object->GetClassType()) {
                 case EClassType::EShape:

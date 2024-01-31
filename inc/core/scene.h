@@ -38,6 +38,10 @@ NAMESPACE_BEGIN
             return pCamera;
         }
 
+        const Aggregate *GetAggregate() const {
+            return pAggregate;
+        }
+
     };
 
 NAMESPACE_END

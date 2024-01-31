@@ -30,6 +30,7 @@ NAMESPACE_BEGIN
             Float closest{Infinity};
             Boolean hitAnything{false};
             Interaction tempInteraction;
+
             for (const auto &primitive: mPrimitives) {
                 if (primitive->Intersect(ray, tempInteraction)) {
                     hitAnything = true;
@@ -39,6 +40,7 @@ NAMESPACE_BEGIN
                     }
                 }
             }
+
             return hitAnything;
 
 

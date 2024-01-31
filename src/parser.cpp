@@ -10,8 +10,32 @@
 #include <vector>
 #include <stdexcept>
 #include <format>
+#include <print>
+#include <ranges>
 
 NAMESPACE_BEGIN
+
+    // Todo: more string check
+    Boolean ToBoolean(std::string_view str) {
+        return str == "true";
+    }
+
+    Integer ToInteger(std::string_view str) {
+        return std::stoi(str.data());
+    }
+
+    Float ToFloat(std::string_view str) {
+        return std::stof(str.data());
+    }
+
+    Vector3f ToVector(std::string_view str) {
+        auto tokens = str | std::views::split(' ');
+        Vector3f result{};
+        for (const auto [i, token]: tokens | std::views::enumerate) {
+            result[i] = ToFloat(token.data());
+        }
+        return result;
+    }
 
     //  tag <-> name map
     enum class ETag : UInt8 {
@@ -104,48 +128,43 @@ NAMESPACE_BEGIN
             }
 
             Object *result{nullptr};
+
             try {
                 if (tag < ETag::EBoolean) {
                     CheckAttribute(node, {"type"});
                     result = ObjectFactory::CreateInstance(node.attribute("type").value(), propList);
 
-                    for(auto child: children){
+                    for (auto child: children) {
                         result->AddChild(child);
 //                        child->SetParent(result);
                     }
                     result->Initialize();
                 } else {
                     CheckAttribute(node, {"name", "value"});
+                    auto name = node.attribute("name").value();
+                    auto value = node.attribute("value").value();
 
                     switch (tag) {
                         case ETag::EBoolean:
-                            list.SetBoolean(node.attribute("name").value(), node.attribute("value").as_bool());
+                            list.SetBoolean(name, ToBoolean((value)));
                             break;
                         case ETag::EInteger:
-                            list.SetInteger(node.attribute("name").value(), node.attribute("value").as_int());
+                            list.SetInteger(name, ToInteger((value)));
                             break;
                         case ETag::EFloat:
-                            list.SetFloat(node.attribute("name").value(), node.attribute("value").as_float());
+                            list.SetFloat(name, ToFloat((value)));
                             break;
                         case ETag::EString:
-                            list.SetString(node.attribute("name").value(), node.attribute("value").value());
+                            list.SetString(name, value);
                             break;
                         case ETag::EColor:
-                            list.SetColor(node.attribute("name").value(),
-                                              Color3f{node.attribute("value").as_float(0),
-                                                      node.attribute("value").as_float(1),
-                                                      node.attribute("value").as_float(2)});
+                            list.SetColor(name, Color3f{ToVector(value)});
                             break;
                         case ETag::EPoint:
-                            list.SetPoint(node.attribute("name").value(),
-                                              Point3f{node.attribute("value").as_float(0),
-                                                      node.attribute("value").as_float(1),
-                                                      node.attribute("value").as_float(2)});
+                            list.SetPoint(name, Point3f{ToVector(value)});
+                            break;
                         case ETag::EVector:
-                            list.SetVector(node.attribute("name").value(),
-                                               Vector3f{node.attribute("value").as_float(0),
-                                                        node.attribute("value").as_float(1),
-                                                        node.attribute("value").as_float(2)});
+                            list.SetVector(name,Vector3f{ToVector(value)});
                             break;
                         default:
                             /*throw*/

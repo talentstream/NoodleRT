@@ -15,6 +15,10 @@ NAMESPACE_BEGIN
             std::print("->Sphere\n");
             mRadius = propertyList.GetFloat("radius", 1.0f);
             mCenter = propertyList.GetPoint("center",{});
+
+            std::print("radius: {}\n", mRadius);
+            std::print("center: {} {} {}\n", mCenter.x, mCenter.y, mCenter.z);
+
         }
 
         Boolean Intersect(const Ray &ray, Float tMax, Interaction &i) const override {
