@@ -1,10 +1,16 @@
 <scene>
     <integrator type="whitted">
+
     </integrator>
+
     <camera type="perspective">
 
     </camera>
-    <shape type="sphere">
-        <float name="radius" value="2.0"/>
-    </shape>
+
+    <primitive type="geometry">
+        <shape type="sphere">
+            <float name="radius" value="2.0"/>
+        </shape>
+    </primitive>
+
 </scene>
