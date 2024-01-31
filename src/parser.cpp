@@ -10,18 +10,17 @@
 #include <vector>
 #include <stdexcept>
 #include <format>
-#include <print>
 
 NAMESPACE_BEGIN
 
-    // 设置 tag name 映射
+    //  tag <-> name map
     enum class ETag : UInt8 {
         EScene = 0,
         ECamera,
         EIntegrator,
         EShape,
         EPrimitive,
-
+        EAggregate,
 
         // Property
         EBoolean,
@@ -40,6 +39,7 @@ NAMESPACE_BEGIN
             {"integrator", ETag::EIntegrator},
             {"shape",      ETag::EShape},
             {"primitive",  ETag::EPrimitive},
+            {"aggregate",  ETag::EAggregate},
             {"vector",     ETag::EVector},
             {"point",      ETag::EPoint},
             {"color",      ETag::EColor},
@@ -54,7 +54,7 @@ NAMESPACE_BEGIN
         pugi::xml_document doc;
         pugi::xml_parse_result result = doc.load_file(filename.data());
 
-        // 检查属性函数
+        // check xml node attribute helper
         auto CheckAttribute = [&](const pugi::xml_node &node, std::unordered_set<std::string_view> attributes) {
             for (auto attr: node.attributes()) {
 
