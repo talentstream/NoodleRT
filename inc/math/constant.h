@@ -57,4 +57,10 @@ inline Float Pow<1>(Float v) {
     return v;
 }
 
+inline Float Sqrt(Float v)
+{
+    return std::sqrt(v);
+}
+
+
 NAMESPACE_END
