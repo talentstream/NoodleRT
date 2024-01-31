@@ -5,6 +5,7 @@
 #include "core/scene.h"
 #include "base/camera.h"
 #include "base/integrator.h"
+#include "base/aggregate.h"
 #include <print>
 
 NAMESPACE_BEGIN
@@ -26,6 +27,9 @@ NAMESPACE_BEGIN
                 break;
             case EClassType::EIntegrator:
                 pIntegrator = dynamic_cast<Integrator *>(object);
+                break;
+            case EClassType::EAggregate:
+                pAggregate = static_cast<Aggregate *>(object);
                 break;
             default:
                 break;
