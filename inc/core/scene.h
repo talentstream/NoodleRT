@@ -12,9 +12,11 @@ NAMESPACE_BEGIN
     public:
         NON_COPY(Scene)
 
-        explicit Scene(const PropertyList&);
+        explicit Scene(const PropertyList &);
 
         ~Scene();
+
+        void AddChild(Object *object) override;
 
         [[nodiscard]] EClassType GetClassType() const override {
             return EClassType::EScene;

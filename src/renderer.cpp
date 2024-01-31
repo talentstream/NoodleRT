@@ -3,12 +3,16 @@
 //
 
 #include "core/renderer.h"
+#include "core/scene.h"
+#include "base/camera.h"
+#include "base/integrator.h"
 #include "util/parser.h"
 #include "util/bitmap.h"
 
 NAMESPACE_BEGIN
     Renderer::Renderer() {
-        LoadSceneXML("../test.xml");
+        Object* obj = LoadSceneXML("../test.xml");
+        pScene = std::unique_ptr<Scene>(static_cast<Scene*>(obj));
     }
 
     Renderer::~Renderer() = default;
@@ -18,19 +22,22 @@ NAMESPACE_BEGIN
     }
 
     void Renderer::OnRender() {
+
+        const Camera *pCamera = pScene->GetCamera();
+        const Integrator *pIntegrator = pScene->GetIntegrator();
+
         for (int i = 0; i < 400; i++) {
             for (int j = 0; j < 400; j++) {
-                mFramebuffer[i * 400 + j] = RandomColor3f(0, 1);
+                Ray ray = pCamera->GenerateRay(Point2f(j, i));
+                mFramebuffer[i * 400 + j] = pIntegrator->Li(ray);
             }
         }
 
         renderCallback(mFramebuffer);
 
         std::vector<Float> data(400 * 400 * 3);
-        for(int i = 0; i < 400; i++)
-        {
-            for(int j = 0; j < 400; j++)
-            {
+        for (int i = 0; i < 400; i++) {
+            for (int j = 0; j < 400; j++) {
                 data[(i * 400 + j) * 3 + 0] = mFramebuffer[i * 400 + j].r;
                 data[(i * 400 + j) * 3 + 1] = mFramebuffer[i * 400 + j].g;
                 data[(i * 400 + j) * 3 + 2] = mFramebuffer[i * 400 + j].b;

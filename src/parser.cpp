@@ -109,11 +109,11 @@ NAMESPACE_BEGIN
                     CheckAttribute(node, {"type"});
                     result = ObjectFactory::CreateInstance(node.attribute("type").value(), propList);
 
-//                    for(auto child: children){
-//                        result->AddChild(child);
-//                        ch->SetParent(result);
-//                    }
-//                    result->Activate();
+                    for(auto child: children){
+                        result->AddChild(child);
+//                        child->SetParent(result);
+                    }
+                    result->Initialize();
                 } else {
                     CheckAttribute(node, {"name", "value"});
 

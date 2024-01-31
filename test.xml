@@ -1,4 +1,6 @@
 <scene>
+    <integrator type="whitted">
+    </integrator>
     <camera type="perspective">
 
     </camera>

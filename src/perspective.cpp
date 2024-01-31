@@ -3,6 +3,7 @@
 //
 #include "base/camera.h"
 #include <print>
+
 NAMESPACE_BEGIN
 
 class PerspectiveCamera : public Camera {

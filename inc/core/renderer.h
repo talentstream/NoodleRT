@@ -28,6 +28,8 @@ NAMESPACE_BEGIN
 
         std::function<void(const std::vector<Color3f> &)> renderCallback;
         std::vector<Color3f> mFramebuffer;
+
+        std::unique_ptr<class Scene> pScene;
     };
 
 NAMESPACE_END

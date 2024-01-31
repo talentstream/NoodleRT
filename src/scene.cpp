@@ -3,6 +3,8 @@
 //
 
 #include "core/scene.h"
+#include "base/camera.h"
+#include "base/integrator.h"
 #include <print>
 
 NAMESPACE_BEGIN
@@ -15,6 +17,19 @@ NAMESPACE_BEGIN
         delete pCamera;
         delete pIntegrator;
         delete pAggregate;
+    }
+
+    void Scene::AddChild(Object *object) {
+        switch(object->GetClassType()){
+            case EClassType::ECamera:
+                pCamera = static_cast<Camera *>(object);
+                break;
+            case EClassType::EIntegrator:
+                pIntegrator = dynamic_cast<Integrator *>(object);
+                break;
+            default:
+                break;
+        }
     }
 
     REGISTER_CLASS(Scene, "scene")
