@@ -44,6 +44,8 @@ NAMESPACE_BEGIN
 
         [[nodiscard]] Vector3f GetVector(std::string_view name, Vector3f defaultValue) const;
 
+        void PrintDebugInfo() const;
+
     private:
         template<typename T>
         void Set(std::string_view name, T value) {

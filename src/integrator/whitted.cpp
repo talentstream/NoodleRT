@@ -11,14 +11,13 @@ NAMESPACE_BEGIN
 
     class WhittedIntegrator : public Integrator {
     public:
-        explicit WhittedIntegrator(const PropertyList &propList) {
-            std::print("->WhittedIntegrator\n");
+        explicit WhittedIntegrator(const PropertyList &propertyList) {
+            PRINT_DEBUG_INFO("Integrator", "whitted")
         }
 
         Color3f Li(const Ray &ray, const Aggregate &aggregate, Integer depth) const override {
             Interaction i;
-            if(!aggregate.Intersect(ray,i))
-            {
+            if (!aggregate.Intersect(ray, i)) {
                 return {0.5f, 0.7f, 1.0f};
             }
             return {1.0f, 0.0f, 0.0f};

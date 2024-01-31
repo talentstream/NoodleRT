@@ -29,6 +29,9 @@ NAMESPACE_BEGIN
 
         class Aggregate *pAggregate{nullptr};
 
+        Integer mSpp;
+        Integer mMaxDepth;
+
     public:
         const Integrator *GetIntegrator() const {
             return pIntegrator;
@@ -40,6 +43,14 @@ NAMESPACE_BEGIN
 
         const Aggregate *GetAggregate() const {
             return pAggregate;
+        }
+
+        const Integer GetSpp() const {
+            return mSpp;
+        }
+
+        const Integer GetMaxDepth() const {
+            return mMaxDepth;
         }
 
     };

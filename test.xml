@@ -1,4 +1,7 @@
 <scene>
+    <integer name = "spp" value = "10"/>
+    <integer name = "depth" value = "1"/>
+
     <integrator type="whitted">
 
     </integrator>

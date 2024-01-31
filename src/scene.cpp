@@ -10,8 +10,10 @@
 
 NAMESPACE_BEGIN
 
-    Scene::Scene(const PropertyList &) {
-        std::print("->Scene\n");
+    Scene::Scene(const PropertyList &propertyList) {
+        mSpp = propertyList.GetInteger("spp", 1);
+        mMaxDepth = propertyList.GetInteger("depth", 1);
+        PRINT_DEBUG_INFO("Scene", "scene")
     }
 
     Scene::~Scene() {
@@ -21,7 +23,7 @@ NAMESPACE_BEGIN
     }
 
     void Scene::AddChild(Object *object) {
-        switch(object->GetClassType()){
+        switch (object->GetClassType()) {
             case EClassType::ECamera:
                 pCamera = static_cast<Camera *>(object);
                 break;

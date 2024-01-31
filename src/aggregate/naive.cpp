@@ -12,7 +12,7 @@ NAMESPACE_BEGIN
     class NaiveAggregate : public Aggregate {
     public:
         explicit NaiveAggregate(const PropertyList &propertyList) {
-            std::print("->NaiveAggregate\n");
+            PRINT_DEBUG_INFO("Aggregate", "naive")
         }
 
         void AddChild(Object *object) {

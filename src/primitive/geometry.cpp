@@ -9,8 +9,8 @@ NAMESPACE_BEGIN
 
     class GeometryPrimitive : public Primitive {
     public:
-        explicit GeometryPrimitive(const PropertyList &propList) {
-            std::print("->GeometryPrimitive\n");
+        explicit GeometryPrimitive(const PropertyList &propertyList) {
+            PRINT_DEBUG_INFO("Primitive", "geometry")
         }
 
         ~GeometryPrimitive()

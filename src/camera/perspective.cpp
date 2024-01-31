@@ -8,12 +8,12 @@ NAMESPACE_BEGIN
 
     class PerspectiveCamera : public Camera {
     public:
+        //Todo: refactor camera code
         PerspectiveCamera(const PropertyList &propertyList) {
             mWidth = propertyList.GetInteger("width", 400);
             mHeight = propertyList.GetInteger("height", 400);
             mCenter = propertyList.GetPoint("center", {});
-
-            std::print("->PerspectiveCamera\n");
+            PRINT_DEBUG_INFO("Camera", "perspective");
         }
 
         void Initialize() override {

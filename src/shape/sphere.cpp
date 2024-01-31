@@ -6,18 +6,15 @@
 
 #include "base/shape.h"
 #include <print>
+
 NAMESPACE_BEGIN
 
     class Sphere : public Shape {
     public:
-        explicit Sphere(const PropertyList &propertyList)
-        {
-            std::print("->Sphere\n");
+        explicit Sphere(const PropertyList &propertyList) {
             mRadius = propertyList.GetFloat("radius", 1.0f);
-            mCenter = propertyList.GetPoint("center",{});
-
-            std::print("radius: {}\n", mRadius);
-            std::print("center: {} {} {}\n", mCenter.x, mCenter.y, mCenter.z);
+            mCenter = propertyList.GetPoint("center", {});
+            PRINT_DEBUG_INFO("Shape", "sphere")
 
         }
 
@@ -27,19 +24,16 @@ NAMESPACE_BEGIN
             Float halfB = Dot(oc, ray.d);
             Float c = LengthSquared(oc) - mRadius * mRadius;
             Float discriminant = halfB * halfB - a * c;
-            if(discriminant < 0)
-            {
+            if (discriminant < 0) {
                 return false;
             }
 
             Float sqrtD = Sqrt(discriminant);
             Float root = (-halfB - sqrtD) / a;
             // 判断是否相交
-            if(root <= 0 || root > tMax)
-            {
+            if (root <= 0 || root > tMax) {
                 root = (-halfB + sqrtD) / a;
-                if(root <= 0 || root > tMax)
-                {
+                if (root <= 0 || root > tMax) {
                     return false;
                 }
             }

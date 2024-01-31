@@ -3,6 +3,7 @@
 //
 
 #include "core/propertylist.h"
+#include <print>
 
 NAMESPACE_BEGIN
 
@@ -30,6 +31,32 @@ NAMESPACE_BEGIN
     PROPERTY_ACCESSOR(Point, Point3f)
 
     PROPERTY_ACCESSOR(Vector, Vector3f)
+
+    void PropertyList::PrintDebugInfo() const {
+        for (const auto &[name, value]: mProperties) {
+            std::print("{}: ", name);
+            std::visit([](auto &&arg) {
+                using T = std::decay_t<decltype(arg)>;
+                if constexpr (std::is_same_v<T, Integer>) {
+                    std::print("{} ", arg);
+                } else if constexpr (std::is_same_v<T, Float>) {
+                    std::print("{} ", arg);
+                } else if constexpr (std::is_same_v<T, Boolean>) {
+                    std::print("{} ", arg);
+                } else if constexpr (std::is_same_v<T, std::string_view>) {
+                    std::print("{} ", arg);
+                } else if constexpr (std::is_same_v<T, Color3f>) {
+                    std::print("{} {} {} ", arg.r, arg.g, arg.b);
+                } else if constexpr (std::is_same_v<T, Point3f>) {
+                    std::print("{} {} {} ", arg.x, arg.y, arg.z);
+                } else if constexpr (std::is_same_v<T, Vector3f>) {
+                    std::print("{} {} {} ", arg.x, arg.y, arg.z);
+                } else {
+                    /*throw*/
+                }
+            }, value);
+        }
+    }
 
 NAMESPACE_END
 
