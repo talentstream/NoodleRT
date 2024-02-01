@@ -8,6 +8,8 @@
 #include "base/integrator.h"
 #include "util/parser.h"
 #include "util/bitmap.h"
+#include <print>
+#include <ranges>
 
 NAMESPACE_BEGIN
     Renderer::Renderer() {
@@ -19,32 +21,35 @@ NAMESPACE_BEGIN
 
     void Renderer::OnInit() {
         mFramebuffer.resize(400 * 400);
+
     }
 
     void Renderer::OnRender() {
-
         const Camera *pCamera = pScene->GetCamera();
         const Integrator *pIntegrator = pScene->GetIntegrator();
         const Aggregate *pAggregate = pScene->GetAggregate();
 
-        for (int i = 0; i < 400; i++) {
-            for (int j = 0; j < 400; j++) {
-                Ray ray = pCamera->GenerateRay(Point2f(j, i));
-                mFramebuffer[i * 400 + j] = pIntegrator->Li(ray, *pAggregate, 0);
+        if(mCurrentSpp < pScene->GetSpp())
+        {
+            for (int i = 0; i < 400; i++) {
+                for (int j = 0; j < 400; j++) {
+                    Ray ray = pCamera->GenerateRay(Point2f(j, i));
+                    mFramebuffer[i * 400 + j] += pIntegrator->Li(ray, *pAggregate, 0);
+                }
             }
+            mCurrentSpp++;
+            std::print("SPP: {} - ", mCurrentSpp);
         }
 
-        renderCallback(mFramebuffer);
 
-        std::vector<Float> data(400 * 400 * 3);
-        for (int i = 0; i < 400; i++) {
-            for (int j = 0; j < 400; j++) {
-                data[(i * 400 + j) * 3 + 0] = mFramebuffer[i * 400 + j].r;
-                data[(i * 400 + j) * 3 + 1] = mFramebuffer[i * 400 + j].g;
-                data[(i * 400 + j) * 3 + 2] = mFramebuffer[i * 400 + j].b;
-            }
-        }
-        BitMap::SavePNG("../test.png", 400, 400, data);
+        std::vector<Color3f> displayBuffer(mFramebuffer.size());
+        std::ranges::transform(mFramebuffer, displayBuffer.begin(), [&](const Color3f &color) {
+            return (color / mCurrentSpp).LinearToGamma();
+        });
+
+        renderCallback(displayBuffer);
+
+//        BitMap::SavePNG("../test.png", 400, 400, data);
     }
 
     void Renderer::SetRenderCallback(std::function<void(const std::vector<Color3f> &)> callback) {

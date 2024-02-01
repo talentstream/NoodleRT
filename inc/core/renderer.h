@@ -30,6 +30,7 @@ NAMESPACE_BEGIN
         std::vector<Color3f> mFramebuffer;
 
         std::unique_ptr<class Scene> pScene;
+        Integer mCurrentSpp{};
     };
 
 NAMESPACE_END
