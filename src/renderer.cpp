@@ -66,7 +66,6 @@ NAMESPACE_BEGIN
 
         std::vector<Color3f> displayBuffer(mFramebuffer.size());
         std::ranges::transform(mFramebuffer, displayBuffer.begin(), [&](const Color3f &color) {
-//            return color / mCurrentSpp;
             return (color / mCurrentSpp).LinearToGamma();
         });
 

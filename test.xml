@@ -1,5 +1,5 @@
 <scene>
-    <integer name="spp" value="10"/>
+    <integer name="spp" value="100"/>
     <integer name="depth" value="50"/>
 
     <integrator type="whitted">
@@ -7,7 +7,9 @@
     </integrator>
 
     <camera type="perspective">
-        <float name="fov" value="90.0"/>
+        <integer name="width" value="400"/>
+        <integer name="height" value="225"/>
+        <float name="fov" value="20.0"/>
         <point name="lookFrom" value="-2.0 2 1.0"/>
         <point name="lookAt" value="0.0 0.0 -1.0"/>
         <vector name="up" value="0.0 1.0 0.0"/>

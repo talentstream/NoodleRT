@@ -14,7 +14,7 @@ inline Vector3f Reflect(Vector3f wi, Vector3f n) {
 }
 
 inline Vector3f Refract(Vector3f wi, Vector3f n, Float etai_over_etat) {
-    Float cos_theta = std::min(Dot(-wi, n), static_cast<Float>(1));
+    Float cos_theta = std::min(Dot(-wi, n), 1.0f);
     Vector3f r_out_parallel = etai_over_etat * (wi + cos_theta * n);
     Vector3f r_out_perp = -sqrtf(fabsf(1.0f - LengthSquared(r_out_parallel))) * n;
     return r_out_parallel + r_out_perp;
