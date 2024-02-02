@@ -6,6 +6,7 @@
 
 #include "core/common.h"
 #include "core/math.h"
+
 NAMESPACE_BEGIN
 
 class BxDF;

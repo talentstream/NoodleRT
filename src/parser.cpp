@@ -66,6 +66,7 @@ NAMESPACE_BEGIN
             {"primitive",  ETag::EPrimitive},
             {"aggregate",  ETag::EAggregate},
             {"bxdf",       ETag::EBxDF},
+
             {"vector",     ETag::EVector},
             {"point",      ETag::EPoint},
             {"color",      ETag::EColor},

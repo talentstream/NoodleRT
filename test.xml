@@ -16,12 +16,18 @@
                 <float name="radius" value="0.5"/>
                 <point name="center" value="0.0 0.0 -1.0"/>
             </shape>
+            <bxdf type="diffuse">
+
+            </bxdf>
         </primitive>
         <primitive type="geometry">
             <shape type="sphere">
                 <float name="radius" value="100.0"/>
                 <point name="center" value="0.0 -100.5 -1.0"/>
             </shape>
+            <bxdf type="diffuse">
+
+            </bxdf>
         </primitive>
     </aggregate>
 

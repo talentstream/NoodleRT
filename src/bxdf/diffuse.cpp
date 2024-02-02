@@ -3,13 +3,14 @@
 //
 
 #include "base/bxdf.h"
-
+#include <print>
 NAMESPACE_BEGIN
 
     class Diffuse : public BxDF {
     public:
         explicit Diffuse(const PropertyList &propertyList) {
             mAlbedo = propertyList.GetColor("albedo", {1, 1, 1});
+            PRINT_DEBUG_INFO("BxDF", "diffuse")
         }
 
         [[nodiscard]] Boolean
