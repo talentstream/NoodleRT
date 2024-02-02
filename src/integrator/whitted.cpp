@@ -25,11 +25,8 @@ NAMESPACE_BEGIN
 
             Ray wo;
             Color3f attenuation;
-            if (i.bxdf->ComputeScattering(ray, i, attenuation, wo))
-            {
-                auto L = Li(wo, aggregate, depth - 1);
-
-                return attenuation * L;
+            if (i.bxdf->ComputeScattering(ray, i, attenuation, wo)) {
+                return attenuation * Li(wo, aggregate, depth - 1);
             }
 
 

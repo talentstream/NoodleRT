@@ -31,6 +31,8 @@ NAMESPACE_BEGIN
 
         Integer mSpp;
         Integer mMaxDepth;
+        Integer mWidth;
+        Integer mHeight;
 
     public:
         const Integrator *GetIntegrator() const {
@@ -53,6 +55,13 @@ NAMESPACE_BEGIN
             return mMaxDepth;
         }
 
+        const Integer GetWidth() const {
+            return mWidth;
+        }
+
+        const Integer GetHeight() const {
+            return mHeight;
+        }
     };
 
 NAMESPACE_END

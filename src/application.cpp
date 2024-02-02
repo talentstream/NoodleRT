@@ -4,6 +4,7 @@
 
 #include "core/application.h"
 #include "core/renderer.h"
+#include "core/scene.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -24,7 +25,7 @@ NAMESPACE_BEGIN
 
         pRenderer->SetRenderCallback([&](const std::vector<Color3f> &pixels) {
             glClear(GL_COLOR_BUFFER_BIT);
-            glDrawPixels(400, 400, GL_RGB, GL_FLOAT, pixels.data());
+            glDrawPixels(pRenderer->GetScene()->GetWidth(), pRenderer->GetScene()->GetHeight(), GL_RGB, GL_FLOAT, pixels.data());
             glfwSwapBuffers(window);
         });
 
@@ -41,7 +42,7 @@ NAMESPACE_BEGIN
     void Application::InitUI() {
         glfwInit();
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-        window = glfwCreateWindow(400, 400, "Rendering Window", nullptr, nullptr);
+        window = glfwCreateWindow(pRenderer->GetScene()->GetWidth(), pRenderer->GetScene()->GetHeight(), "Rendering Window", nullptr, nullptr);
         if (window == nullptr) {
             std::print("Failed to create GLFW window\n");
             glfwTerminate();

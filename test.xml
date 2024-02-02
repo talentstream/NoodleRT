@@ -1,6 +1,6 @@
 <scene>
     <integer name="spp" value="10"/>
-    <integer name="depth" value="1"/>
+    <integer name="depth" value="50"/>
 
     <integrator type="whitted">
 
@@ -17,7 +17,26 @@
                 <point name="center" value="0.0 0.0 -1.0"/>
             </shape>
             <bxdf type="diffuse">
-                <color name="albedo" value="0.7 0.3 0.3"/>
+                <color name="albedo" value="0.1 0.2 0.5"/>
+            </bxdf>
+        </primitive>
+        <primitive type="geometry">
+            <shape type="sphere">
+                <float name="radius" value="0.5"/>
+                <point name="center" value="-1.0 0.0 -1.0"/>
+            </shape>
+            <bxdf type="dielectric">
+                <float name="refractionIndex" value="1.5"/>
+            </bxdf>
+        </primitive>
+        <primitive type="geometry">
+            <shape type="sphere">
+                <float name="radius" value="0.5"/>
+                <point name="center" value="1.0 0.0 -1.0"/>
+            </shape>
+            <bxdf type="metal">
+                <color name="albedo" value="0.8 0.6 0.2"/>
+                <float name="roughness" value="0.0"/>
             </bxdf>
         </primitive>
         <primitive type="geometry">

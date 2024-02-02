@@ -20,7 +20,7 @@ NAMESPACE_BEGIN
         void Run();
 
     private:
-        static void InitUI();
+        void InitUI();
 
     private:
         std::unique_ptr<class Renderer> pRenderer;

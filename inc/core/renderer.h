@@ -24,12 +24,14 @@ NAMESPACE_BEGIN
 
         void SetRenderCallback(std::function<void(const std::vector<Color3f> &)> callback);
 
+        const class Scene *GetScene() const { return pScene.get(); }
+
     private:
 
         std::function<void(const std::vector<Color3f> &)> renderCallback;
         std::vector<Color3f> mFramebuffer;
 
-        std::unique_ptr<class Scene> pScene;
+        std::unique_ptr<Scene> pScene;
         Integer mCurrentSpp{};
     };
 

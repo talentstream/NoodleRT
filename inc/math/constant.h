@@ -67,5 +67,15 @@ inline Float Abs(Float v)
     return std::abs(v);
 }
 
+inline Float Min(Float v1, Float v2)
+{
+    return std::min(v1, v2);
+}
+
+inline Float Max(Float v1, Float v2)
+{
+    return std::max(v1, v2);
+}
+
 
 NAMESPACE_END

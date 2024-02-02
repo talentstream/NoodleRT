@@ -22,7 +22,7 @@ NAMESPACE_BEGIN
     Renderer::~Renderer() = default;
 
     void Renderer::OnInit() {
-        mFramebuffer.resize(400 * 400);
+        mFramebuffer.resize(pScene->GetHeight() * pScene->GetWidth());
 
     }
 
@@ -30,21 +30,23 @@ NAMESPACE_BEGIN
         const Camera *pCamera = pScene->GetCamera();
         const Integrator *pIntegrator = pScene->GetIntegrator();
         const Aggregate *pAggregate = pScene->GetAggregate();
+        const auto imageWidth = pScene->GetWidth();
+        const auto imageHeight = pScene->GetHeight();
         Integer tileSizeX{8}, tileSizeY{8};
-        Integer tileHeight = std::floor(static_cast<Float>(400) / static_cast<Float>(tileSizeY));
-        Integer tileWidth = std::floor(static_cast<Float>(400) / static_cast<Float>(tileSizeX));
+        Integer tileHeight = std::floor(static_cast<Float>(imageHeight) / static_cast<Float>(tileSizeY));
+        Integer tileWidth = std::floor(static_cast<Float>(imageWidth) / static_cast<Float>(tileSizeX));
 
         auto RenderBlock = [&](Integer tileX, Integer tileY) {
             auto beginY = tileY * tileHeight;
             auto endY = (tileY + 1) * tileHeight;
-            endY = endY > 400 ? 400 : endY;
+            endY = endY > imageHeight ? imageHeight : endY;
             auto beginX = tileX * tileWidth;
             auto endX = (tileX + 1) * tileWidth;
-            endX = endX > 400 ? 400 : endX;
+            endX = endX > imageWidth ? imageWidth : endX;
 
             // write reverse-y
             for (const Integer y: std::views::iota(beginY, endY)) {
-                auto index = (400 - y - 1) * 400;
+                auto index = (imageHeight - y - 1) * imageWidth;
                 for (const Integer x: std::views::iota(beginX, endX)) {
                     Ray ray = pCamera->GenerateRay(Point2f(x, y));
                     Color3f L = pIntegrator->Li(ray, *pAggregate, pScene->GetMaxDepth());
@@ -70,7 +72,7 @@ NAMESPACE_BEGIN
 
         renderCallback(displayBuffer);
 
-//        BitMap::SavePNG("../test.png", 400, 400, data);
+//        BitMap::SavePNG("../test.png", imageHeight, imageWidth, data);
     }
 
     void Renderer::SetRenderCallback(std::function<void(const std::vector<Color3f> &)> callback) {
