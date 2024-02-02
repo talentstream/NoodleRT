@@ -45,6 +45,7 @@ NAMESPACE_BEGIN
         EShape,
         EPrimitive,
         EAggregate,
+        EBxDF,
 
         // Property
         EBoolean,
@@ -64,6 +65,7 @@ NAMESPACE_BEGIN
             {"shape",      ETag::EShape},
             {"primitive",  ETag::EPrimitive},
             {"aggregate",  ETag::EAggregate},
+            {"bxdf",       ETag::EBxDF},
             {"vector",     ETag::EVector},
             {"point",      ETag::EPoint},
             {"color",      ETag::EColor},
@@ -164,7 +166,7 @@ NAMESPACE_BEGIN
                             list.SetPoint(name, Point3f{ToVector(value)});
                             break;
                         case ETag::EVector:
-                            list.SetVector(name,Vector3f{ToVector(value)});
+                            list.SetVector(name, Vector3f{ToVector(value)});
                             break;
                         default:
                             /*throw*/

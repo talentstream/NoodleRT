@@ -8,14 +8,15 @@
 
 NAMESPACE_BEGIN
 
-    class Material : public Object {
+    class BxDF : public Object {
     public:
-        virtual ~Material() = default;
+        virtual ~BxDF() = default;
 
 
-        virtual Boolean ComputeScattering()
+        virtual Boolean ComputeScattering() const = 0;
+
         [[nodiscard]] EClassType GetClassType() const override {
-            return EClassType::EMaterial;
+            return EClassType::EBxDF;
         }
     };
 

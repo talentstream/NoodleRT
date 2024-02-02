@@ -22,7 +22,7 @@ NAMESPACE_BEGIN
             EShape,
             EPrimitive,
             EAggregate,
-            EMaterial
+            EBxDF
         };
 
         virtual ~Object() = default;
@@ -47,8 +47,8 @@ NAMESPACE_BEGIN
                     return "EPrimitive";
                 case EClassType::EAggregate:
                     return "EAggregate";
-                case EClassType::EMaterial:
-                    return "EMaterial";
+                case EClassType::EBxDF:
+                    return "EBxDF";
                 default:
                     return "Unknown";
             };
