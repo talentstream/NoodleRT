@@ -17,6 +17,7 @@ NAMESPACE_BEGIN
 
         [[nodiscard]] Boolean
         ComputeScattering(const Ray &ray, const Interaction &i, Color3f &attenuation, Ray &wo) const override {
+            // Todo: dielectric bug? 相反的结果
             attenuation = Color3f{1.0f, 1.0f, 1.0f};
             Float refractionRatio = i.front ? (1.0f / mRefractionIndex) : mRefractionIndex;
             Vector3f unitDirection = Normalize(ray.d);
