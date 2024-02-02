@@ -8,6 +8,7 @@
 #include "base/integrator.h"
 #include "util/parser.h"
 #include "util/bitmap.h"
+#include "util/timer.h"
 #include <print>
 #include <ranges>
 
@@ -31,6 +32,7 @@ NAMESPACE_BEGIN
 
         if(mCurrentSpp < pScene->GetSpp())
         {
+            Timer timer;
             for (int i = 0; i < 400; i++) {
                 for (int j = 0; j < 400; j++) {
                     Ray ray = pCamera->GenerateRay(Point2f(j, i));
@@ -39,6 +41,7 @@ NAMESPACE_BEGIN
             }
             mCurrentSpp++;
             std::print("SPP: {} - ", mCurrentSpp);
+            timer.PrintElapsedMillSec();
         }
 
 
