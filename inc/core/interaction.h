@@ -6,8 +6,9 @@
 
 #include "core/common.h"
 #include "core/math.h"
-
 NAMESPACE_BEGIN
+
+class BxDF;
 
 // default surface interaction
 class Interaction {
@@ -16,6 +17,7 @@ public:
     Normal3f n;// normal
     Float t;// time
     Boolean front{};// Is face front
+    BxDF* bxdf{nullptr};
 };
 
 NAMESPACE_END

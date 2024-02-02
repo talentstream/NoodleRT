@@ -2,7 +2,6 @@
 
 #include "core/object.h"
 #include "core/interaction.h"
-#include "base/shape.h"
 
 NAMESPACE_BEGIN
 
@@ -15,9 +14,6 @@ NAMESPACE_BEGIN
         [[nodiscard]] EClassType GetClassType() const override {
             return EClassType::EPrimitive;
         }
-
-    private:
-        Shape *pShape;
     };
 
 NAMESPACE_END

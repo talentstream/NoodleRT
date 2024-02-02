@@ -5,6 +5,7 @@
 #pragma once
 
 #include "core/object.h"
+#include "core/interaction.h"
 
 NAMESPACE_BEGIN
 
@@ -12,8 +13,7 @@ NAMESPACE_BEGIN
     public:
         virtual ~BxDF() = default;
 
-
-        virtual Boolean ComputeScattering() const = 0;
+        virtual Boolean ComputeScattering(const Ray &, const Interaction &, Color3f &, Ray &wo) const = 0;
 
         [[nodiscard]] EClassType GetClassType() const override {
             return EClassType::EBxDF;

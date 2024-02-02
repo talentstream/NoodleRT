@@ -3,6 +3,8 @@
 //
 
 #include "base/primitive.h"
+#include "base/shape.h"
+#include "base/bxdf.h"
 #include <print>
 
 NAMESPACE_BEGIN
@@ -13,8 +15,7 @@ NAMESPACE_BEGIN
             PRINT_DEBUG_INFO("Primitive", "geometry")
         }
 
-        ~GeometryPrimitive()
-        {
+        ~GeometryPrimitive() {
             delete pShape;
         }
 
@@ -23,18 +24,28 @@ NAMESPACE_BEGIN
                 case EClassType::EShape:
                     pShape = static_cast<Shape *>(object);
                     break;
+                case EClassType::EBxDF:
+                    pBxDF = static_cast<BxDF *>(object);
+                    break;
+            }
+        }
+
+        void Initialize() override {
+            if (pBxDF == nullptr) {
+                pBxDF = static_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList()));
             }
         }
 
         Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
+            interaction.bxdf = pBxDF;
             return pShape->Intersect(ray, Infinity, interaction);
         }
 
     private:
         Shape *pShape;
-
+        BxDF *pBxDF;
     };
 
-    REGISTER_CLASS(GeometryPrimitive,"geometry")
+    REGISTER_CLASS(GeometryPrimitive, "geometry")
 
 NAMESPACE_END
