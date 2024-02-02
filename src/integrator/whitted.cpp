@@ -16,7 +16,7 @@ NAMESPACE_BEGIN
         }
 
         Color3f Li(const Ray &ray, const Aggregate &aggregate, Integer depth) const override {
-            if (depth <= 0) return {0, 0, 0};
+            if (depth < 0) return {0, 0, 0};
 
             Interaction i;
             if (!aggregate.Intersect(ray, i)) {
@@ -25,11 +25,15 @@ NAMESPACE_BEGIN
 
             Ray wo;
             Color3f attenuation;
-            if (!i.bxdf->ComputeScattering(ray, i, attenuation, wo)) {
-                return {0, 0, 0};
-            } else {
-                return attenuation * Li(wo, aggregate, depth - 1);
+            if (i.bxdf->ComputeScattering(ray, i, attenuation, wo))
+            {
+                auto L = Li(wo, aggregate, depth - 1);
+
+                return attenuation * L;
             }
+
+
+            return {0, 0, 0};
         }
 
     private:

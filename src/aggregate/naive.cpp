@@ -43,9 +43,7 @@ NAMESPACE_BEGIN
 
             return hitAnything;
 
-
         }
-
 
     private:
         std::vector<Primitive *> mPrimitives;

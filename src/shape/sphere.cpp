@@ -31,9 +31,9 @@ NAMESPACE_BEGIN
             Float sqrtD = Sqrt(discriminant);
             Float root = (-halfB - sqrtD) / a;
             // 判断是否相交
-            if (root <= 0 || root > tMax) {
+            if (root < 0.001 || root > tMax) {
                 root = (-halfB + sqrtD) / a;
-                if (root <= 0 || root > tMax) {
+                if (root < 0.001 || root > tMax) {
                     return false;
                 }
             }

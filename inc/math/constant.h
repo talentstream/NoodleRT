@@ -62,5 +62,10 @@ inline Float Sqrt(Float v)
     return std::sqrt(v);
 }
 
+inline Float Abs(Float v)
+{
+    return std::abs(v);
+}
+
 
 NAMESPACE_END

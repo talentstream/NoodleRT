@@ -17,7 +17,7 @@
                 <point name="center" value="0.0 0.0 -1.0"/>
             </shape>
             <bxdf type="diffuse">
-
+                <color name="albedo" value="0.7 0.3 0.3"/>
             </bxdf>
         </primitive>
         <primitive type="geometry">
@@ -26,7 +26,7 @@
                 <point name="center" value="0.0 -100.5 -1.0"/>
             </shape>
             <bxdf type="diffuse">
-
+                <color name="albedo" value="0.8 0.8 0.0"/>
             </bxdf>
         </primitive>
     </aggregate>

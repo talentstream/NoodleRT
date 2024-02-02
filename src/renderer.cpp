@@ -47,16 +47,15 @@ NAMESPACE_BEGIN
                 auto index = (400 - y - 1) * 400;
                 for (const Integer x: std::views::iota(beginX, endX)) {
                     Ray ray = pCamera->GenerateRay(Point2f(x, y));
-                    Color3f L = pIntegrator->Li(ray, *pAggregate,pScene->GetMaxDepth());
+                    Color3f L = pIntegrator->Li(ray, *pAggregate, pScene->GetMaxDepth());
                     mFramebuffer[index + x] += L;
                 }
             }
         };
 
-        if(mCurrentSpp < pScene->GetSpp())
-        {
+        if (mCurrentSpp < pScene->GetSpp()) {
             Timer timer;
-            Parallel::For2D(0,tileSizeX, 0,tileSizeY, RenderBlock);
+            Parallel::For2D(0, tileSizeX, 0, tileSizeY, RenderBlock);
             mCurrentSpp++;
             std::print("SPP: {} - ", mCurrentSpp);
             timer.PrintElapsedMillSec();
@@ -65,6 +64,7 @@ NAMESPACE_BEGIN
 
         std::vector<Color3f> displayBuffer(mFramebuffer.size());
         std::ranges::transform(mFramebuffer, displayBuffer.begin(), [&](const Color3f &color) {
+//            return color / mCurrentSpp;
             return (color / mCurrentSpp).LinearToGamma();
         });
 
