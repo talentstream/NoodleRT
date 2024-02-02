@@ -77,5 +77,9 @@ inline Float Max(Float v1, Float v2)
     return std::max(v1, v2);
 }
 
+inline Float Tan(Float v)
+{
+    return std::tan(v);
+}
 
 NAMESPACE_END

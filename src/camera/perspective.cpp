@@ -12,24 +12,32 @@ NAMESPACE_BEGIN
         PerspectiveCamera(const PropertyList &propertyList) {
             mWidth = propertyList.GetInteger("width", 400);
             mHeight = propertyList.GetInteger("height", 400);
-            mCenter = propertyList.GetPoint("center", {});
+            mFov = propertyList.GetFloat("fov", 90);
+            mLookFrom = propertyList.GetPoint("lookFrom", {});
+            mLookAt = propertyList.GetPoint("lookAt", {0, 0, -1});
+            mUp = propertyList.GetVector("up", {0, 1, 0});
             PRINT_DEBUG_INFO("Camera", "perspective");
         }
 
         void Initialize() override {
             Float aspectRatio = Float(mWidth) / Float(mHeight);
-            Float focalLength = 1.0f;
-            Float viewportHeight = 2.0f;
+            Float focalLength = Length(mLookFrom - mLookAt);
+            auto theta = DegreeToRadian(mFov);
+            Float h = Tan(theta / 2.0);
+            Float viewportHeight = 2.0f * h * focalLength;
             Float viewportWidth = aspectRatio * viewportHeight;
 
-            Vector3f viewPortU = {viewportWidth, 0, 0};
-            Vector3f viewPortV = {0, -viewportHeight, 0};
+            Vector3f w = Normalize(mLookFrom - mLookAt);
+            Vector3f u = Normalize(Cross(mUp, w));
+            Vector3f v = Cross(w, u);
 
-            deltaU = viewPortU / Float(mWidth);
-            deltaV = viewPortV / Float(mHeight);
+            auto viewportU = viewportWidth * u;
+            auto viewportV = viewportHeight * -v;
+            deltaU = viewportU / mWidth;
+            deltaV = viewportV / mHeight;
 
-            Vector3f viewPortUpperLeft{mCenter - viewPortU / 2 - viewPortV / 2 - Vector3f(0, 0, focalLength)};
-            pixel100Loc = Point3f{viewPortUpperLeft + deltaU * 0.5 + deltaV * 0.5};
+            auto viewportUpperLeft = mLookFrom - (w * focalLength + viewportU / 2 + viewportV / 2);
+            pixel100Loc = Point3f{viewportUpperLeft + deltaU * 0.5 + deltaV * 0.5};
         }
 
         Ray GenerateRay(Point2f uv) const override {
@@ -41,13 +49,16 @@ NAMESPACE_BEGIN
 
             auto pixelCenter = pixel100Loc + uv.x * deltaU + uv.y * deltaV;
             auto pixelSample = pixelCenter + PixelSampleSquare();
-            return Ray{mCenter, pixelSample - mCenter};
+            return Ray{mLookFrom, pixelSample - mLookFrom};
         }
 
     private:
         Integer mWidth;
         Integer mHeight;
-        Point3f mCenter;
+        Float mFov;
+        Point3f mLookFrom;
+        Point3f mLookAt;
+        Vector3f mUp;
 
         Vector3f deltaU;
         Vector3f deltaV;
