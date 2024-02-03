@@ -48,6 +48,11 @@ NAMESPACE_BEGIN
             return true;
         }
 
+        Bound3f BoundingBox() const override {
+            Vector3f radiusVec{mRadius};
+            return Bound3f{mCenter - radiusVec, mCenter + radiusVec};
+        }
+
     private:
         Float mRadius;
         Point3f mCenter;

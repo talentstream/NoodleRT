@@ -5,6 +5,7 @@
 #include "base/aggregate.h"
 #include "base/primitive.h"
 #include <print>
+#include <queue>
 #include <vector>
 #include <algorithm>
 
@@ -82,10 +83,36 @@ NAMESPACE_BEGIN
         }
 
         Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
-            return false;
+            if (mRoot == nullptr) {
+                return false;
+            }
+            Boolean hitAnything{false};
+            std::queue<BVHNode *> nodes;
+            nodes.push(mRoot);
+            while (nodes.empty()) {
+                auto currentNode = nodes.front();
+                nodes.pop();
+                if (currentNode->bound.IntersectP(ray, Infinity)) {
+                    if (currentNode->primitiveNumber > 0) {
+                        auto begin{currentNode->firstPrimIndex};
+                        auto end{begin + currentNode->primitiveNumber};
+                        for (auto i{begin}; i < end; ++i) {
+                            if (mPrimitives[i]->Intersect(ray, interaction)) {
+                                hitAnything = true;
+                            }
+                        }
+                    } else {
+                        nodes.push(currentNode->children[0]);
+                        nodes.push(currentNode->children[1]);
+                    }
+                }
+            }
+
+            return hitAnything;
         }
 
     private:
+
         BVHNode *RecursiveBuild(std::vector<PrimitiveInfo> &primitiveInfo,
                                 Integer start, Integer end,
                                 std::vector<Primitive *> &orderedPrimitives) {

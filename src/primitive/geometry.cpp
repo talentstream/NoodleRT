@@ -44,6 +44,10 @@ NAMESPACE_BEGIN
             return true;
         }
 
+        Bound3f BoundingBox() const override {
+            return pShape->BoundingBox();
+        }
+
     private:
         Shape *pShape;
         BxDF *pBxDF;
