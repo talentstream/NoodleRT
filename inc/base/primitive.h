@@ -11,6 +11,8 @@ NAMESPACE_BEGIN
 
         virtual Boolean Intersect(const Ray &ray, Interaction& interaction) const = 0;
 
+        virtual Bound3f BoundingBox() const = 0;
+
         [[nodiscard]] EClassType GetClassType() const override {
             return EClassType::EPrimitive;
         }
