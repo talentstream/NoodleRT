@@ -83,38 +83,8 @@ NAMESPACE_BEGIN
         }
 
         Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
-            if (mRoot == nullptr) {
-                return false;
-            }
-
-            Boolean hitAnything{false};
-            std::queue<BVHNode *> nodes;
-            nodes.push(mRoot);
-            Float closest{Infinity};
-            Interaction tempInteraction;
-            while (!nodes.empty()) {
-                auto currentNode = nodes.front();
-                nodes.pop();
-                if (currentNode->bound.IntersectP(ray, closest)) {
-                    if (currentNode->primitiveNumber > 0) {
-                        auto begin{currentNode->firstPrimIndex};
-                        for (auto i{0}; i < currentNode->primitiveNumber; ++i) {
-                            if (mPrimitives[begin + i]->Intersect(ray, tempInteraction)) {
-                                hitAnything = true;
-                                if(tempInteraction.t < closest) {
-                                    closest = tempInteraction.t;
-                                    interaction = tempInteraction;
-                                }
-                            }
-                        }
-                    } else {
-                        nodes.push(currentNode->children[0]);
-                        nodes.push(currentNode->children[1]);
-                    }
-                }
-            }
-
-            return hitAnything;
+            auto closest{Infinity};
+            return RecursiveIntersect(mRoot, ray, closest, interaction);
         }
 
     private:
@@ -170,6 +140,34 @@ NAMESPACE_BEGIN
                 }
             }
             return node;
+        }
+
+        Boolean
+        RecursiveIntersect(const BVHNode *node, const Ray &ray, Float &closest, Interaction &interaction) const {
+            if (!node || !node->bound.IntersectP(ray, Infinity)) {
+                return false;
+            }
+
+            // leaf node
+            if (node->primitiveNumber > 0) {
+                Boolean hitAnything{false};
+                Interaction tempInteraction = interaction;
+                for (auto i{0}; i < node->primitiveNumber; ++i) {
+                    if (mPrimitives[node->firstPrimIndex + i]->Intersect(ray, tempInteraction)) {
+                        hitAnything = true;
+                        if (tempInteraction.t < closest) {
+                            closest = tempInteraction.t;
+                            interaction = tempInteraction;
+                        }
+                    }
+                }
+                return hitAnything;
+            }
+
+            // interior node
+            Boolean hitLeft = RecursiveIntersect(node->children[0], ray, closest, interaction);
+            Boolean hitRight = RecursiveIntersect(node->children[1], ray, closest, interaction);
+            return hitLeft || hitRight;
         }
 
     private:
