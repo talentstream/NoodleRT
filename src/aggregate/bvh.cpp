@@ -86,19 +86,25 @@ NAMESPACE_BEGIN
             if (mRoot == nullptr) {
                 return false;
             }
+
             Boolean hitAnything{false};
             std::queue<BVHNode *> nodes;
             nodes.push(mRoot);
-            while (nodes.empty()) {
+            Float closest{Infinity};
+            Interaction tempInteraction;
+            while (!nodes.empty()) {
                 auto currentNode = nodes.front();
                 nodes.pop();
-                if (currentNode->bound.IntersectP(ray, Infinity)) {
+                if (currentNode->bound.IntersectP(ray, closest)) {
                     if (currentNode->primitiveNumber > 0) {
                         auto begin{currentNode->firstPrimIndex};
-                        auto end{begin + currentNode->primitiveNumber};
-                        for (auto i{begin}; i < end; ++i) {
-                            if (mPrimitives[i]->Intersect(ray, interaction)) {
+                        for (auto i{0}; i < currentNode->primitiveNumber; ++i) {
+                            if (mPrimitives[begin + i]->Intersect(ray, tempInteraction)) {
                                 hitAnything = true;
+                                if(tempInteraction.t < closest) {
+                                    closest = tempInteraction.t;
+                                    interaction = tempInteraction;
+                                }
                             }
                         }
                     } else {
@@ -170,5 +176,7 @@ NAMESPACE_BEGIN
         std::vector<Primitive *> mPrimitives;
         BVHNode *mRoot{nullptr};
     };
+
+    REGISTER_CLASS(BVHAggregate, "bvh")
 
 NAMESPACE_END
