@@ -5,7 +5,7 @@
 #include "base/mesh.h"
 #include "base/bxdf.h"
 #include "base/primitive.h"
-#include "shape/triangle.cpp"
+#include "shape/triangle.h"
 #include <print>
 
 #define TINYOBJLOADER_IMPLEMENTATION
