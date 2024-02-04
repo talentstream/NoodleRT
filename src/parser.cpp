@@ -47,6 +47,7 @@ NAMESPACE_BEGIN
         EAggregate,
         EMesh,
         EBxDF,
+        ETexture,
 
         // Property
         EBoolean,
@@ -68,14 +69,15 @@ NAMESPACE_BEGIN
             {"aggregate",  ETag::EAggregate},
             {"mesh",       ETag::EMesh},
             {"bxdf",       ETag::EBxDF},
+            {"texture",    ETag::ETexture},
 
-            {"vector",     ETag::EVector},
-            {"point",      ETag::EPoint},
-            {"color",      ETag::EColor},
-            {"string",     ETag::EString},
-            {"float",      ETag::EFloat},
-            {"integer",    ETag::EInteger},
             {"boolean",    ETag::EBoolean},
+            {"integer",    ETag::EInteger},
+            {"float",      ETag::EFloat},
+            {"string",     ETag::EString},
+            {"color",      ETag::EColor},
+            {"point",      ETag::EPoint},
+            {"vector",     ETag::EVector}
 
     };
 

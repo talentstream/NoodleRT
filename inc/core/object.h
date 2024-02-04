@@ -23,7 +23,8 @@ NAMESPACE_BEGIN
             EPrimitive,
             EAggregate,
             EMesh,
-            EBxDF
+            EBxDF,
+            ETexture
         };
 
         virtual ~Object() = default;
@@ -52,6 +53,8 @@ NAMESPACE_BEGIN
                     return "EMesh";
                 case EClassType::EBxDF:
                     return "EBxDF";
+                case EClassType::ETexture:
+                    return "ETexture";
                 default:
                     return "Unknown";
             };
