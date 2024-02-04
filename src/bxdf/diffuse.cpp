@@ -10,7 +10,7 @@ NAMESPACE_BEGIN
     class Diffuse : public BxDF {
     public:
         explicit Diffuse(const PropertyList &propertyList) {
-            mAlbedo = propertyList.GetColor("albedo", {0.5f, 0.5f, 0.5f});
+            mAlbedo = propertyList.GetColor("albedo", {1.0f, 1.0f, 1.0f});
             PRINT_DEBUG_INFO("BxDF", "diffuse")
 
         }

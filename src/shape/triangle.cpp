@@ -50,9 +50,8 @@ NAMESPACE_BEGIN
             i.front = Dot(ray.d, Vector3f{i.n}) < 0;
             i.n = i.front ? outNormal : -outNormal;
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     Bound3f Triangle::BoundingBox() const {

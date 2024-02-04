@@ -6,8 +6,9 @@
 #include "base/primitive.h"
 #include "base/mesh.h"
 #include <print>
-#include <queue>
 #include <vector>
+#include <set>
+#include <unordered_set>
 #include <algorithm>
 
 NAMESPACE_BEGIN
@@ -90,8 +91,7 @@ NAMESPACE_BEGIN
         }
 
         Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
-            auto closest{Infinity};
-            return RecursiveIntersect(mRoot, ray, closest, interaction);
+            return RecursiveIntersect(mRoot, ray, interaction);
         }
 
     private:
@@ -106,7 +106,7 @@ NAMESPACE_BEGIN
             }
 
             Integer nPrimitive = end - start;
-            if (nPrimitive == 1) {
+            if (nPrimitive <= 1) {
                 // leaf node
                 Integer firstPrimOffset = orderedPrimitives.size();
                 for (auto i{start}; i < end; ++i) {
@@ -114,6 +114,7 @@ NAMESPACE_BEGIN
                     orderedPrimitives.push_back(mPrimitives[primNum]);
                 }
                 node->InitLeaf(firstPrimOffset, nPrimitive, bound);
+
                 return node;
             } else {
                 // interior node
@@ -131,14 +132,15 @@ NAMESPACE_BEGIN
                         orderedPrimitives.push_back(mPrimitives[primNum]);
                     }
                     node->InitLeaf(firstPrimOffset, nPrimitive, bound);
+
                     return node;
                 } else {
                     // interior node
                     // default equal split
                     Integer mid = (start + end) >> 1;
-                    std::nth_element(primitiveInfo.begin(),
-                                     primitiveInfo.begin() + mid,
-                                     primitiveInfo.end(),
+                    std::nth_element(&primitiveInfo[start],
+                                     &primitiveInfo[mid],
+                                     &primitiveInfo[end - 1] + 1,
                                      [dim](const PrimitiveInfo &a, const PrimitiveInfo &b) {
                                          return a.centroid[dim] < b.centroid[dim];
                                      });
@@ -150,7 +152,7 @@ NAMESPACE_BEGIN
         }
 
         Boolean
-        RecursiveIntersect(const BVHNode *node, const Ray &ray, Float &closest, Interaction &interaction) const {
+        RecursiveIntersect(const BVHNode *node, const Ray &ray, Interaction &interaction) const {
             if (!node || !node->bound.IntersectP(ray, Infinity)) {
                 return false;
             }
@@ -158,23 +160,28 @@ NAMESPACE_BEGIN
             // leaf node
             if (node->primitiveNumber > 0) {
                 Boolean hitAnything{false};
-                Interaction tempInteraction = interaction;
+                Interaction tempInteraction;
                 for (auto i{0}; i < node->primitiveNumber; ++i) {
                     if (mPrimitives[node->firstPrimIndex + i]->Intersect(ray, tempInteraction)) {
                         hitAnything = true;
-                        if (tempInteraction.t < closest) {
-                            closest = tempInteraction.t;
+
+                        if (tempInteraction.t < interaction.t) {
                             interaction = tempInteraction;
                         }
                     }
                 }
+
                 return hitAnything;
+
             }
 
             // interior node
-            Boolean hitLeft = RecursiveIntersect(node->children[0], ray, closest, interaction);
-            if(!hitLeft) closest = Infinity;
-            Boolean hitRight = RecursiveIntersect(node->children[1], ray, closest, interaction);
+            Boolean hitLeft = RecursiveIntersect(node->children[0], ray,interaction);
+//            if (!hitLeft) {
+////                std::print("{}\n", interaction.t);
+//                interaction.t = Infinity;
+//            }
+            Boolean hitRight = RecursiveIntersect(node->children[1], ray,interaction);
             return hitLeft || hitRight;
         }
 

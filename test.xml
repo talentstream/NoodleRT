@@ -17,7 +17,7 @@
         <vector name="up" value="0.0 1.0 0.0"/>
     </camera>
 
-    <aggregate type="bvh">
+    <aggregate type="naive">
         <primitive type="geometry">
             <shape type="sphere">
                 <float name="radius" value="0.5"/>

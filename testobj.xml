@@ -4,7 +4,7 @@
     <integer name="width" value="400"/>
     <integer name="height" value="225"/>
 
-    <aggregate type="naive">
+    <aggregate type="bvh">
         <mesh>
             <string name="filename" value="../bunny.obj"/>
         </mesh>

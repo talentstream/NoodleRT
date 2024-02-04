@@ -16,7 +16,7 @@ class Interaction {
 public:
     Point3f p;// position
     Normal3f n;// normal
-    Float t;// time
+    Float t{Infinity};// time
     Boolean front{};// Is face front
     BxDF* bxdf{nullptr};
 };

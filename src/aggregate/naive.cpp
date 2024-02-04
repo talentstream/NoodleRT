@@ -33,15 +33,13 @@ NAMESPACE_BEGIN
         }
 
         Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
-            Float closest{Infinity};
             Boolean hitAnything{false};
             Interaction tempInteraction;
 
             for (const auto &primitive: mPrimitives) {
                 if (primitive->Intersect(ray, tempInteraction)) {
                     hitAnything = true;
-                    if (tempInteraction.t < closest) {
-                        closest = tempInteraction.t;
+                    if (tempInteraction.t < interaction.t) {
                         interaction = tempInteraction;
                     }
                 }
