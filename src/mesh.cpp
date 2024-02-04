@@ -71,7 +71,6 @@ NAMESPACE_BEGIN
                 auto primitive = dynamic_cast<Primitive *>(ObjectFactory::CreateInstance("geometry", PropertyList()));
                 primitive->AddChild(pTriangle);
                 primitive->AddChild(pBxDF);
-                primitive->Initialize();
                 primitives.emplace_back(primitive);
             };
         }

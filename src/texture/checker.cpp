@@ -9,7 +9,7 @@ NAMESPACE_BEGIN
     class CheckerTexture : public Texture {
     public:
         explicit CheckerTexture(const PropertyList &propertyList) {
-            mInvScale = 1 / propertyList.GetFloat("invScale", {0.32f});
+            mInvScale = 1 / propertyList.GetFloat("invScale", {0.01f});
         }
 
         void AddChild(Object *object) override {

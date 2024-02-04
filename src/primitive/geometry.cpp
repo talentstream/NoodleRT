@@ -35,7 +35,6 @@ NAMESPACE_BEGIN
             if (!pBxDF) {
                 pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList()));
             }
-
         }
 
         Boolean Intersect(const Ray &ray, Interaction &interaction) const override {

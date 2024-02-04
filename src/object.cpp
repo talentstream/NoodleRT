@@ -21,7 +21,9 @@ Object* ObjectFactory::CreateInstance(std::string_view name, const PropertyList&
     if(pCreators == nullptr || !pCreators->contains(name)) {
         throw std::runtime_error("ObjectFactory::CreateInstance: class name not found");
     }
-    return (*pCreators)[name](propertyList);
+    auto object = (*pCreators)[name](propertyList);
+    object->Initialize();
+    return object;
 }
 
 NAMESPACE_END
