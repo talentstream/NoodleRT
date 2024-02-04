@@ -17,7 +17,7 @@ NAMESPACE_BEGIN
 
         Boolean Intersect(const Ray &ray, Float tMax, Interaction &i) const override {
 
-            return true;
+            return false;
         }
 
         Bound3f BoundingBox() const override {

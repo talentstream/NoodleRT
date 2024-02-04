@@ -16,6 +16,7 @@ NAMESPACE_BEGIN
 
     Mesh::Mesh(const PropertyList &propertyList) {
         mFileName = propertyList.GetString("filename", {});
+
         PRINT_DEBUG_INFO("Mesh", "mesh")
     }
 
@@ -73,5 +74,7 @@ NAMESPACE_BEGIN
         }
 
     }
+
+    REGISTER_CLASS(Mesh, "mesh")
 
 NAMESPACE_END

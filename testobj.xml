@@ -1,0 +1,28 @@
+<scene>
+    <integer name="spp" value="100"/>
+    <integer name="depth" value="50"/>
+    <integer name="width" value="800"/>
+    <integer name="height" value="450"/>
+
+    <aggregate type="naive">
+        <mesh>
+            <string name="filename" value="../bunny.obj"/>
+        </mesh>
+    </aggregate>
+
+    <integrator type="whitted">
+
+    </integrator>
+
+    <camera type="perspective">
+        <integer name="width" value="800"/>
+        <integer name="height" value="450"/>
+        <float name="fov" value="20.0"/>
+        <point name="lookFrom" value="-2.0 2 1.0"/>
+        <point name="lookAt" value="0.0 0.0 -1.0"/>
+        <vector name="up" value="0.0 1.0 0.0"/>
+    </camera>
+
+
+
+</scene>

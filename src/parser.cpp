@@ -120,6 +120,8 @@ NAMESPACE_BEGIN
 
             if (tag == ETag::EScene) {
                 node.append_attribute("type") = "scene";
+            } else if (tag == ETag::EMesh) {
+                node.append_attribute("type") = "mesh";
             }
 
             PropertyList propList;

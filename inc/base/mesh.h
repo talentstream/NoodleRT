@@ -11,7 +11,7 @@ NAMESPACE_BEGIN
 
     class Mesh : public Object {
     public:
-        explicit Mesh(const PropertyList &);
+        explicit Mesh(const PropertyList &propertyList);
 
         virtual ~Mesh() = default;
 
