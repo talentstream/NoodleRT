@@ -3,6 +3,7 @@
 //
 
 #include "base/bxdf.h"
+#include "base/texture.h"
 #include <print>
 
 NAMESPACE_BEGIN
@@ -10,9 +11,22 @@ NAMESPACE_BEGIN
     class Diffuse : public BxDF {
     public:
         explicit Diffuse(const PropertyList &propertyList) {
-            mAlbedo = propertyList.GetColor("albedo", {0.5f, 0.5f, 0.5f});
             PRINT_DEBUG_INFO("BxDF", "diffuse")
+        }
 
+        void AddChild(Object *object) override {
+            switch (object->GetClassType()) {
+                case EClassType::ETexture:
+                    pAlbedo = dynamic_cast<Texture *>(object);
+                    break;
+            }
+        }
+
+        void Initialize() override {
+            if (pAlbedo == nullptr) {
+                pAlbedo = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("checker", {}));
+                pAlbedo->Initialize();
+            }
         }
 
         [[nodiscard]] Boolean
@@ -26,14 +40,14 @@ NAMESPACE_BEGIN
             if (NearZero(scatterDirection)) {
                 scatterDirection = Vector3f(i.n);
             }
-            attenuation = mAlbedo;
+            attenuation = pAlbedo->Evaluate(i);
             wo = Ray(i.p, scatterDirection);
 
             return true;
         }
 
     private:
-        Color3f mAlbedo;
+        Texture *pAlbedo{nullptr};
     };
 
     REGISTER_CLASS(Diffuse, "diffuse")

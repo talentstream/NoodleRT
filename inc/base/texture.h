@@ -14,7 +14,7 @@ class Texture : public Object
 public:
     virtual ~Texture() = default;
 
-    virtual Color3f Value(const Interaction&) const = 0;
+    virtual Color3f Evaluate(const Interaction&) const = 0;
 
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::ETexture;

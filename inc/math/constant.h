@@ -82,4 +82,24 @@ inline Float Tan(Float v)
     return std::tan(v);
 }
 
+inline Integer Floor(Float v)
+{
+    return static_cast<Integer>(std::floor(v));
+}
+
+inline Float ACos(Float v)
+{
+    return std::acos(v);
+}
+
+inline Float ASin(Float v)
+{
+    return std::asin(v);
+}
+
+inline Float ATan2(Float y, Float x)
+{
+    return std::atan2(y, x);
+}
+
 NAMESPACE_END

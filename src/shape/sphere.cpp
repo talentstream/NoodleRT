@@ -45,6 +45,11 @@ NAMESPACE_BEGIN
             i.front = Dot(ray.d, Vector3f(outNormal)) < 0;
             i.n = i.front ? outNormal : -outNormal;
 
+            // uv
+            auto theta = ACos(-i.n.y);
+            auto phi = ATan2(-i.n.z, i.n.x) + Pi;
+            i.u = phi / (2 * Pi);
+            i.v = theta / Pi;
             return true;
         }
 
