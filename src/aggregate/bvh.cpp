@@ -4,6 +4,7 @@
 
 #include "base/aggregate.h"
 #include "base/primitive.h"
+#include "base/mesh.h"
 #include <print>
 #include <queue>
 #include <vector>
@@ -60,6 +61,11 @@ NAMESPACE_BEGIN
                 case EClassType::EPrimitive:
                     mPrimitives.emplace_back(dynamic_cast<Primitive *>(object));
                     break;
+                case EClassType::EMesh: {
+                    auto mesh = dynamic_cast<Mesh *>(object);
+                    mPrimitives.insert(mPrimitives.end(), mesh->primitives.begin(), mesh->primitives.end());
+                    break;
+                }
                 default:
                     /*throw*/
                     break;
@@ -79,6 +85,7 @@ NAMESPACE_BEGIN
 
             mRoot = RecursiveBuild(primitiveInfo, 0, primitiveSize, orderedPrimitives);
             mPrimitives.swap(orderedPrimitives);
+
             primitiveInfo.clear();
         }
 
@@ -166,6 +173,7 @@ NAMESPACE_BEGIN
 
             // interior node
             Boolean hitLeft = RecursiveIntersect(node->children[0], ray, closest, interaction);
+            if(!hitLeft) closest = Infinity;
             Boolean hitRight = RecursiveIntersect(node->children[1], ray, closest, interaction);
             return hitLeft || hitRight;
         }
