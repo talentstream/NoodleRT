@@ -22,6 +22,7 @@ NAMESPACE_BEGIN
             EShape,
             EPrimitive,
             EAggregate,
+            EMesh,
             EBxDF
         };
 
@@ -47,6 +48,8 @@ NAMESPACE_BEGIN
                     return "EPrimitive";
                 case EClassType::EAggregate:
                     return "EAggregate";
+                case EClassType::EMesh:
+                    return "EMesh";
                 case EClassType::EBxDF:
                     return "EBxDF";
                 default:

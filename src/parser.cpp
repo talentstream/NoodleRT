@@ -45,6 +45,7 @@ NAMESPACE_BEGIN
         EShape,
         EPrimitive,
         EAggregate,
+        EMesh,
         EBxDF,
 
         // Property
@@ -65,6 +66,7 @@ NAMESPACE_BEGIN
             {"shape",      ETag::EShape},
             {"primitive",  ETag::EPrimitive},
             {"aggregate",  ETag::EAggregate},
+            {"mesh",       ETag::EMesh},
             {"bxdf",       ETag::EBxDF},
 
             {"vector",     ETag::EVector},
