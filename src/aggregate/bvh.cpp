@@ -58,7 +58,7 @@ NAMESPACE_BEGIN
         void AddChild(Object *object) override {
             switch (object->GetClassType()) {
                 case EClassType::EPrimitive:
-                    mPrimitives.emplace_back(static_cast<Primitive *>(object));
+                    mPrimitives.emplace_back(dynamic_cast<Primitive *>(object));
                     break;
                 default:
                     /*throw*/

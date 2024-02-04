@@ -4,6 +4,7 @@
 
 #include "base/aggregate.h"
 #include "base/primitive.h"
+#include "base/mesh.h"
 #include <vector>
 #include <print>
 
@@ -18,8 +19,13 @@ NAMESPACE_BEGIN
         void AddChild(Object *object) {
             switch (object->GetClassType()) {
                 case EClassType::EPrimitive:
-                    mPrimitives.emplace_back(static_cast<Primitive *>(object));
+                    mPrimitives.emplace_back(dynamic_cast<Primitive *>(object));
                     break;
+                case EClassType::EMesh: {
+                    auto mesh = dynamic_cast<Mesh *>(object);
+                    mPrimitives.insert(mPrimitives.end(), mesh->primitives.begin(), mesh->primitives.end());
+                    break;
+                }
                 default:
                     /*throw*/
                     break;

@@ -29,12 +29,19 @@ FetchContent_Declare(
         pugixml
         GIT_REPOSITORY https://github.com/zeux/pugixml.git
 )
+# tinyobjloader
+FetchContent_Declare(
+        tinyobjloader
+        GIT_REPOSITORY https://github.com/tinyobjloader/tinyobjloader.git
+        GIT_TAG release
+)
 
 FetchContent_MakeAvailable(
         stb
         glfw
         glad
         pugixml
+        tinyobjloader
 )
 
 
@@ -50,6 +57,7 @@ add_executable(NoodleRT
 target_include_directories(${PROJECT_NAME} PRIVATE
         inc
         ${stb_SOURCE_DIR}
+        ${tinyobjloader_SOURCE_DIR}
         ${glfw_SOURCE_DIR}/include
 )
 
