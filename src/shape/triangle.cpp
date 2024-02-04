@@ -46,9 +46,12 @@ NAMESPACE_BEGIN
         if (t > Epsilon) {
             i.t = t;
             i.p = ray(t);
-            Normal3f outNormal = Normalize(Normal3f{Cross(edge1, edge2)});
+            const Normal3f& n1 = pMesh->normals[mIndices[0]];
+            const Normal3f& n2 = pMesh->normals[mIndices[1]];
+            const Normal3f& n3 = pMesh->normals[mIndices[2]];
+            i.n = Normalize((1 - u - v) * n1 + u * n2 + v * n3);
+//            Normal3f outNormal = Normalize(Normal3f{Cross(edge1, edge2)});
             i.front = Dot(ray.d, Vector3f{i.n}) < 0;
-            i.n = i.front ? outNormal : -outNormal;
             return true;
         }
         return false;

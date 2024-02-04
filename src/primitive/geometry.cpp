@@ -39,7 +39,7 @@ NAMESPACE_BEGIN
         }
 
         Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
-            if (!pShape->Intersect(ray, Infinity, interaction)) {
+            if (!pShape->Intersect(ray, interaction.t, interaction)) {
                 return false;
             }
             interaction.bxdf = pBxDF;

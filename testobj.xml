@@ -1,6 +1,6 @@
 <scene>
     <integer name="spp" value="10"/>
-    <integer name="depth" value="5"/>
+    <integer name="depth" value="1"/>
     <integer name="width" value="400"/>
     <integer name="height" value="225"/>
 

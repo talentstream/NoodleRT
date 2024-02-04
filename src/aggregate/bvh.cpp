@@ -172,16 +172,15 @@ NAMESPACE_BEGIN
                 }
 
                 return hitAnything;
-
             }
 
             // interior node
-            Boolean hitLeft = RecursiveIntersect(node->children[0], ray,interaction);
+            Boolean hitLeft = RecursiveIntersect(node->children[0], ray, interaction);
 //            if (!hitLeft) {
 ////                std::print("{}\n", interaction.t);
 //                interaction.t = Infinity;
 //            }
-            Boolean hitRight = RecursiveIntersect(node->children[1], ray,interaction);
+            Boolean hitRight = RecursiveIntersect(node->children[1], ray, interaction);
             return hitLeft || hitRight;
         }
 
