@@ -45,28 +45,28 @@ NAMESPACE_BEGIN
 
         for (const auto &shape: shapes) {
             for (auto i{0}; i < shape.mesh.indices.size(); i += 3) {
-
-                positions.emplace_back(attrib.vertices[3 * shape.mesh.indices[i].vertex_index + 0],
-                                        attrib.vertices[3 * shape.mesh.indices[i].vertex_index + 1],
-                                        attrib.vertices[3 * shape.mesh.indices[i].vertex_index + 2]);
-                positions.emplace_back(attrib.vertices[3 * shape.mesh.indices[i + 1].vertex_index + 0],
-                                        attrib.vertices[3 * shape.mesh.indices[i + 1].vertex_index + 1],
-                                        attrib.vertices[3 * shape.mesh.indices[i + 1].vertex_index + 2]);
-                positions.emplace_back(attrib.vertices[3 * shape.mesh.indices[i + 2].vertex_index + 0],
-                                        attrib.vertices[3 * shape.mesh.indices[i + 2].vertex_index + 1],
-                                        attrib.vertices[3 * shape.mesh.indices[i + 2].vertex_index + 2]);
-                normals.emplace_back(attrib.normals[3 * shape.mesh.indices[i].normal_index + 0],
-                                      attrib.normals[3 * shape.mesh.indices[i].normal_index + 1],
-                                      attrib.normals[3 * shape.mesh.indices[i].normal_index + 2]);
-                normals.emplace_back(attrib.normals[3 * shape.mesh.indices[i + 1].normal_index + 0],
-                                      attrib.normals[3 * shape.mesh.indices[i + 1].normal_index + 1],
-                                      attrib.normals[3 * shape.mesh.indices[i + 1].normal_index + 2]);
-                normals.emplace_back(attrib.normals[3 * shape.mesh.indices[i + 2].normal_index + 0],
-                                      attrib.normals[3 * shape.mesh.indices[i + 2].normal_index + 1],
-                                      attrib.normals[3 * shape.mesh.indices[i + 2].normal_index + 2]);
+                tinyobj::index_t idx0 = shape.mesh.indices[i];
+                tinyobj::index_t idx1 = shape.mesh.indices[i + 1];
+                tinyobj::index_t idx2 = shape.mesh.indices[i + 2];
+                auto LoadPosition = [&](const auto &idx) -> void {
+                    positions.emplace_back(attrib.vertices[3 * idx.vertex_index + 0],
+                                           attrib.vertices[3 * idx.vertex_index + 1],
+                                           attrib.vertices[3 * idx.vertex_index + 2]);
+                };
+                LoadPosition(idx0);
+                LoadPosition(idx1);
+                LoadPosition(idx2);
+                auto LoadNormal = [&](const auto &idx) -> void {
+                    normals.emplace_back(attrib.normals[3 * idx.normal_index + 0],
+                                         attrib.normals[3 * idx.normal_index + 1],
+                                         attrib.normals[3 * idx.normal_index + 2]);
+                };
+                LoadNormal(idx0);
+                LoadNormal(idx1);
+                LoadNormal(idx2);
 
                 auto *pTriangle = new Triangle(this, i);
-                auto primitive = dynamic_cast<Primitive*>(ObjectFactory::CreateInstance("geometry", PropertyList()));
+                auto primitive = dynamic_cast<Primitive *>(ObjectFactory::CreateInstance("geometry", PropertyList()));
                 primitive->AddChild(pTriangle);
                 primitives.emplace_back(primitive);
             };
