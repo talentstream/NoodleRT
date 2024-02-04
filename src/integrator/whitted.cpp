@@ -12,11 +12,16 @@ NAMESPACE_BEGIN
     class WhittedIntegrator : public Integrator {
     public:
         explicit WhittedIntegrator(const PropertyList &propertyList) {
+            mMaxDepth = propertyList.GetInteger("depth", 1);
             PRINT_DEBUG_INFO("Integrator", "whitted")
         }
 
-        Color3f Li(const Ray &ray, const Aggregate &aggregate, Integer depth) const override {
+        Color3f Li(const Ray &ray, const Aggregate &aggregate) const override {
+            return Trace(ray, aggregate, mMaxDepth);
+        }
 
+    private:
+        Color3f Trace(const Ray &ray, const Aggregate &aggregate, Integer depth) const {
             if (depth < 0) return {0, 0, 0};
 
             Interaction i;
@@ -28,13 +33,14 @@ NAMESPACE_BEGIN
             Color3f attenuation;
 
             if (i.bxdf->ComputeScattering(ray, i, attenuation, wo)) {
-                return attenuation * Li(wo, aggregate, depth - 1);
+                return attenuation * Trace(wo, aggregate, depth - 1);
             }
 
             return {0, 0, 0};
         }
 
     private:
+        Integer mMaxDepth;
     };
 
     REGISTER_CLASS(WhittedIntegrator, "whitted")

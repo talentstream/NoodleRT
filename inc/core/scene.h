@@ -30,7 +30,6 @@ NAMESPACE_BEGIN
         class Aggregate *pAggregate{nullptr};
 
         Integer mSpp;
-        Integer mMaxDepth;
         Integer mWidth;
         Integer mHeight;
 
@@ -49,10 +48,6 @@ NAMESPACE_BEGIN
 
         const Integer GetSpp() const {
             return mSpp;
-        }
-
-        const Integer GetMaxDepth() const {
-            return mMaxDepth;
         }
 
         const Integer GetWidth() const {
