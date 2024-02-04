@@ -17,23 +17,25 @@ NAMESPACE_BEGIN
 
         ~GeometryPrimitive() {
             delete pShape;
+            delete pBxDF;
         }
 
         void AddChild(Object *object) override {
             switch (object->GetClassType()) {
                 case EClassType::EShape:
-                    pShape = static_cast<Shape *>(object);
+                    pShape = dynamic_cast<Shape *>(object);
                     break;
                 case EClassType::EBxDF:
-                    pBxDF = static_cast<BxDF *>(object);
+                    pBxDF = dynamic_cast<BxDF *>(object);
                     break;
             }
         }
 
         void Initialize() override {
-            if (pBxDF == nullptr) {
-                pBxDF = static_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList()));
+            if (!pBxDF) {
+                pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList()));
             }
+
         }
 
         Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
@@ -41,6 +43,7 @@ NAMESPACE_BEGIN
                 return false;
             }
             interaction.bxdf = pBxDF;
+
             return true;
         }
 
@@ -50,7 +53,7 @@ NAMESPACE_BEGIN
 
     private:
         Shape *pShape;
-        BxDF *pBxDF;
+        BxDF *pBxDF{nullptr};
     };
 
     REGISTER_CLASS(GeometryPrimitive, "geometry")

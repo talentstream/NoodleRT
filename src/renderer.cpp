@@ -49,6 +49,7 @@ NAMESPACE_BEGIN
                 auto index = (imageHeight - y - 1) * imageWidth;
                 for (const Integer x: std::views::iota(beginX, endX)) {
                     Ray ray = pCamera->GenerateRay(Point2f(x, y));
+
                     Color3f L = pIntegrator->Li(ray, *pAggregate, pScene->GetMaxDepth());
                     mFramebuffer[index + x] += L;
                 }

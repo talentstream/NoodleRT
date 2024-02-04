@@ -32,6 +32,7 @@ NAMESPACE_BEGIN
         if (pBxDF == nullptr) {
             pBxDF = static_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList()));
         }
+
         LoadMesh();
     }
 
@@ -69,6 +70,7 @@ NAMESPACE_BEGIN
                 auto *pTriangle = new Triangle(this, i);
                 auto primitive = dynamic_cast<Primitive *>(ObjectFactory::CreateInstance("geometry", PropertyList()));
                 primitive->AddChild(pTriangle);
+                primitive->Initialize();
                 primitives.emplace_back(primitive);
             };
         }

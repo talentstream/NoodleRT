@@ -16,6 +16,7 @@ NAMESPACE_BEGIN
         }
 
         Color3f Li(const Ray &ray, const Aggregate &aggregate, Integer depth) const override {
+
             if (depth < 0) return {0, 0, 0};
 
             Interaction i;
@@ -25,10 +26,10 @@ NAMESPACE_BEGIN
 
             Ray wo;
             Color3f attenuation;
+
             if (i.bxdf->ComputeScattering(ray, i, attenuation, wo)) {
                 return attenuation * Li(wo, aggregate, depth - 1);
             }
-
 
             return {0, 0, 0};
         }
