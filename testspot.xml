@@ -9,7 +9,7 @@
         </mesh>
     </aggregate>
 
-    <integrator type="normal">
+    <integrator type="whitted">
 
     </integrator>
 
