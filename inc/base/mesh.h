@@ -27,6 +27,7 @@ NAMESPACE_BEGIN
         std::vector<class Primitive *> primitives;
         std::vector<Point3f> positions;
         std::vector<Normal3f> normals;
+        std::vector<Point2f> uvs;
     private:
         void LoadMesh();
 
