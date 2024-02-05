@@ -83,9 +83,12 @@ static struct Class ##Register { \
     } \
 } Class ##RegisterInstance;
 
-#define PRINT_DEBUG_INFO(Name,Type) \
+#ifdef NDEBUG
+#define PRINT_DEBUG_INFO(Name,Type)
+#else
+    #define PRINT_DEBUG_INFO(Name,Type) \
 std::print("{}->{} --- ",Name,Type); \
 propertyList.PrintDebugInfo(); \
 std::print("\n");
-
+#endif
 NAMESPACE_END
