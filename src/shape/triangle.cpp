@@ -4,6 +4,7 @@
 
 #include "triangle.h"
 #include "base/mesh.h"
+#include <print>
 
 NAMESPACE_BEGIN
 
@@ -46,12 +47,31 @@ NAMESPACE_BEGIN
         if (t > Epsilon) {
             i.t = t;
             i.p = ray(t);
-            const Normal3f& n1 = pMesh->normals[mIndices[0]];
-            const Normal3f& n2 = pMesh->normals[mIndices[1]];
-            const Normal3f& n3 = pMesh->normals[mIndices[2]];
-            i.n = Normalize((1 - u - v) * n1 + u * n2 + v * n3);
-//            Normal3f outNormal = Normalize(Normal3f{Cross(edge1, edge2)});
-            i.front = Dot(ray.d, Vector3f{i.n}) < 0;
+            Normal3f outNormal;
+            if (pMesh->normals.size() == 0) {
+               outNormal = Normalize(Normal3f{Cross(edge1, edge2)});
+
+            } else {
+                const Normal3f &n1 = pMesh->normals[mIndices[0]];
+                const Normal3f &n2 = pMesh->normals[mIndices[1]];
+                const Normal3f &n3 = pMesh->normals[mIndices[2]];
+                outNormal = Normalize((1 - u - v) * n1 + u * n2 + v * n3);
+            }
+            i.front = Dot(ray.d, Vector3f{outNormal}) < 0;
+            i.n = i.front ? outNormal : -outNormal;
+
+            if(!pMesh->uvs.size() == 0){
+                const Point2f &uv1 = pMesh->uvs[mIndices[0]];
+                const Point2f &uv2 = pMesh->uvs[mIndices[1]];
+                const Point2f &uv3 = pMesh->uvs[mIndices[2]];
+                i.u = (1 - u - v) * uv1.x + u * uv2.x + v * uv3.x;
+                i.v = (1 - u - v) * uv1.y + u * uv2.y + v * uv3.y;
+            }
+            else {
+                i.u = (1 - u - v) * 0 + u * 1 + v * 1;
+                i.v = (1 - u - v) * 0 + u * 0 + v * 1;
+            }
+
             return true;
         }
         return false;

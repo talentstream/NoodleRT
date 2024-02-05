@@ -1,0 +1,27 @@
+<scene>
+    <integer name="spp" value="10"/>
+    <integer name="width" value="400"/>
+    <integer name="height" value="400"/>
+
+    <aggregate type="bvh">
+        <mesh>
+            <string name="filename" value="../spot.obj"/>
+        </mesh>
+    </aggregate>
+
+    <integrator type="normal">
+
+    </integrator>
+
+    <camera type="perspective">
+        <integer name="width" value="400"/>
+        <integer name="height" value="400"/>
+        <float name="fov" value="90.0"/>
+        <point name="lookFrom" value="1, 1, 1"/>
+        <point name="lookAt" value="0, 0, 0"/>
+        <vector name="up" value="0, 1, 0"/>
+    </camera>
+
+
+
+</scene>

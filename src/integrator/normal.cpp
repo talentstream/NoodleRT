@@ -18,6 +18,7 @@ NAMESPACE_BEGIN
             if (!aggregate.Intersect(ray, i)) {
                 return {0.5f, 0.7f, 1.0f};
             }
+
             return Color3f{i.n.x + 1, i.n.y + 1, i.n.z + 1} * 0.5f;
         }
     };

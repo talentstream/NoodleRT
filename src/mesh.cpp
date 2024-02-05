@@ -93,6 +93,7 @@ NAMESPACE_BEGIN
                 primitive->AddChild(pTriangle);
                 primitive->AddChild(pBxDF);
                 primitives.emplace_back(primitive);
+
             };
         }
 
