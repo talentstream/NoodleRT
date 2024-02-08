@@ -16,6 +16,9 @@ NAMESPACE_BEGIN
 
         virtual Point2f Next2D() const = 0;
 
+        virtual EClassType GetClassType() const override {
+            return EClassType::ESampler;
+        }
     };
 
 NAMESPACE_END
