@@ -15,7 +15,7 @@
 
 NAMESPACE_BEGIN
     Renderer::Renderer() {
-        Object *obj = LoadSceneXML("../testspot.xml");
+        Object *obj = LoadSceneXML("../test.xml");
         pScene = std::unique_ptr<Scene>(static_cast<Scene *>(obj));
     }
 

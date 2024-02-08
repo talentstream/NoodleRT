@@ -48,6 +48,7 @@ NAMESPACE_BEGIN
         EMesh,
         EBxDF,
         ETexture,
+        ESampler,
 
         // Property
         EBoolean,
@@ -70,6 +71,7 @@ NAMESPACE_BEGIN
             {"mesh",       ETag::EMesh},
             {"bxdf",       ETag::EBxDF},
             {"texture",    ETag::ETexture},
+            {"sampler",    ETag::ESampler},
 
             {"boolean",    ETag::EBoolean},
             {"integer",    ETag::EInteger},
