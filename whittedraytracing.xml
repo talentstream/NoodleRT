@@ -1,0 +1,52 @@
+<scene>
+    <integer name="spp" value="1"/>
+    <integer name="width" value="1280"/>
+    <integer name="height" value="960"/>
+
+    <integrator type="whitted">
+        <integer name="maxDepth" value="5"/>
+    </integrator>
+
+    <camera type="perspective">
+        <integer name="width" value="1280"/>
+        <integer name="height" value="960"/>
+        <float name="fov" value="90.0"/>
+<!--        <point name="lookFrom" value="-2.0 2 1.0"/>-->
+<!--        <point name="lookAt" value="0.0 0.0 -1.0"/>-->
+<!--        <vector name="up" value="0.0 1.0 0.0"/>-->
+    </camera>
+
+    <aggregate type="bvh">
+        <primitive type="geometry">
+            <shape type="sphere">
+                <float name="radius" value="2.0"/>
+                <point name="center" value="-1.0 0.0 -12.0"/>
+            </shape>
+            <bxdf type="lambert">
+                <texture type="solid">
+                    <color name="albedo" value="0.6 0.7 0.8"/>
+                </texture>
+            </bxdf>
+        </primitive>
+        <primitive type="geometry">
+            <shape type="sphere">
+                <float name="radius" value="1.5"/>
+                <point name="center" value="-0.5 -0.5 -8.0"/>
+            </shape>
+            <bxdf type="dielectric">
+                <float name="refractionIndex" value="1.5"/>
+            </bxdf>
+        </primitive>
+        <primitive type="geometry">
+            <shape type="sphere">
+                <float name="radius" value="5"/>
+                <point name="center" value="0.0 -8.0 -11.0"/>
+            </shape>
+            <bxdf type="lambert">
+            </bxdf>
+        </primitive>
+
+    </aggregate>
+
+
+</scene>

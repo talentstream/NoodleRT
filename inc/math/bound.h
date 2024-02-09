@@ -105,4 +105,10 @@ NAMESPACE_BEGIN
         return 2;
     }
 
+    template<typename T>
+    inline Bound3<T> Padding(const Bound3<T> &b, T delta) {
+        Vector3f v{delta, delta, delta};
+        return Bound3<T>{b.pMin - v, b.pMax + v};
+    }
+
 NAMESPACE_END
