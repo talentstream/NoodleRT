@@ -4,6 +4,7 @@
     <integer name="height" value="450"/>
 
     <integrator type="whitted">
+        <integer name="maxDepth" value="50"/>
     </integrator>
 
     <camera type="perspective">
@@ -21,7 +22,7 @@
                 <float name="radius" value="0.5"/>
                 <point name="center" value="0.0 0.0 -1.0"/>
             </shape>
-            <bxdf type="diffuse">
+            <bxdf type="lambert">
                 <texture type="solid">
                     <color name="albedo" value="0.1 0.2 0.5"/>
                 </texture>

@@ -35,12 +35,13 @@ NAMESPACE_BEGIN
 
             // calculate light emission
 
-            // calculate refection
+            // calculate light reflection
             Ray wo;
             Color3f attenuation;
-
-            if (ni.bxdf->ComputeScattering(ray, ni, attenuation, wo)) {
-                return Le + attenuation * Trace(wo, aggregate, depth - 1);
+            Boolean isSpecular = ni.bxdf->ComputeScattering(ray, ni, attenuation, wo);
+            Le += attenuation;
+            if (isSpecular) {
+                Le += Trace(wo, aggregate, depth - 1);
             }
             return Le;
         }

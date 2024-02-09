@@ -26,7 +26,7 @@ NAMESPACE_BEGIN
             Boolean cannotRefract = refractionRatio * sinTheta > 1.0f;
 
             Vector3f direction;
-            if (cannotRefract || Schlick(cosTheta, refractionRatio) > RandomFloat()) {
+            if (cannotRefract || Schlick(cosTheta, refractionRatio) > 0) {
                 direction = Reflect(unitDirection, Vector3f(i.n));
             } else {
                 direction = Refract(unitDirection, Vector3f(i.n), refractionRatio);

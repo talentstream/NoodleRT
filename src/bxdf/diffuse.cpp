@@ -32,7 +32,7 @@ NAMESPACE_BEGIN
         [[nodiscard]] Boolean
         ComputeScattering(const Ray &ray, const Interaction &i, Color3f &attenuation, Ray &wo) const override {
 
-            Vector3f scatterDirection = Vector3f(i.n) + RandomInUnitVector();
+            Vector3f scatterDirection = Vector3f(i.n)/* + RandomInUnitVector()*/;
             auto NearZero = [](const Vector3f &v) {
                 const Float s = Epsilon;
                 return (Abs(v.x) < s) && (Abs(v.y) < s) && (Abs(v.z) < s);
