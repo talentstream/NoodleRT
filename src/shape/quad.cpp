@@ -9,27 +9,30 @@ NAMESPACE_BEGIN
 
     class Quad : public Shape {
     public:
-        Quad(const PropertyList &propertyList) {
+        explicit Quad(const PropertyList &propertyList) {
+            mStart = propertyList.GetPoint("start", {});
+            mHorizontal = propertyList.GetVector("horizontal", {1, 0, 0});
+            mVertical = propertyList.GetVector("vertical", {0, 1, 0});
             PRINT_DEBUG_INFO("Shape", "quad")
         }
 
         Boolean Intersect(const Ray &ray, Float tMax, Interaction &i) const override {
-            Vector3f vNormal = Cross(u, v);
+            Vector3f vNormal = Cross(mHorizontal, mVertical);
             Vector3f vUnitNormal = Normalize(vNormal);
             if (AbsDot(ray.d, vNormal) < Epsilon) {
                 return false;
             }
 
-            auto t = Dot(q - ray.o, vNormal) / Dot(ray.d, vNormal);
+            auto t = Dot(mStart - ray.o, vNormal) / Dot(ray.d, vNormal);
             if (t < 0 || t > tMax) {
                 return false;
             }
 
             Point3f p = ray(t);
-            Vector3f pq = p - q;
+            Vector3f pq = p - mStart;
 
-            auto alpha = Dot(vUnitNormal, Cross(u, pq));
-            auto beta = Dot(vUnitNormal, Cross(pq, v));
+            auto alpha = Dot(vUnitNormal, Cross(mHorizontal, pq));
+            auto beta = Dot(vUnitNormal, Cross(pq, mVertical));
             if (alpha < 0 || alpha > 1 || beta < 0 || beta > 1) {
                 return false;
             }
@@ -44,12 +47,12 @@ NAMESPACE_BEGIN
         }
 
         Bound3f BoundingBox() const override {
-            return Padding(Bound3f{q, q + u + v}, Epsilon);
+            return Padding(Bound3f{mStart, mStart + mHorizontal + mVertical}, Epsilon);
         }
 
     private:
-        Point3f q;
-        Vector3f u, v;
+        Point3f mStart;
+        Vector3f mHorizontal, mVertical;
     };
 
     REGISTER_CLASS(Quad, "quad")
