@@ -4,7 +4,6 @@
     <integer name="height" value="450"/>
 
     <integrator type="whitted">
-        <integer name="depth" value="1"/>
     </integrator>
 
     <camera type="perspective">

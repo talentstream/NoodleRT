@@ -24,19 +24,25 @@ NAMESPACE_BEGIN
         Color3f Trace(const Ray &ray, const Aggregate &aggregate, Integer depth) const {
             if (depth < 0) return {0, 0, 0};
 
-            Interaction i;
-            if (!aggregate.Intersect(ray, i)) {
+            // find nearest intersection
+            Interaction ni;
+            if (!aggregate.Intersect(ray, ni)) {
                 return {0.5f, 0.7f, 1.0f};
             }
 
+            // shading
+            Color3f Le{};
+
+            // calculate light emission
+
+            // calculate refection
             Ray wo;
             Color3f attenuation;
 
-            if (i.bxdf->ComputeScattering(ray, i, attenuation, wo)) {
-                return attenuation * Trace(wo, aggregate, depth - 1);
+            if (ni.bxdf->ComputeScattering(ray, ni, attenuation, wo)) {
+                return Le + attenuation * Trace(wo, aggregate, depth - 1);
             }
-
-            return {0, 0, 0};
+            return Le;
         }
 
     private:
