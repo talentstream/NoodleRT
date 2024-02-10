@@ -17,8 +17,6 @@ public:
 
     [[nodiscard]] virtual Color3f Li(const Ray &ray) const = 0;
 
-    [[nodiscard]] virtual Color3f OldLi(const Ray &ray, const Aggregate &aggregate) const = 0;
-
     virtual void AddChild(Object *child) {
         switch (child->GetClassType()) {
             case EClassType::EAggregate:

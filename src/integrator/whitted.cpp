@@ -20,10 +20,6 @@ public:
         return Trace(ray, *pAggregate, mMaxDepth);
     }
 
-    Color3f OldLi(const Ray &ray, const Aggregate &aggregate) const override {
-        return Trace(ray, aggregate, mMaxDepth);
-    }
-
 private:
     Color3f Trace(const Ray &ray, const Aggregate &aggregate, Integer depth) const {
         if (depth < 0) return {0, 0, 0};
