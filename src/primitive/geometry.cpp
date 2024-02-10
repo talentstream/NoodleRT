@@ -33,7 +33,7 @@ NAMESPACE_BEGIN
 
         void Initialize() override {
             if (!pBxDF) {
-                pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList()));
+                pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("lambert", PropertyList(), true));
             }
         }
 
@@ -41,6 +41,7 @@ NAMESPACE_BEGIN
             if (!pShape->Intersect(ray, interaction.t, interaction)) {
                 return false;
             }
+
             interaction.bxdf = pBxDF;
 
             return true;

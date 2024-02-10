@@ -11,6 +11,7 @@ NAMESPACE_BEGIN
     class Lambert : public BxDF {
     public:
         explicit Lambert(const PropertyList &propertyList) {
+
             PRINT_DEBUG_INFO("BxDF", "lambert")
         }
 
@@ -32,6 +33,7 @@ NAMESPACE_BEGIN
             if (pAlbedo == nullptr) {
                 pAlbedo = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("checker", {}));
             }
+
         }
 
 

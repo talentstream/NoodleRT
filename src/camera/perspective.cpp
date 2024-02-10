@@ -13,7 +13,7 @@ NAMESPACE_BEGIN
             mWidth = propertyList.GetInteger("width", 400);
             mHeight = propertyList.GetInteger("height", 400);
             mFov = propertyList.GetFloat("fov", 90);
-            mLookFrom = propertyList.GetPoint("lookFrom", {});
+            mLookFrom = propertyList.GetPoint("lookFrom", {0, 0, 0});
             mLookAt = propertyList.GetPoint("lookAt", {0, 0, -1});
             mUp = propertyList.GetVector("up", {0, 1, 0});
             PRINT_DEBUG_INFO("Camera", "perspective");
@@ -48,7 +48,7 @@ NAMESPACE_BEGIN
             };
 
             auto pixelCenter = pixel100Loc + uv.x * deltaU + uv.y * deltaV;
-            auto pixelSample = pixelCenter + PixelSampleSquare();
+//            auto pixelSample = pixelCenter + PixelSampleSquare();
             return Ray{mLookFrom, pixelCenter - mLookFrom};
         }
 

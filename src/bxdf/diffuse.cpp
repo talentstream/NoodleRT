@@ -24,8 +24,7 @@ NAMESPACE_BEGIN
 
         void Initialize() override {
             if (pAlbedo == nullptr) {
-                pAlbedo = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("checker", {}));
-                pAlbedo->Initialize();
+                pAlbedo = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("checker", {}, true));
             }
         }
 

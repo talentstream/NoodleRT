@@ -28,7 +28,7 @@ NAMESPACE_BEGIN
         void Initialize() override {
             if (pEven == nullptr) {
                 PropertyList propertyList;
-                propertyList.SetColor("albedo", {1.0f, 1.0f, 1.0f});
+                propertyList.SetColor("albedo", {.5f, .5f, .5f});
 
                 pEven = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("solid", propertyList));
 

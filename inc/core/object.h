@@ -71,7 +71,7 @@ NAMESPACE_BEGIN
 
         static void RegisterClass(std::string_view name, const Creator &creator);
 
-        static Object *CreateInstance(std::string_view name, const PropertyList &propertyList);
+        static Object *CreateInstance(std::string_view name, const PropertyList &propertyList, Boolean manualInit = false);
 
 
     private:
@@ -91,7 +91,7 @@ static struct Class ##Register { \
 #else
     #define PRINT_DEBUG_INFO(Name,Type) \
 std::print("{}->{} --- ",Name,Type); \
-propertyList.PrintDebugInfo(); \
+propertyList.PrintDebugInfo();          \
 std::print("\n");
 #endif
 NAMESPACE_END
