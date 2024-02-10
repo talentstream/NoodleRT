@@ -7,7 +7,7 @@
 #include "core/object.h"
 #include <vector>
 #include <ranges>
-
+#include <print>
 NAMESPACE_BEGIN
 
 class Film : public Object {
@@ -18,6 +18,7 @@ public:
                                 propertyList.GetInteger("height", {})}};
         mSaveFileName = propertyList.GetString("saveFileName", "output.png");
         mFramebuffer.resize(filmBound.Area());
+        PRINT_DEBUG_INFO("Film", "film")
     }
 
     virtual ~Film() = default;
@@ -45,6 +46,4 @@ private:
     std::string_view mSaveFileName;
 };
 
-
-REGISTER_CLASS(Film, "film")
 NAMESPACE_END

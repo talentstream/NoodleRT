@@ -23,8 +23,6 @@ public:
     }
 
 private:
-    class Camera *pCamera{nullptr};
-
     class Integrator *pIntegrator{nullptr};
 
     Integer mSpp;
@@ -34,10 +32,6 @@ private:
 public:
     const Integrator *GetIntegrator() const {
         return pIntegrator;
-    }
-
-    const Camera *GetCamera() const {
-        return pCamera;
     }
 
     const Integer GetSpp() const {

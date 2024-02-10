@@ -2,6 +2,7 @@
 // Created by 44772 on 2024/1/27.
 //
 #include "base/camera.h"
+#include "base/film.h"
 #include <print>
 
 NAMESPACE_BEGIN
@@ -10,8 +11,6 @@ class PerspectiveCamera : public Camera {
 public:
     //Todo: refactor camera code
     PerspectiveCamera(const PropertyList &propertyList) {
-        mWidth = propertyList.GetInteger("width", 400);
-        mHeight = propertyList.GetInteger("height", 400);
         mFov = propertyList.GetFloat("fov", 90);
         mLookFrom = propertyList.GetPoint("lookFrom", {0, 0, 0});
         mLookAt = propertyList.GetPoint("lookAt", {0, 0, -1});
@@ -21,6 +20,8 @@ public:
 
     void Initialize() override {
         Camera::Initialize();
+        mWidth = pFilm->filmBound.pMax.x;
+        mHeight = pFilm->filmBound.pMax.y;
         Float aspectRatio = Float(mWidth) / Float(mHeight);
         Float focalLength = Length(mLookFrom - mLookAt);
         auto theta = DegreeToRadian(mFov);

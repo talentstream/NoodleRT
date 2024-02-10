@@ -18,15 +18,11 @@ Scene::Scene(const PropertyList &propertyList) {
 }
 
 Scene::~Scene() {
-    delete pCamera;
     delete pIntegrator;
 }
 
 void Scene::AddChild(Object *object) {
     switch (object->GetClassType()) {
-        case EClassType::ECamera:
-            pCamera = dynamic_cast<Camera *>(object);
-            break;
         case EClassType::EIntegrator:
             pIntegrator = dynamic_cast<Integrator *>(object);
             break;
