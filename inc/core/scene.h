@@ -26,8 +26,6 @@ private:
     class Integrator *pIntegrator{nullptr};
 
     Integer mSpp;
-    Integer mWidth;
-    Integer mHeight;
 
 public:
     const Integrator *GetIntegrator() const {
@@ -38,13 +36,6 @@ public:
         return mSpp;
     }
 
-    const Integer GetWidth() const {
-        return mWidth;
-    }
-
-    const Integer GetHeight() const {
-        return mHeight;
-    }
 };
 
 NAMESPACE_END

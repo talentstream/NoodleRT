@@ -26,6 +26,10 @@ public:
 
     const class Scene *GetScene() const { return pScene.get(); }
 
+    Integer GetWidth() const;
+
+    Integer GetHeight() const;
+
 private:
 
     std::function<void(const std::vector<Color3f> &)> renderCallback;

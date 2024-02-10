@@ -24,6 +24,10 @@ public:
         return EClassType::ECamera;
     }
 
+    const Film *GetFilm() const {
+        return pFilm;
+    }
+
 protected:
     Film *pFilm{nullptr};
 };

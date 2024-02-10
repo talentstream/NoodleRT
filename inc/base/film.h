@@ -13,11 +13,10 @@ NAMESPACE_BEGIN
 class Film : public Object {
 public:
     explicit Film(const PropertyList &propertyList) {
-        filmBound = Bound2i{{0, 0},
-                            {propertyList.GetInteger("width", {}),
-                                propertyList.GetInteger("height", {})}};
+        width = propertyList.GetInteger("width", 400);
+        height = propertyList.GetInteger("height", 400);
         mSaveFileName = propertyList.GetString("saveFileName", "output.png");
-        mFramebuffer.resize(filmBound.Area());
+        mFramebuffer.resize(width * height);
         PRINT_DEBUG_INFO("Film", "film")
     }
 
@@ -40,7 +39,8 @@ public:
     }
 
 public:
-    Bound2i filmBound;
+    Integer width;
+    Integer height;
 private:
     std::vector<Color3f> mFramebuffer;
     std::string_view mSaveFileName;

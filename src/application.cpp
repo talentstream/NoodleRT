@@ -26,7 +26,7 @@ void Application::Run() {
 
     pRenderer->SetRenderCallback([&](const std::vector<Color3f> &pixels) {
         glClear(GL_COLOR_BUFFER_BIT);
-        glDrawPixels(pRenderer->GetScene()->GetWidth(), pRenderer->GetScene()->GetHeight(), GL_RGB, GL_FLOAT,
+        glDrawPixels(pRenderer->GetWidth(), pRenderer->GetHeight(), GL_RGB, GL_FLOAT,
                      pixels.data());
         glfwSwapBuffers(window);
     });
@@ -44,7 +44,7 @@ void Application::Run() {
 void Application::InitUI() {
     glfwInit();
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    window = glfwCreateWindow(pRenderer->GetScene()->GetWidth(), pRenderer->GetScene()->GetHeight(), "Rendering Window",
+    window = glfwCreateWindow(pRenderer->GetWidth(), pRenderer->GetHeight(), "Rendering Window",
                               nullptr, nullptr);
     if (window == nullptr) {
         std::print("Failed to create GLFW window\n");

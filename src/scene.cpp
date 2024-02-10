@@ -12,8 +12,6 @@ NAMESPACE_BEGIN
 
 Scene::Scene(const PropertyList &propertyList) {
     mSpp = propertyList.GetInteger("spp", 1);
-    mWidth = propertyList.GetInteger("width", 400);
-    mHeight = propertyList.GetInteger("height", 400);
     PRINT_DEBUG_INFO("Scene", "scene")
 }
 

@@ -20,8 +20,8 @@ public:
 
     void Initialize() override {
         Camera::Initialize();
-        mWidth = pFilm->filmBound.pMax.x;
-        mHeight = pFilm->filmBound.pMax.y;
+        mWidth = pFilm->width;
+        mHeight = pFilm->height;
         Float aspectRatio = Float(mWidth) / Float(mHeight);
         Float focalLength = Length(mLookFrom - mLookAt);
         auto theta = DegreeToRadian(mFov);
