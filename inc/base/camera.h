@@ -8,15 +8,24 @@
 
 NAMESPACE_BEGIN
 
+class Film;
+
 class Camera : public Object {
 public:
     virtual ~Camera() = default;
 
-    virtual Ray GenerateRay(Point2f uv) const = 0;
+    [[nodiscard]] virtual Ray GenerateRay(Point2f uv) const = 0;
+
+    void AddChild(Object *child) override;
+
+    void Initialize() override;
 
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::ECamera;
     }
+
+protected:
+    Film *pFilm{nullptr};
 };
 
 NAMESPACE_END

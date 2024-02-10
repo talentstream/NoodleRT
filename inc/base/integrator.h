@@ -28,6 +28,10 @@ public:
         return EClassType::EIntegrator;
     }
 
+    const Camera *GetCamera() const {
+        return pCamera;
+    }
+
 protected:
     Aggregate *pAggregate{nullptr};
     Camera *pCamera{nullptr};

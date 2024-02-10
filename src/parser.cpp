@@ -129,6 +129,8 @@ Object *LoadSceneXML(const std::string_view &filename) {
             node.append_attribute("type") = "scene";
         } else if (tag == ETag::EMesh) {
             node.append_attribute("type") = "mesh";
+        }else if(tag == ETag::EFilm){
+            node.append_attribute("type") = "film";
         }
 
         PropertyList propList;

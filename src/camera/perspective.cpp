@@ -20,6 +20,7 @@ public:
     }
 
     void Initialize() override {
+        Camera::Initialize();
         Float aspectRatio = Float(mWidth) / Float(mHeight);
         Float focalLength = Length(mLookFrom - mLookAt);
         auto theta = DegreeToRadian(mFov);

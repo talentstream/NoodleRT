@@ -36,6 +36,11 @@ public:
 
     explicit Bound2(Point2<T> p1, Point2<T> p2) : pMin{Min(p1, p2)}, pMax{Max(p1, p2)} {}
 
+    T Area() const {
+        auto d = pMax - pMin;
+        return d.x * d.y;
+    }
+
 };
 
 template<typename T>

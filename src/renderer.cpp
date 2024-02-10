@@ -27,8 +27,8 @@ void Renderer::OnInit() {
 }
 
 void Renderer::OnRender() {
-    const Camera *pCamera = pScene->GetCamera();
     const Integrator *pIntegrator = pScene->GetIntegrator();
+    const Camera *pCamera = pIntegrator->GetCamera();
     const auto imageWidth = pScene->GetWidth();
     const auto imageHeight = pScene->GetHeight();
     Integer tileSizeX{8}, tileSizeY{8};

@@ -23,13 +23,14 @@ public:
         return EClassType::EMesh;
     }
 
+private:
+    void LoadMesh();
+
 public:
     std::vector<class Primitive *> primitives;
     std::vector<Point3f> positions;
     std::vector<Normal3f> normals;
     std::vector<Point2f> uvs;
-private:
-    void LoadMesh();
 
 private:
     class BxDF *pBxDF{nullptr};
