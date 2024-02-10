@@ -16,7 +16,11 @@ public:
         PRINT_DEBUG_INFO("Integrator", "whitted")
     }
 
-    Color3f Li(const Ray &ray, const Aggregate &aggregate) const override {
+    [[nodiscard]] Color3f Li(const Ray &ray) const override {
+        return Trace(ray, *pAggregate, mMaxDepth);
+    }
+
+    Color3f OldLi(const Ray &ray, const Aggregate &aggregate) const override {
         return Trace(ray, aggregate, mMaxDepth);
     }
 
@@ -25,7 +29,7 @@ private:
         if (depth < 0) return {0, 0, 0};
 
         // find nearest intersection
-        Interaction ni;
+        SurfaceInteraction ni;
         if (!aggregate.Intersect(ray, ni)) {
             return {0.235294, 0.67451, 0.843137};
         }

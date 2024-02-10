@@ -13,7 +13,7 @@ class Aggregate : public Object {
 public:
     virtual ~Aggregate() = default;
 
-    virtual Boolean Intersect(const Ray &ray, Interaction &interaction) const = 0;
+    virtual Boolean Intersect(const Ray &ray, SurfaceInteraction &interaction) const = 0;
 
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::EAggregate;

@@ -17,7 +17,7 @@ public:
     }
 
     [[nodiscard]] Boolean
-    ComputeScattering(const Ray &ray, const Interaction &i, Color3f &attenuation, Ray &wo) const override {
+    ComputeScattering(const Ray &ray, const SurfaceInteraction &i, Color3f &attenuation, Ray &wo) const override {
         Vector3f reflected = Reflect(Normalize(ray.d), Vector3f(i.n));
         wo = Ray(i.p, reflected + mRoughness * Vector3f(i.n)/*RandomInUnitSphere()*/);
         attenuation = mAlbedo;

@@ -12,7 +12,7 @@ NAMESPACE_BEGIN
 class BxDF;
 
 // default surface interaction
-class Interaction {
+class SurfaceInteraction {
 public:
     Float t{Infinity};// time
     Point3f p;// position

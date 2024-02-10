@@ -50,7 +50,7 @@ void Renderer::OnRender() {
             for (const Integer x: std::views::iota(beginX, endX)) {
                 Ray ray = pCamera->GenerateRay(Point2f(x, y));
 
-                Color3f L = pIntegrator->Li(ray, *pAggregate);
+                Color3f L = pIntegrator->Li(ray);
                 mFramebuffer[index + x] += L;
             }
         }

@@ -18,7 +18,7 @@ public:
 
     }
 
-    Boolean Intersect(const Ray &ray, Float tMax, Interaction &i) const override {
+    Boolean Intersect(const Ray &ray, Float tMax, SurfaceInteraction &i) const override {
         Vector3f oc = ray.o - mCenter;
         Float a = Dot(ray.d, ray.d);
         Float halfB = Dot(oc, ray.d);

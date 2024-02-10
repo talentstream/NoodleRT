@@ -42,7 +42,7 @@ public:
         }
     }
 
-    [[nodiscard]] Color3f Evaluate(const Interaction &i) const override {
+    [[nodiscard]] Color3f Evaluate(const SurfaceInteraction &i) const override {
         auto p = i.p;
         auto x = Floor(mInvScale * p.x);
         auto y = Floor(mInvScale * p.y);

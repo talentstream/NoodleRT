@@ -16,7 +16,9 @@ public:
 
 //    virtual void Render() const final;
 
-    [[nodiscard]] virtual Color3f Li(const Ray &ray, const Aggregate &aggregate) const = 0;
+    [[nodiscard]] virtual Color3f Li(const Ray &ray) const = 0;
+
+    [[nodiscard]] virtual Color3f OldLi(const Ray &ray, const Aggregate &aggregate) const = 0;
 
     virtual void AddChild(Object *child) {
         std::print("Integrator::AddChild\n");
@@ -29,7 +31,7 @@ public:
         }
     }
 
-    virtual void Initialize() {
+    virtual void Initialize() override {
         if (pAggregate == nullptr) {
             throw std::runtime_error("Integrator Need Aggregate!");
         }

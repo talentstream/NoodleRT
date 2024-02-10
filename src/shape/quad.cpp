@@ -20,7 +20,7 @@ public:
         w = Normalize(n);
     }
 
-    Boolean Intersect(const Ray &ray, Float tMax, Interaction &i) const override {
+    Boolean Intersect(const Ray &ray, Float tMax, SurfaceInteraction &i) const override {
         auto denom = Dot(ray.d, unitN);
         if (Abs(denom) < Epsilon) {
             return false;

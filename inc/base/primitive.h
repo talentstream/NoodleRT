@@ -9,7 +9,7 @@ class Primitive : public Object {
 public:
     virtual ~Primitive() = default;
 
-    virtual Boolean Intersect(const Ray &ray, Interaction &interaction) const = 0;
+    virtual Boolean Intersect(const Ray &ray, SurfaceInteraction &interaction) const = 0;
 
     virtual Bound3f BoundingBox() const = 0;
 

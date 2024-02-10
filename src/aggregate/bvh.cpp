@@ -90,7 +90,7 @@ public:
         primitiveInfo.clear();
     }
 
-    Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
+    Boolean Intersect(const Ray &ray, SurfaceInteraction &interaction) const override {
         return RecursiveIntersect(mRoot, ray, interaction);
     }
 
@@ -152,7 +152,7 @@ private:
     }
 
     Boolean
-    RecursiveIntersect(const BVHNode *node, const Ray &ray, Interaction &interaction) const {
+    RecursiveIntersect(const BVHNode *node, const Ray &ray, SurfaceInteraction &interaction) const {
         if (!node || !node->bound.IntersectP(ray, Infinity)) {
             return false;
         }
@@ -160,7 +160,7 @@ private:
         // leaf node
         if (node->primitiveNumber > 0) {
             Boolean hitAnything{false};
-            Interaction tempInteraction;
+            SurfaceInteraction tempInteraction;
             for (auto i{0}; i < node->primitiveNumber; ++i) {
                 if (mPrimitives[node->firstPrimIndex + i]->Intersect(ray, tempInteraction)) {
                     hitAnything = true;

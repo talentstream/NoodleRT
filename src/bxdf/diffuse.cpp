@@ -29,7 +29,7 @@ public:
     }
 
     [[nodiscard]] Boolean
-    ComputeScattering(const Ray &ray, const Interaction &i, Color3f &attenuation, Ray &wo) const override {
+    ComputeScattering(const Ray &ray, const SurfaceInteraction &i, Color3f &attenuation, Ray &wo) const override {
 
         Vector3f scatterDirection = Vector3f(i.n)/* + RandomInUnitVector()*/;
         auto NearZero = [](const Vector3f &v) {

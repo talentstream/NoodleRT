@@ -140,50 +140,47 @@ Object *LoadSceneXML(const std::string_view &filename) {
 
         Object *result{nullptr};
 
-        try {
-            if (tag < ETag::EBoolean) {
-                CheckAttribute(node, {"type"});
-                result = ObjectFactory::CreateInstance(node.attribute("type").value(), propList);
 
-                for (auto child: children) {
-                    result->AddChild(child);
+        if (tag < ETag::EBoolean) {
+            CheckAttribute(node, {"type"});
+            result = ObjectFactory::CreateInstance(node.attribute("type").value(), propList);
+
+            for (auto child: children) {
+                result->AddChild(child);
 //                        child->SetParent(result);
-                }
-                result->Initialize();
-            } else {
-                CheckAttribute(node, {"name", "value"});
-                auto name = node.attribute("name").value();
-                auto value = node.attribute("value").value();
-
-                switch (tag) {
-                    case ETag::EBoolean:
-                        list.SetBoolean(name, ToBoolean((value)));
-                        break;
-                    case ETag::EInteger:
-                        list.SetInteger(name, ToInteger((value)));
-                        break;
-                    case ETag::EFloat:
-                        list.SetFloat(name, ToFloat((value)));
-                        break;
-                    case ETag::EString:
-                        list.SetString(name, value);
-                        break;
-                    case ETag::EColor:
-                        list.SetColor(name, Color3f{ToVector(value)});
-                        break;
-                    case ETag::EPoint:
-                        list.SetPoint(name, Point3f{ToVector(value)});
-                        break;
-                    case ETag::EVector:
-                        list.SetVector(name, Vector3f{ToVector(value)});
-                        break;
-                    default:
-                        /*throw*/
-                        break;
-                }
             }
-        } catch (...) {
-            /*throw*/
+            result->Initialize();
+        } else {
+            CheckAttribute(node, {"name", "value"});
+            auto name = node.attribute("name").value();
+            auto value = node.attribute("value").value();
+
+            switch (tag) {
+                case ETag::EBoolean:
+                    list.SetBoolean(name, ToBoolean((value)));
+                    break;
+                case ETag::EInteger:
+                    list.SetInteger(name, ToInteger((value)));
+                    break;
+                case ETag::EFloat:
+                    list.SetFloat(name, ToFloat((value)));
+                    break;
+                case ETag::EString:
+                    list.SetString(name, value);
+                    break;
+                case ETag::EColor:
+                    list.SetColor(name, Color3f{ToVector(value)});
+                    break;
+                case ETag::EPoint:
+                    list.SetPoint(name, Point3f{ToVector(value)});
+                    break;
+                case ETag::EVector:
+                    list.SetVector(name, Vector3f{ToVector(value)});
+                    break;
+                default:
+                    /*throw*/
+                    break;
+            }
         }
 
         return result;

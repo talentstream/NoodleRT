@@ -16,7 +16,7 @@ public:
     }
 
     Boolean
-    ComputeScattering(const Ray &ray, const Interaction &i, Color3f &attenuation, Ray &wo) const override {
+    ComputeScattering(const Ray &ray, const SurfaceInteraction &i, Color3f &attenuation, Ray &wo) const override {
         attenuation = pAlbedo->Evaluate(i);
         return false;
     }

@@ -12,7 +12,7 @@ public:
         mAlbedo = propertyList.GetColor("albedo", {});
     }
 
-    [[nodiscard]] Color3f Evaluate(const Interaction &) const override {
+    [[nodiscard]] Color3f Evaluate(const SurfaceInteraction &) const override {
         return mAlbedo;
     }
 

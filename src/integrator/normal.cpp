@@ -13,13 +13,24 @@ public:
         PRINT_DEBUG_INFO("Integrator", "normal")
     }
 
-    [[nodiscard]] Color3f Li(const Ray &ray, const Aggregate &aggregate) const override {
-        Interaction i;
-        if (!aggregate.Intersect(ray, i)) {
+    [[nodiscard]] Color3f Li(const Ray &ray) const override {
+        SurfaceInteraction si;
+        if (!pAggregate->Intersect(ray, si)) {
             return {0.5f, 0.7f, 1.0f};
         }
 
-        return Color3f{i.n.x + 1, i.n.y + 1, i.n.z + 1} * 0.5f;
+        auto n = si.n;
+        return Color3f{n.x + 1, n.y + 1, n.z + 1} * 0.5f;
+    }
+
+    [[nodiscard]] Color3f OldLi(const Ray &ray, const Aggregate& aggregate) const override {
+        SurfaceInteraction si;
+        if (!pAggregate->Intersect(ray, si)) {
+            return {0.5f, 0.7f, 1.0f};
+        }
+
+        auto n = si.n;
+        return Color3f{n.x + 1, n.y + 1, n.z + 1} * 0.5f;
     }
 
 };

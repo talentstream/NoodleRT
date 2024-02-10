@@ -37,7 +37,7 @@ public:
         }
     }
 
-    Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
+    Boolean Intersect(const Ray &ray, SurfaceInteraction &interaction) const override {
         if (!pShape->Intersect(ray, interaction.t, interaction)) {
             return false;
         }

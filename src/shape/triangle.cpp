@@ -15,7 +15,7 @@ Triangle::Triangle(Mesh *mesh, Integer index)
     }
 }
 
-Boolean Triangle::Intersect(const Ray &ray, Float tMax, Interaction &i) const {
+Boolean Triangle::Intersect(const Ray &ray, Float tMax, SurfaceInteraction &i) const {
     const Point3f &v0 = pMesh->positions[mIndices[0]];
     const Point3f &v1 = pMesh->positions[mIndices[1]];
     const Point3f &v2 = pMesh->positions[mIndices[2]];
