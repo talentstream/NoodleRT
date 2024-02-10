@@ -5,33 +5,24 @@
 #pragma once
 
 #include "core/object.h"
-#include "base/aggregate.h"
 
 NAMESPACE_BEGIN
+
+class Aggregate;
+
+class Camera;
 
 class Integrator : public Object {
 public:
     virtual ~Integrator() = default;
 
-//    virtual void Render() const final;
+    virtual void Render() const = 0;
 
     [[nodiscard]] virtual Color3f Li(const Ray &ray) const = 0;
 
-    virtual void AddChild(Object *child) {
-        switch (child->GetClassType()) {
-            case EClassType::EAggregate:
-                pAggregate = dynamic_cast<Aggregate *>(child);
-                break;
-            default:
-                break;
-        }
-    }
+    void AddChild(Object *child) override;
 
-    virtual void Initialize() override {
-        if (pAggregate == nullptr) {
-            throw std::runtime_error("Integrator Need Aggregate!");
-        }
-    }
+    void Initialize() override;
 
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::EIntegrator;
@@ -39,11 +30,20 @@ public:
 
 protected:
     Aggregate *pAggregate{nullptr};
+    Camera *pCamera{nullptr};
     // std::vector<Light> mLights;
 
-    // Camera *pCamera{nullptr};
+
     // Sampler *pSampler{nullptr};
 };
 
+class ImageTileIntegrator : public Integrator {
+public:
+    ~ImageTileIntegrator() = default;
+
+    void Render() const final;
+
+    [[nodiscard]] virtual Color3f NewLi(const Ray &ray) const = 0;
+};
 
 NAMESPACE_END

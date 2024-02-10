@@ -3,13 +3,16 @@
 //
 
 #include "base/integrator.h"
-#include "core/interaction.h"
+#include "base/aggregate.h"
+#include "base/camera.h"
 #include "base/bxdf.h"
+#include "core/interaction.h"
+
 #include <print>
 
 NAMESPACE_BEGIN
 
-class WhittedIntegrator : public Integrator {
+class WhittedIntegrator : public ImageTileIntegrator {
 public:
     explicit WhittedIntegrator(const PropertyList &propertyList) {
         mMaxDepth = propertyList.GetInteger("depth", 1);
@@ -17,6 +20,10 @@ public:
     }
 
     [[nodiscard]] Color3f Li(const Ray &ray) const override {
+        return Trace(ray, *pAggregate, mMaxDepth);
+    }
+
+    Color3f NewLi(const Ray &ray) const override {
         return Trace(ray, *pAggregate, mMaxDepth);
     }
 
