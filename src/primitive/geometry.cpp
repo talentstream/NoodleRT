@@ -9,53 +9,53 @@
 
 NAMESPACE_BEGIN
 
-    class GeometryPrimitive : public Primitive {
-    public:
-        explicit GeometryPrimitive(const PropertyList &propertyList) {
-            PRINT_DEBUG_INFO("Primitive", "geometry")
+class GeometryPrimitive : public Primitive {
+public:
+    explicit GeometryPrimitive(const PropertyList &propertyList) {
+        PRINT_DEBUG_INFO("Primitive", "geometry")
+    }
+
+    ~GeometryPrimitive() {
+        delete pShape;
+        delete pBxDF;
+    }
+
+    void AddChild(Object *object) override {
+        switch (object->GetClassType()) {
+            case EClassType::EShape:
+                pShape = dynamic_cast<Shape *>(object);
+                break;
+            case EClassType::EBxDF:
+                pBxDF = dynamic_cast<BxDF *>(object);
+                break;
+        }
+    }
+
+    void Initialize() override {
+        if (!pBxDF) {
+            pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("lambert", PropertyList(), true));
+        }
+    }
+
+    Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
+        if (!pShape->Intersect(ray, interaction.t, interaction)) {
+            return false;
         }
 
-        ~GeometryPrimitive() {
-            delete pShape;
-            delete pBxDF;
-        }
+        interaction.bxdf = pBxDF;
 
-        void AddChild(Object *object) override {
-            switch (object->GetClassType()) {
-                case EClassType::EShape:
-                    pShape = dynamic_cast<Shape *>(object);
-                    break;
-                case EClassType::EBxDF:
-                    pBxDF = dynamic_cast<BxDF *>(object);
-                    break;
-            }
-        }
+        return true;
+    }
 
-        void Initialize() override {
-            if (!pBxDF) {
-                pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("lambert", PropertyList(), true));
-            }
-        }
+    Bound3f BoundingBox() const override {
+        return pShape->BoundingBox();
+    }
 
-        Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
-            if (!pShape->Intersect(ray, interaction.t, interaction)) {
-                return false;
-            }
+private:
+    Shape *pShape;
+    BxDF *pBxDF{nullptr};
+};
 
-            interaction.bxdf = pBxDF;
-
-            return true;
-        }
-
-        Bound3f BoundingBox() const override {
-            return pShape->BoundingBox();
-        }
-
-    private:
-        Shape *pShape;
-        BxDF *pBxDF{nullptr};
-    };
-
-    REGISTER_CLASS(GeometryPrimitive, "geometry")
+REGISTER_CLASS(GeometryPrimitive, "geometry")
 
 NAMESPACE_END

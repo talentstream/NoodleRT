@@ -8,55 +8,55 @@
 
 NAMESPACE_BEGIN
 
-    class Scene : public Object {
-    public:
-        NON_COPY(Scene)
+class Scene : public Object {
+public:
+    NON_COPY(Scene)
 
-        explicit Scene(const PropertyList &);
+    explicit Scene(const PropertyList &);
 
-        ~Scene();
+    ~Scene();
 
-        void AddChild(Object *object) override;
+    void AddChild(Object *object) override;
 
-        [[nodiscard]] EClassType GetClassType() const override {
-            return EClassType::EScene;
-        }
+    [[nodiscard]] EClassType GetClassType() const override {
+        return EClassType::EScene;
+    }
 
-    private:
-        class Camera *pCamera{nullptr};
+private:
+    class Camera *pCamera{nullptr};
 
-        class Integrator *pIntegrator{nullptr};
+    class Integrator *pIntegrator{nullptr};
 
-        class Aggregate *pAggregate{nullptr};
+    class Aggregate *pAggregate{nullptr};
 
-        Integer mSpp;
-        Integer mWidth;
-        Integer mHeight;
+    Integer mSpp;
+    Integer mWidth;
+    Integer mHeight;
 
-    public:
-        const Integrator *GetIntegrator() const {
-            return pIntegrator;
-        }
+public:
+    const Integrator *GetIntegrator() const {
+        return pIntegrator;
+    }
 
-        const Camera *GetCamera() const {
-            return pCamera;
-        }
+    const Camera *GetCamera() const {
+        return pCamera;
+    }
 
-        const Aggregate *GetAggregate() const {
-            return pAggregate;
-        }
+    const Aggregate *GetAggregate() const {
+        return pAggregate;
+    }
 
-        const Integer GetSpp() const {
-            return mSpp;
-        }
+    const Integer GetSpp() const {
+        return mSpp;
+    }
 
-        const Integer GetWidth() const {
-            return mWidth;
-        }
+    const Integer GetWidth() const {
+        return mWidth;
+    }
 
-        const Integer GetHeight() const {
-            return mHeight;
-        }
-    };
+    const Integer GetHeight() const {
+        return mHeight;
+    }
+};
 
 NAMESPACE_END

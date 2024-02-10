@@ -8,6 +8,6 @@
 
 NAMESPACE_BEGIN
 
-Object* LoadSceneXML(const std::string_view &filename);
+Object *LoadSceneXML(const std::string_view &filename);
 
 NAMESPACE_END

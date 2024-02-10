@@ -9,21 +9,21 @@
 
 NAMESPACE_BEGIN
 
-    class Application {
-    public:
-        NON_COPY(Application)
+class Application {
+public:
+    NON_COPY(Application)
 
-        Application();
+    Application();
 
-        ~Application();
+    ~Application();
 
-        void Run();
+    void Run();
 
-    private:
-        void InitUI();
+private:
+    void InitUI();
 
-    private:
-        std::unique_ptr<class Renderer> pRenderer;
-    };
+private:
+    std::unique_ptr<class Renderer> pRenderer;
+};
 
 NAMESPACE_END

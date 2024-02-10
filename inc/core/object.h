@@ -13,70 +13,70 @@
 
 NAMESPACE_BEGIN
 
-    class Object {
-    public:
-        enum class EClassType {
-            EScene = 0,
-            EIntegrator,
-            ECamera,
-            EShape,
-            EPrimitive,
-            EAggregate,
-            EMesh,
-            EBxDF,
-            ETexture,
-            ESampler
+class Object {
+public:
+    enum class EClassType {
+        EScene = 0,
+        EIntegrator,
+        ECamera,
+        EShape,
+        EPrimitive,
+        EAggregate,
+        EMesh,
+        EBxDF,
+        ETexture,
+        ESampler
+    };
+
+    virtual ~Object() = default;
+
+    [[nodiscard]] virtual EClassType GetClassType() const = 0;
+
+    virtual void AddChild(Object *child) {/*throw*/}
+
+    virtual void Initialize() {}
+
+    static std::string ClassTypeName(EClassType type) {
+        switch (type) {
+            case EClassType::EScene:
+                return "EScene";
+            case EClassType::EIntegrator:
+                return "EIntegrator";
+            case EClassType::ECamera:
+                return "ECamera";
+            case EClassType::EShape:
+                return "EShape";
+            case EClassType::EPrimitive:
+                return "EPrimitive";
+            case EClassType::EAggregate:
+                return "EAggregate";
+            case EClassType::EMesh:
+                return "EMesh";
+            case EClassType::EBxDF:
+                return "EBxDF";
+            case EClassType::ETexture:
+                return "ETexture";
+            case EClassType::ESampler:
+                return "ESampler";
+            default:
+                return "Unknown";
         };
+    }
 
-        virtual ~Object() = default;
+};
 
-        [[nodiscard]] virtual EClassType GetClassType() const = 0;
+class ObjectFactory {
+public:
+    using Creator = std::function<Object *(const PropertyList &)>;
 
-        virtual void AddChild(Object *child) {/*throw*/}
+    static void RegisterClass(std::string_view name, const Creator &creator);
 
-        virtual void Initialize() {}
-
-        static std::string ClassTypeName(EClassType type) {
-            switch (type) {
-                case EClassType::EScene:
-                    return "EScene";
-                case EClassType::EIntegrator:
-                    return "EIntegrator";
-                case EClassType::ECamera:
-                    return "ECamera";
-                case EClassType::EShape:
-                    return "EShape";
-                case EClassType::EPrimitive:
-                    return "EPrimitive";
-                case EClassType::EAggregate:
-                    return "EAggregate";
-                case EClassType::EMesh:
-                    return "EMesh";
-                case EClassType::EBxDF:
-                    return "EBxDF";
-                case EClassType::ETexture:
-                    return "ETexture";
-                case EClassType::ESampler:
-                    return "ESampler";
-                default:
-                    return "Unknown";
-            };
-        }
-
-    };
-
-    class ObjectFactory {
-    public:
-        using Creator = std::function<Object *(const PropertyList &)>;
-
-        static void RegisterClass(std::string_view name, const Creator &creator);
-
-        static Object *CreateInstance(std::string_view name, const PropertyList &propertyList, Boolean manualInit = false);
+    static Object *CreateInstance(std::string_view name, const PropertyList &propertyList, Boolean manualInit = false);
 
 
-    private:
-        static constinit std::unordered_map<std::string_view, Creator> *pCreators;
-    };
+private:
+    static constinit std::unordered_map<std::string_view, Creator> *pCreators;
+};
 
 #define REGISTER_CLASS(Class, Name) \
 Class *Class ##Create(const PropertyList& propertyList) { return new Class(propertyList); } \
@@ -89,7 +89,7 @@ static struct Class ##Register { \
 #ifdef NDEBUG
 #define PRINT_DEBUG_INFO(Name,Type)
 #else
-    #define PRINT_DEBUG_INFO(Name,Type) \
+#define PRINT_DEBUG_INFO(Name, Type) \
 std::print("{}->{} --- ",Name,Type); \
 propertyList.PrintDebugInfo();          \
 std::print("\n");

@@ -8,17 +8,17 @@
 
 NAMESPACE_BEGIN
 
-    class Triangle : public Shape {
-    public:
-        explicit Triangle(class Mesh *mesh, Integer index);
+class Triangle : public Shape {
+public:
+    explicit Triangle(class Mesh *mesh, Integer index);
 
-        Boolean Intersect(const Ray &ray, Float tMax, Interaction &i) const override;
+    Boolean Intersect(const Ray &ray, Float tMax, Interaction &i) const override;
 
-        Bound3f BoundingBox() const override;
+    Bound3f BoundingBox() const override;
 
-    private:
-        Mesh *pMesh{nullptr};
-        Integer mIndices[3];
-    };
+private:
+    Mesh *pMesh{nullptr};
+    Integer mIndices[3];
+};
 
 NAMESPACE_END

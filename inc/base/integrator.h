@@ -9,15 +9,15 @@
 
 NAMESPACE_BEGIN
 
-    class Integrator : public Object {
-    public:
-        virtual ~Integrator() = default;
+class Integrator : public Object {
+public:
+    virtual ~Integrator() = default;
 
-        virtual Color3f Li(const Ray &ray, const Aggregate &aggregate) const = 0;
+    virtual Color3f Li(const Ray &ray, const Aggregate &aggregate) const = 0;
 
-        [[nodiscard]] EClassType GetClassType() const override {
-            return EClassType::EIntegrator;
-        }
-    };
+    [[nodiscard]] EClassType GetClassType() const override {
+        return EClassType::EIntegrator;
+    }
+};
 
 NAMESPACE_END

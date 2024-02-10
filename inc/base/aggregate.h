@@ -9,15 +9,15 @@
 
 NAMESPACE_BEGIN
 
-    class Aggregate : public Object {
-    public:
-        virtual ~Aggregate() = default;
+class Aggregate : public Object {
+public:
+    virtual ~Aggregate() = default;
 
-        virtual Boolean Intersect(const Ray &ray, Interaction &interaction) const = 0;
+    virtual Boolean Intersect(const Ray &ray, Interaction &interaction) const = 0;
 
-        [[nodiscard]] EClassType GetClassType() const override {
-            return EClassType::EAggregate;
-        }
-    };
+    [[nodiscard]] EClassType GetClassType() const override {
+        return EClassType::EAggregate;
+    }
+};
 
 NAMESPACE_END

@@ -10,30 +10,30 @@
 
 NAMESPACE_BEGIN
 
-    class Renderer {
-    public:
-        NON_COPY(Renderer)
+class Renderer {
+public:
+    NON_COPY(Renderer)
 
-        Renderer();
+    Renderer();
 
-        ~Renderer();
+    ~Renderer();
 
-        void OnInit();
+    void OnInit();
 
-        void OnRender();
+    void OnRender();
 
-        void SetRenderCallback(std::function<void(const std::vector<Color3f> &)> callback);
+    void SetRenderCallback(std::function<void(const std::vector<Color3f> &)> callback);
 
-        const class Scene *GetScene() const { return pScene.get(); }
+    const class Scene *GetScene() const { return pScene.get(); }
 
-    private:
+private:
 
-        std::function<void(const std::vector<Color3f> &)> renderCallback;
-        std::vector<Color3f> mFramebuffer;
+    std::function<void(const std::vector<Color3f> &)> renderCallback;
+    std::vector<Color3f> mFramebuffer;
 
-        std::unique_ptr<Scene> pScene;
-        Integer mCurrentSpp{};
-    };
+    std::unique_ptr<Scene> pScene;
+    Integer mCurrentSpp{};
+};
 
 NAMESPACE_END
 

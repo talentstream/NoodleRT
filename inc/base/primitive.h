@@ -5,17 +5,17 @@
 
 NAMESPACE_BEGIN
 
-    class Primitive : public Object {
-    public:
-        virtual ~Primitive() = default;
+class Primitive : public Object {
+public:
+    virtual ~Primitive() = default;
 
-        virtual Boolean Intersect(const Ray &ray, Interaction& interaction) const = 0;
+    virtual Boolean Intersect(const Ray &ray, Interaction &interaction) const = 0;
 
-        virtual Bound3f BoundingBox() const = 0;
+    virtual Bound3f BoundingBox() const = 0;
 
-        [[nodiscard]] EClassType GetClassType() const override {
-            return EClassType::EPrimitive;
-        }
-    };
+    [[nodiscard]] EClassType GetClassType() const override {
+        return EClassType::EPrimitive;
+    }
+};
 
 NAMESPACE_END

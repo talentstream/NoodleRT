@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <stacktrace>
 #include <iostream>
+
 NAMESPACE_BEGIN
 
 template<typename T>
@@ -43,7 +44,7 @@ public:
 
     Tuple2() = default;
 
-    Tuple2(T v): x{v}, y{v} {}
+    Tuple2(T v) : x{v}, y{v} {}
 
     Tuple2(T x, T y) : x{x}, y{y} {}
 
@@ -179,7 +180,7 @@ public:
 
     Tuple3() = default;
 
-    Tuple3(T v): x{v}, y{v}, z{v} {}
+    Tuple3(T v) : x{v}, y{v}, z{v} {}
 
     Tuple3(T x, T y, T z) : x{x}, y{y}, z{z} {}
 
@@ -329,7 +330,7 @@ public:
 
     Vector2() = default;
 
-    Vector2(T v): Tuple2<Vector2, T>(v) {}
+    Vector2(T v) : Tuple2<Vector2, T>(v) {}
 
     Vector2(T x, T y) : Tuple2<Vector2, T>(x, y) {}
 };
@@ -363,7 +364,7 @@ public:
 
     Vector3() = default;
 
-    Vector3(T v): Tuple3<Vector3, T>{v, v, v} {}
+    Vector3(T v) : Tuple3<Vector3, T>{v, v, v} {}
 
     Vector3(T x, T y, T z) : Tuple3<Vector3, T>{x, y, z} {}
 

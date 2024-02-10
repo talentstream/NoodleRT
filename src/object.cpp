@@ -17,13 +17,12 @@ void ObjectFactory::RegisterClass(std::string_view name, const ObjectFactory::Cr
     pCreators->emplace(name, creator);
 }
 
-Object* ObjectFactory::CreateInstance(std::string_view name, const PropertyList& propertyList,Boolean manualInit) {
-    if(pCreators == nullptr || !pCreators->contains(name)) {
+Object *ObjectFactory::CreateInstance(std::string_view name, const PropertyList &propertyList, Boolean manualInit) {
+    if (pCreators == nullptr || !pCreators->contains(name)) {
         throw std::runtime_error("ObjectFactory::CreateInstance: class name not found");
     }
     auto object = (*pCreators)[name](propertyList);
-    if(manualInit)
-    {
+    if (manualInit) {
         object->Initialize();
     }
     return object;

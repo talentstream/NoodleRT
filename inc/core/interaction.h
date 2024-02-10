@@ -14,13 +14,18 @@ class BxDF;
 // default surface interaction
 class Interaction {
 public:
-    Point3f p;// position
-    Normal3f n;// normal
-    Float u;
-    Float v;
     Float t{Infinity};// time
-    Boolean front{};// Is face front
-    BxDF* bxdf{nullptr};
+    Point3f p;// position
+
+    Normal3f n;// normal
+    Boolean front{};// Is normal face front
+
+    // texture uv
+    Float u{};
+    Float v{};
+
+    // material
+    BxDF *bxdf{nullptr};
 };
 
 NAMESPACE_END

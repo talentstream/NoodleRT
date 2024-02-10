@@ -9,47 +9,47 @@
 
 NAMESPACE_BEGIN
 
-    class WhittedIntegrator : public Integrator {
-    public:
-        explicit WhittedIntegrator(const PropertyList &propertyList) {
-            mMaxDepth = propertyList.GetInteger("depth", 1);
-            PRINT_DEBUG_INFO("Integrator", "whitted")
+class WhittedIntegrator : public Integrator {
+public:
+    explicit WhittedIntegrator(const PropertyList &propertyList) {
+        mMaxDepth = propertyList.GetInteger("depth", 1);
+        PRINT_DEBUG_INFO("Integrator", "whitted")
+    }
+
+    Color3f Li(const Ray &ray, const Aggregate &aggregate) const override {
+        return Trace(ray, aggregate, mMaxDepth);
+    }
+
+private:
+    Color3f Trace(const Ray &ray, const Aggregate &aggregate, Integer depth) const {
+        if (depth < 0) return {0, 0, 0};
+
+        // find nearest intersection
+        Interaction ni;
+        if (!aggregate.Intersect(ray, ni)) {
+            return {0.235294, 0.67451, 0.843137};
         }
 
-        Color3f Li(const Ray &ray, const Aggregate &aggregate) const override {
-            return Trace(ray, aggregate, mMaxDepth);
+        // shading
+        Color3f Le{};
+
+        // calculate light emission
+
+        // calculate light reflection
+        Ray wo;
+        Color3f attenuation;
+        Boolean isSpecular = ni.bxdf->ComputeScattering(ray, ni, attenuation, wo);
+        Le += attenuation;
+        if (isSpecular) {
+            Le += Trace(wo, aggregate, depth - 1);
         }
+        return Le;
+    }
 
-    private:
-        Color3f Trace(const Ray &ray, const Aggregate &aggregate, Integer depth) const {
-            if (depth < 0) return {0, 0, 0};
+private:
+    Integer mMaxDepth;
+};
 
-            // find nearest intersection
-            Interaction ni;
-            if (!aggregate.Intersect(ray, ni)) {
-                return {0.235294, 0.67451, 0.843137};
-            }
-
-            // shading
-            Color3f Le{};
-
-            // calculate light emission
-
-            // calculate light reflection
-            Ray wo;
-            Color3f attenuation;
-            Boolean isSpecular = ni.bxdf->ComputeScattering(ray, ni, attenuation, wo);
-            Le += attenuation;
-            if (isSpecular) {
-                Le += Trace(wo, aggregate, depth - 1);
-            }
-            return Le;
-        }
-
-    private:
-        Integer mMaxDepth;
-    };
-
-    REGISTER_CLASS(WhittedIntegrator, "whitted")
+REGISTER_CLASS(WhittedIntegrator, "whitted")
 
 NAMESPACE_END

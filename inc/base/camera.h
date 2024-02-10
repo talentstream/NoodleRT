@@ -8,15 +8,15 @@
 
 NAMESPACE_BEGIN
 
-    class Camera : public Object {
-    public:
-        virtual ~Camera() = default;
+class Camera : public Object {
+public:
+    virtual ~Camera() = default;
 
-        virtual Ray GenerateRay(Point2f uv) const = 0;
+    virtual Ray GenerateRay(Point2f uv) const = 0;
 
-        [[nodiscard]] EClassType GetClassType() const override {
-            return EClassType::ECamera;
-        }
-    };
+    [[nodiscard]] EClassType GetClassType() const override {
+        return EClassType::ECamera;
+    }
+};
 
 NAMESPACE_END

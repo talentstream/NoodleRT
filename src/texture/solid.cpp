@@ -6,20 +6,20 @@
 
 NAMESPACE_BEGIN
 
-    class SolidTexture : public Texture {
-    public:
-        explicit SolidTexture(const PropertyList &propertyList) {
-            mAlbedo = propertyList.GetColor("albedo", {});
-        }
+class SolidTexture : public Texture {
+public:
+    explicit SolidTexture(const PropertyList &propertyList) {
+        mAlbedo = propertyList.GetColor("albedo", {});
+    }
 
-        [[nodiscard]] Color3f Evaluate(const Interaction &) const override {
-            return mAlbedo;
-        }
+    [[nodiscard]] Color3f Evaluate(const Interaction &) const override {
+        return mAlbedo;
+    }
 
-    private:
-        Color3f mAlbedo;
-    };
+private:
+    Color3f mAlbedo;
+};
 
-    REGISTER_CLASS(SolidTexture, "solid")
+REGISTER_CLASS(SolidTexture, "solid")
 
 NAMESPACE_END

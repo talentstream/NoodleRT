@@ -11,18 +11,18 @@
 
 NAMESPACE_BEGIN
 
-    constexpr Float Infinity = std::numeric_limits<Float>::infinity();
-    constexpr Float Epsilon = std::numeric_limits<Float>::epsilon();
-    constexpr Float Pi = std::numbers::pi_v<Float>;
-    constexpr Float TwoPi = 2 * Pi;
-    constexpr Float InvPi = std::numbers::inv_pi_v<Float>;
-    constexpr Float Sqrt2 = std::numbers::sqrt2_v<Float>;
+constexpr Float Infinity = std::numeric_limits<Float>::infinity();
+constexpr Float Epsilon = std::numeric_limits<Float>::epsilon();
+constexpr Float Pi = std::numbers::pi_v<Float>;
+constexpr Float TwoPi = 2 * Pi;
+constexpr Float InvPi = std::numbers::inv_pi_v<Float>;
+constexpr Float Sqrt2 = std::numbers::sqrt2_v<Float>;
 
-    inline Float DegreeToRadian(Float
-    degree) {
+inline Float DegreeToRadian(Float
+                            degree) {
     return
-    degree *Pi
-    / 180;
+            degree * Pi
+            / 180;
 }
 
 inline Float RadianToDegree(Float radian) {

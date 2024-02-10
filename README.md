@@ -3,7 +3,18 @@
 --- 
 
 Todo:
-1.30 : add XMLParser, ObjectProperty, SaveBitMap
 
-1.31 : complete Course RayTracing in one week, next week.
-Material, Texture, Shape, Primitive, Aggregate, Integrator Interface
+// Refactor ? 
+
+Application:
+- Integrator
+  - Aggregate
+    - Primitive
+      - Shape 
+      - Material
+        - Texture
+        - BxDF
+  - Lights
+- Camera
+- Film
+- Sampler

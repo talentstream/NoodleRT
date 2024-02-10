@@ -14,9 +14,9 @@ NAMESPACE_BEGIN
 
 namespace detail {
 #ifdef __cpp_lib_move_only_function
-    using default_function_type = std::move_only_function<void()>;
+using default_function_type = std::move_only_function<void()>;
 #else
-    using default_function_type = std::function<void()>;
+using default_function_type = std::function<void()>;
 #endif
 }
 

@@ -10,49 +10,49 @@
 
 NAMESPACE_BEGIN
 
-    class NaiveAggregate : public Aggregate {
-    public:
-        explicit NaiveAggregate(const PropertyList &propertyList) {
-            PRINT_DEBUG_INFO("Aggregate", "naive")
-        }
+class NaiveAggregate : public Aggregate {
+public:
+    explicit NaiveAggregate(const PropertyList &propertyList) {
+        PRINT_DEBUG_INFO("Aggregate", "naive")
+    }
 
-        void AddChild(Object *object) {
-            switch (object->GetClassType()) {
-                case EClassType::EPrimitive:
-                    mPrimitives.emplace_back(dynamic_cast<Primitive *>(object));
-                    break;
-                case EClassType::EMesh: {
-                    auto mesh = dynamic_cast<Mesh *>(object);
-                    mPrimitives.insert(mPrimitives.end(), mesh->primitives.begin(), mesh->primitives.end());
-                    break;
+    void AddChild(Object *object) {
+        switch (object->GetClassType()) {
+            case EClassType::EPrimitive:
+                mPrimitives.emplace_back(dynamic_cast<Primitive *>(object));
+                break;
+            case EClassType::EMesh: {
+                auto mesh = dynamic_cast<Mesh *>(object);
+                mPrimitives.insert(mPrimitives.end(), mesh->primitives.begin(), mesh->primitives.end());
+                break;
+            }
+            default:
+                /*throw*/
+                break;
+        }
+    }
+
+    Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
+        Boolean hitAnything{false};
+        Interaction tempInteraction;
+
+        for (const auto &primitive: mPrimitives) {
+            if (primitive->Intersect(ray, tempInteraction)) {
+                hitAnything = true;
+                if (tempInteraction.t < interaction.t) {
+                    interaction = tempInteraction;
                 }
-                default:
-                    /*throw*/
-                    break;
             }
         }
 
-        Boolean Intersect(const Ray &ray, Interaction &interaction) const override {
-            Boolean hitAnything{false};
-            Interaction tempInteraction;
+        return hitAnything;
 
-            for (const auto &primitive: mPrimitives) {
-                if (primitive->Intersect(ray, tempInteraction)) {
-                    hitAnything = true;
-                    if (tempInteraction.t < interaction.t) {
-                        interaction = tempInteraction;
-                    }
-                }
-            }
+    }
 
-            return hitAnything;
+private:
+    std::vector<Primitive *> mPrimitives;
+};
 
-        }
-
-    private:
-        std::vector<Primitive *> mPrimitives;
-    };
-
-    REGISTER_CLASS(NaiveAggregate, "naive")
+REGISTER_CLASS(NaiveAggregate, "naive")
 
 NAMESPACE_END
