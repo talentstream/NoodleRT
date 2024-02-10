@@ -25,7 +25,8 @@ public:
         EMesh,
         EBxDF,
         ETexture,
-        ESampler
+        ESampler,
+        EFilm,
     };
 
     virtual ~Object() = default;
@@ -58,6 +59,8 @@ public:
                 return "ETexture";
             case EClassType::ESampler:
                 return "ESampler";
+            case EClassType::EFilm:
+                return "EFilm";
             default:
                 return "Unknown";
         };
