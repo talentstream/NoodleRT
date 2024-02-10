@@ -6,7 +6,6 @@
 
 #include "core/object.h"
 #include "base/aggregate.h"
-#include <print>
 
 NAMESPACE_BEGIN
 
@@ -21,7 +20,6 @@ public:
     [[nodiscard]] virtual Color3f OldLi(const Ray &ray, const Aggregate &aggregate) const = 0;
 
     virtual void AddChild(Object *child) {
-        std::print("Integrator::AddChild\n");
         switch (child->GetClassType()) {
             case EClassType::EAggregate:
                 pAggregate = dynamic_cast<Aggregate *>(child);

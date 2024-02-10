@@ -20,19 +20,15 @@ Scene::Scene(const PropertyList &propertyList) {
 Scene::~Scene() {
     delete pCamera;
     delete pIntegrator;
-    delete pAggregate;
 }
 
 void Scene::AddChild(Object *object) {
     switch (object->GetClassType()) {
         case EClassType::ECamera:
-            pCamera = static_cast<Camera *>(object);
+            pCamera = dynamic_cast<Camera *>(object);
             break;
         case EClassType::EIntegrator:
             pIntegrator = dynamic_cast<Integrator *>(object);
-            break;
-        case EClassType::EAggregate:
-            pAggregate = static_cast<Aggregate *>(object);
             break;
         default:
             break;

@@ -27,8 +27,6 @@ private:
 
     class Integrator *pIntegrator{nullptr};
 
-    class Aggregate *pAggregate{nullptr};
-
     Integer mSpp;
     Integer mWidth;
     Integer mHeight;
@@ -40,10 +38,6 @@ public:
 
     const Camera *GetCamera() const {
         return pCamera;
-    }
-
-    const Aggregate *GetAggregate() const {
-        return pAggregate;
     }
 
     const Integer GetSpp() const {

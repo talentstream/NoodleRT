@@ -16,7 +16,7 @@
 NAMESPACE_BEGIN
 Renderer::Renderer() {
     Object *obj = LoadSceneXML("../twospheres.xml");
-    pScene = std::unique_ptr<Scene>(static_cast<Scene *>(obj));
+    pScene = std::unique_ptr<Scene>(dynamic_cast<Scene *>(obj));
 }
 
 Renderer::~Renderer() = default;
@@ -29,7 +29,6 @@ void Renderer::OnInit() {
 void Renderer::OnRender() {
     const Camera *pCamera = pScene->GetCamera();
     const Integrator *pIntegrator = pScene->GetIntegrator();
-    const Aggregate *pAggregate = pScene->GetAggregate();
     const auto imageWidth = pScene->GetWidth();
     const auto imageHeight = pScene->GetHeight();
     Integer tileSizeX{8}, tileSizeY{8};
