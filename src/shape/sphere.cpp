@@ -20,7 +20,7 @@ public:
 
     Boolean Intersect(const Ray &ray, Float tMax, SurfaceInteraction &i) const override {
         Vector3f oc = ray.o - mCenter;
-        Float a = Dot(ray.d, ray.d);
+        Float a = LengthSquared(ray.d);
         Float halfB = Dot(oc, ray.d);
         Float c = LengthSquared(oc) - mRadius * mRadius;
         Float discriminant = halfB * halfB - a * c;
@@ -41,7 +41,7 @@ public:
         // 设定Interaction Info
         i.t = root;
         i.p = ray(root);
-        Normal3f outNormal{Normalize(i.p - mCenter)};
+        Normal3f outNormal{(i.p - mCenter) / mRadius};
         i.front = Dot(ray.d, Vector3f(outNormal)) < 0;
         i.n = i.front ? outNormal : -outNormal;
 

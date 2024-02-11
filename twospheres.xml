@@ -16,7 +16,7 @@
                         <texture type="solid">
                             <color name="albedo" value="0.9 0.9 0.9"/>
                         </texture>
-                        <float name="scale" value="0.8"/>
+                        <float name="scale" value="0.32"/>
                     </texture>
                 </bxdf>
             </primitive>
@@ -33,7 +33,7 @@
                         <texture type="solid">
                             <color name="albedo" value="0.9 0.9 0.9"/>
                         </texture>
-                        <float name="scale" value="0.8"/>
+                        <float name="scale" value="0.32"/>
                     </texture>
                 </bxdf>
             </primitive>
