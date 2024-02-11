@@ -12,9 +12,9 @@ class Sampler : public Object {
 public:
     virtual ~Sampler() = default;
 
-    virtual Float Next1D() const = 0;
+    virtual Float Next1D() = 0;
 
-    virtual Point2f Next2D() const = 0;
+    virtual Point2f Next2D() = 0;
 
     virtual EClassType GetClassType() const override {
         return EClassType::ESampler;

@@ -27,7 +27,6 @@ public:
             pAlbedo = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("checker", {}, true));
         }
     }
-
     [[nodiscard]] Boolean
     ComputeScattering(const Ray &ray, const SurfaceInteraction &i, Color3f &attenuation, Ray &wo) const override {
 

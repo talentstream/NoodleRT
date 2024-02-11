@@ -551,4 +551,5 @@ inline Normal3<T> Normalize(Normal3<T> n) {
     return n / Length(n);
 }
 
+
 NAMESPACE_END

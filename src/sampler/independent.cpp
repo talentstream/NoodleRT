@@ -14,16 +14,17 @@ public:
 
     virtual ~IndependentSampler() = default;
 
-    [[nodiscard]] Float Next1D() const override {
-        /*random generator*/
+    [[nodiscard]] Float Next1D() override {
+        return rng.UniformFloat();
     }
 
-    [[nodiscard]] Point2f Next2D() const override {
-        /*random generator*/
+    [[nodiscard]] Point2f Next2D() override {
+        return {rng.UniformFloat(), rng.UniformFloat()};
     }
 
 private:
     Integer mSampleCount;
+    RNG rng;
 };
 
 NAMESPACE_END

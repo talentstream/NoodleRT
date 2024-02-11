@@ -19,10 +19,10 @@ constexpr Float InvPi = std::numbers::inv_pi_v<Float>;
 constexpr Float Sqrt2 = std::numbers::sqrt2_v<Float>;
 
 inline Float DegreeToRadian(Float
-                            degree) {
-    return
-            degree * Pi
-            / 180;
+degree) {
+return
+degree *Pi
+/ 180;
 }
 
 inline Float RadianToDegree(Float radian) {
@@ -68,8 +68,24 @@ inline Float Abs(Float v) {
     return std::abs(v);
 }
 
+inline Float Dot(Vector3f v, Normal3f n) {
+    return Dot(v, Vector3f{n});
+}
+
+inline Float Dot(Normal3f n, Vector3f v) {
+    return Dot(Vector3f{n}, v);
+}
+
 inline Float AbsDot(Vector3f v1, Vector3f v2) {
     return std::abs(Dot(v1, v2));
+}
+
+inline Float AbsDot(Vector3f v, Normal3f n) {
+    return std::abs(Dot(v, n));
+}
+
+inline Float AbsDot(Normal3f n, Vector3f v) {
+    return std::abs(Dot(n, v));
 }
 
 inline Float Min(Float v1, Float v2) {

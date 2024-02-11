@@ -29,24 +29,34 @@ private:
         if (depth < 0) return {0, 0, 0};
 
         // find nearest intersection
-        SurfaceInteraction ni;
-        if (!pAggregate->Intersect(ray, ni)) {
+        SurfaceInteraction si;
+        if (!pAggregate->Intersect(ray, si)) {
+            // calculate infinite light or background color
             return {0.235294, 0.67451, 0.843137};
         }
 
         // shading
         Color3f Le{};
-
+        auto bxdf = si.bxdf;
         // calculate light emission
 
         // calculate light reflection
-        Ray wo;
-        Color3f attenuation;
-        Boolean isSpecular = ni.bxdf->ComputeScattering(ray, ni, attenuation, wo);
-        Le += attenuation;
-        if (isSpecular) {
-            Le += Trace(wo, depth - 1);
+        Ray oldWo;
+        Vector3f wo = -ray.d;
+
+        auto wi = bxdf->GenerateRay(si, wo);
+        if (wi.has_value()) {
+            Le += Trace(Ray(si.p, wi.value()), depth - 1);
+        } else {
+            Le = bxdf->Evaluate(si, wo);
         }
+//        Color3f attenuation;
+//
+//        Boolean isSpecular = si.bxdf->ComputeScattering(ray, si, attenuation, oldWo);
+//        Le += attenuation;
+//        if (isSpecular) {
+//            Le += Trace(oldWo, depth - 1);
+//        }
         return Le;
     }
 

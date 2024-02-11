@@ -42,15 +42,15 @@ public:
         }
     }
 
-    [[nodiscard]] Color3f Evaluate(const SurfaceInteraction &i) const override {
-        auto p = i.p;
+    [[nodiscard]] Color3f Evaluate(const SurfaceInteraction &si) const override {
+        auto p = si.p;
         auto x = Floor(mInvScale * p.x);
         auto y = Floor(mInvScale * p.y);
         auto z = Floor(mInvScale * p.z);
         if ((x + y + z) % 2 == 0) {
-            return pEven->Evaluate(i);
+            return pEven->Evaluate(si);
         } else {
-            return pOdd->Evaluate(i);
+            return pOdd->Evaluate(si);
         }
     }
 
