@@ -16,12 +16,16 @@ public:
 
     }
 
-    [[nodiscard]] Boolean
-    ComputeScattering(const Ray &ray, const SurfaceInteraction &i, Color3f &attenuation, Ray &wo) const override {
-        Vector3f reflected = Reflect(Normalize(ray.d), Vector3f(i.n));
-        wo = Ray(i.p, reflected + mRoughness * Vector3f(i.n)/*RandomInUnitSphere()*/);
-        attenuation = mAlbedo;
-        return Dot(wo.d, Vector3f(i.n)) > 0;
+    std::optional<Vector3f> ComputeScattering(const SurfaceInteraction &si, Vector3f wo) const override {
+        Vector3f reflected = Reflect(Normalize(wo), Vector3f(si.n)) + mRoughness * RandomInUnitSphere();
+        if(Dot(reflected, Vector3f(si.n)) > 0){
+            return reflected;
+        }
+        return std::nullopt;
+    }
+
+    Color3f Evaluate(const SurfaceInteraction &si, Vector3f wo) const override {
+        return mAlbedo;
     }
 
 private:

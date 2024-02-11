@@ -27,21 +27,20 @@ public:
             pAlbedo = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("checker", {}, true));
         }
     }
-    [[nodiscard]] Boolean
-    ComputeScattering(const Ray &ray, const SurfaceInteraction &i, Color3f &attenuation, Ray &wo) const override {
 
-        Vector3f scatterDirection = Vector3f(i.n)/* + RandomInUnitVector()*/;
-        auto NearZero = [](const Vector3f &v) {
-            const Float s = Epsilon;
-            return (Abs(v.x) < s) && (Abs(v.y) < s) && (Abs(v.z) < s);
+    std::optional<Vector3f> ComputeScattering(const SurfaceInteraction &si, Vector3f wo) const override {
+        Vector3f scatterDirection = Vector3f(si.n) + RandomInUnitVector();
+        auto NearZero = [](Vector3f v) {
+            return (Abs(v.x) < Epsilon) && (Abs(v.y) < Epsilon) && (Abs(v.z) < Epsilon);
         };
         if (NearZero(scatterDirection)) {
-            scatterDirection = Vector3f(i.n);
+            scatterDirection = Vector3f(si.n);
         }
-        attenuation = pAlbedo->Evaluate(i);
-        wo = Ray(i.p, scatterDirection);
+        return scatterDirection;
+    }
 
-        return true;
+    [[nodiscard]] Color3f Evaluate(const SurfaceInteraction &si, Vector3f wo) const override {
+        return pAlbedo->Evaluate(si);
     }
 
 private:

@@ -31,33 +31,21 @@ private:
         // find nearest intersection
         SurfaceInteraction si;
         if (!pAggregate->Intersect(ray, si)) {
-            // calculate infinite light or background color
-            return {0.235294, 0.67451, 0.843137};
+            Vector3f unitDir = Normalize(ray.d);
+            Float t = 0.5f * (unitDir.y + 1.0f);
+            return (1.0f - t) * Color3f{1.0f, 1.0f, 1.0f} + t * Color3f{0.5f, 0.7f, 1.0f};
         }
 
         // shading
-        Color3f Le{};
         auto bxdf = si.bxdf;
-        // calculate light emission
-
-        // calculate light reflection
-        Ray oldWo;
         Vector3f wo = -ray.d;
 
-        auto wi = bxdf->GenerateRay(si, wo);
+        auto wi = bxdf->ComputeScattering(si, ray.d);
         if (wi.has_value()) {
-            Le += Trace(Ray(si.p, wi.value()), depth - 1);
+            return bxdf->Evaluate(si, wo) * Trace(Ray(si.p, wi.value()), depth - 1);
         } else {
-            Le = bxdf->Evaluate(si, wo);
+            return {};
         }
-//        Color3f attenuation;
-//
-//        Boolean isSpecular = si.bxdf->ComputeScattering(ray, si, attenuation, oldWo);
-//        Le += attenuation;
-//        if (isSpecular) {
-//            Le += Trace(oldWo, depth - 1);
-//        }
-        return Le;
     }
 
 private:

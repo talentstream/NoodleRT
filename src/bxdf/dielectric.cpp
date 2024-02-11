@@ -15,23 +15,22 @@ public:
 
     }
 
-    [[nodiscard]] Boolean
-    ComputeScattering(const Ray &ray, const SurfaceInteraction &i, Color3f &attenuation, Ray &wo) const override {
-        attenuation = Color3f{1.0f, 1.0f, 1.0f};
-        Float refractionRatio = i.front ? (1.0f / mRefractionIndex) : mRefractionIndex;
-        Vector3f unitDirection = Normalize(ray.d);
-        Float cosTheta = Min(Dot(-unitDirection, Vector3f(i.n)), 1.0f);
+    std::optional<Vector3f> ComputeScattering(const SurfaceInteraction &si, Vector3f wo) const override {
+        Float refractionRatio = si.front ? (1.0f / mRefractionIndex) : mRefractionIndex;
+        Vector3f unitDirection = Normalize(wo);
+        Float cosTheta = Min(Dot(-unitDirection, Vector3f(si.n)), 1.0f);
         Float sinTheta = Sqrt(1.0f - cosTheta * cosTheta);
         Boolean cannotRefract = refractionRatio * sinTheta > 1.0f;
 
-        Vector3f direction;
-        if (cannotRefract || Schlick(cosTheta, refractionRatio) > 0) {
-            direction = Reflect(unitDirection, Vector3f(i.n));
-        } else {
-            direction = Refract(unitDirection, Vector3f(i.n), refractionRatio);
+        if(cannotRefract || Schlick(cosTheta, refractionRatio) > RandomFloat()){
+            return Reflect(unitDirection, Vector3f(si.n));
+        }else{
+            return Refract(unitDirection, Vector3f(si.n), refractionRatio);
         }
-        wo = Ray(i.p, direction);
-        return true;
+    }
+
+    Color3f Evaluate(const SurfaceInteraction &si, Vector3f wo) const override {
+        return {1.0f, 1.0f, 1.0f};
     }
 
 private:

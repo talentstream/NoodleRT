@@ -14,13 +14,9 @@ public:
     virtual ~BxDF() = default;
 
     // compute scatter
-    virtual std::optional<Vector3f> GenerateRay(SurfaceInteraction&, Vector3f wo) const {return std::nullopt;}
+    virtual std::optional<Vector3f> ComputeScattering(const SurfaceInteraction &si, Vector3f wo) const = 0;
 
-    virtual Color3f Evaluate(const SurfaceInteraction &, Vector3f wo) const {
-        return {1,1,1};
-    }
-
-    virtual Boolean ComputeScattering(const Ray &, const SurfaceInteraction &, Color3f &, Ray &wo) const = 0;
+    virtual Color3f Evaluate(const SurfaceInteraction &si, Vector3f wo) const = 0;
 
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::EBxDF;

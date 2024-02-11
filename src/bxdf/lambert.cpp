@@ -15,19 +15,13 @@ public:
         PRINT_DEBUG_INFO("BxDF", "lambert")
     }
 
-    std::optional<Vector3f> GenerateRay(SurfaceInteraction& si, Vector3f wo) const override{
-        return std::nullopt;
+    std::optional<Vector3f> ComputeScattering(const SurfaceInteraction& si, Vector3f wo) const override{
+        return Vector3f{si.n};
     }
 
     Color3f Evaluate(const SurfaceInteraction &si, Vector3f wo) const override{
-        return pAlbedo->Evaluate(si);
-    }
-
-    [[nodiscard]]
-    Boolean
-    ComputeScattering(const Ray &ray, const SurfaceInteraction &i, Color3f &attenuation, Ray &wo) const override {
-        attenuation = pAlbedo->Evaluate(i);
-        return false;
+        Float k = AbsDot(si.n, Normalize(wo));
+        return pAlbedo->Evaluate(si) * k;
     }
 
     void AddChild(Object *object) override {
