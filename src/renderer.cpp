@@ -63,7 +63,7 @@ void Renderer::OnRender() {
 //        std::print("SPP: {} - ", mCurrentSpp);
 //        timer.PrintElapsedMillSec();
 //    }
-    mFramebuffer = pIntegrator->Render();
+//    mFramebuffer = pIntegrator->Render();
     std::vector<Color3f> displayBuffer(mFramebuffer.size());
     std::ranges::transform(mFramebuffer, displayBuffer.begin(), [&](const Color3f &color) {
         return color.LinearToGamma();

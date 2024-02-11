@@ -24,7 +24,7 @@ public:
         return EClassType::ECamera;
     }
 
-    const Film *GetFilm() const {
+    Film *GetFilm() const {
         return pFilm;
     }
 

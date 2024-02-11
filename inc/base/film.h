@@ -8,6 +8,7 @@
 #include <vector>
 #include <ranges>
 #include <print>
+
 NAMESPACE_BEGIN
 
 class Film : public Object {
@@ -16,33 +17,40 @@ public:
         width = propertyList.GetInteger("width", 400);
         height = propertyList.GetInteger("height", 400);
         mSaveFileName = propertyList.GetString("saveFileName", "output.png");
-        mFramebuffer.resize(width * height);
+        framebuffer.resize(width * height);
         PRINT_DEBUG_INFO("Film", "film")
     }
 
     virtual ~Film() = default;
 
-    void Display() const {
-        std::vector<Color3f> displayBuffer(mFramebuffer.size());
-        std::ranges::transform(mFramebuffer, displayBuffer.begin(), [&](const Color3f &color) {
-            return color.LinearToGamma();
-        });
+    void Update(Integer index, Color3f color) {
+        framebuffer[index] = color;
     }
 
+    void Display() const {
+        std::vector<Color3f> displayBuffer(framebuffer.size());
+        std::ranges::transform(framebuffer, displayBuffer.begin(), [&](const Color3f &color) {
+            return color.LinearToGamma();
+        });
+        mCallback(displayBuffer);
+    }
+
+    void SetCallBack(std::function<void(const std::vector<Color3f> &)> callback) {
+        mCallback = std::move(callback);
+    }
 
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::EFilm;
     }
 
-    std::vector<Color3f> &GetPixels() {
-        return mFramebuffer;
-    }
 
 public:
     Integer width;
     Integer height;
+    std::vector<Color3f> framebuffer;
 private:
-    std::vector<Color3f> mFramebuffer;
+    std::function<void(const std::vector<Color3f> &)> mCallback;
+
     std::string_view mSaveFileName;
 };
 

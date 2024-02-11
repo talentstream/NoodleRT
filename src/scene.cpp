@@ -3,9 +3,7 @@
 //
 
 #include "core/scene.h"
-#include "base/camera.h"
 #include "base/integrator.h"
-#include "base/aggregate.h"
 #include <print>
 
 NAMESPACE_BEGIN
@@ -28,6 +26,8 @@ void Scene::AddChild(Object *object) {
             break;
     }
 }
+
+
 
 REGISTER_CLASS(Scene, "scene")
 

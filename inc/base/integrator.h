@@ -16,7 +16,7 @@ class Integrator : public Object {
 public:
     virtual ~Integrator() = default;
 
-    virtual std::vector<Color3f> Render() const = 0;
+    virtual void Render() const = 0;
 
     void AddChild(Object *child) override;
 
@@ -41,7 +41,7 @@ class ImageTileIntegrator : public Integrator {
 public:
     ~ImageTileIntegrator() = default;
 
-    std::vector<Color3f> Render() const final;
+    void Render() const final;
 
     [[nodiscard]] virtual Color3f Li(const Ray &ray) const = 0;
 };

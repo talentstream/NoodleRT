@@ -1,5 +1,6 @@
 #include "core/application.h"
 #include <print>
+#include <iostream>
 
 int main() {
     using namespace nrt;
@@ -8,7 +9,7 @@ int main() {
         app.Run();
     }
     catch (const std::exception &e) {
-        std::print("Exception: {}\n", e.what());
+        std::cerr << e.what() << std::endl;
     }
     return 0;
 }

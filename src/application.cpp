@@ -3,9 +3,12 @@
 //
 
 #include "core/application.h"
-#include "core/renderer.h"
 #include "core/scene.h"
+#include "base/integrator.h"
+#include "base/camera.h"
+#include "base/film.h"
 
+#include "util/parser.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <print>
@@ -13,20 +16,26 @@
 NAMESPACE_BEGIN
 
 GLFWwindow *window = nullptr;
+Integer windowWidth{};
+Integer windowHeight{};
 
 Application::Application() {
-    pRenderer = std::make_unique<Renderer>();
+    Object *obj = LoadSceneXML("../twospheres.xml");
+    pScene = std::unique_ptr<Scene>(dynamic_cast<Scene *>(obj));
+    windowWidth = pScene->GetIntegrator()->GetCamera()->GetFilm()->width;
+    windowHeight = pScene->GetIntegrator()->GetCamera()->GetFilm()->height;
     InitUI();
 }
 
 Application::~Application() = default;
 
 void Application::Run() {
-    pRenderer->OnInit();
 
-    pRenderer->SetRenderCallback([&](const std::vector<Color3f> &pixels) {
+    const auto pIntegrator = pScene->GetIntegrator();
+    const auto pFilm = pIntegrator->GetCamera()->GetFilm();
+    pFilm->SetCallBack([&](const std::vector<Color3f> &pixels) {
         glClear(GL_COLOR_BUFFER_BIT);
-        glDrawPixels(pRenderer->GetWidth(), pRenderer->GetHeight(), GL_RGB, GL_FLOAT,
+        glDrawPixels(windowWidth, windowHeight, GL_RGB, GL_FLOAT,
                      pixels.data());
         glfwSwapBuffers(window);
     });
@@ -34,7 +43,8 @@ void Application::Run() {
     std::print("RENDERING BEGIN============================================\n");
 
     while (!glfwWindowShouldClose(window)) {
-        pRenderer->OnRender();
+//        pRenderer->OnRender();
+        pIntegrator->Render();
         glfwPollEvents();
     }
 
@@ -44,7 +54,7 @@ void Application::Run() {
 void Application::InitUI() {
     glfwInit();
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    window = glfwCreateWindow(pRenderer->GetWidth(), pRenderer->GetHeight(), "Rendering Window",
+    window = glfwCreateWindow(windowWidth, windowHeight, "Rendering Window",
                               nullptr, nullptr);
     if (window == nullptr) {
         std::print("Failed to create GLFW window\n");

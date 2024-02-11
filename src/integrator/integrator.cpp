@@ -34,7 +34,7 @@ void Integrator::Initialize() {
     }
 }
 
-std::vector<Color3f> ImageTileIntegrator::Render() const {
+void ImageTileIntegrator::Render() const {
     const auto film = pCamera->GetFilm();
     const auto width = film->width;
     const auto height = film->height;
@@ -56,13 +56,13 @@ std::vector<Color3f> ImageTileIntegrator::Render() const {
             auto index = (height - y - 1) * width;
             for (const Integer x: std::views::iota(beginX, endX)) {
                 auto ray = pCamera->GenerateRay(Point2f(x, y));
-                framebuffer[index + x] = Li(ray);
+                auto L = Li(ray);
+                film->Update(index + x, L);
             }
         }
     });
 
-    return framebuffer;
-
+    film->Display();
 }
 
 NAMESPACE_END

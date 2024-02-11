@@ -23,7 +23,7 @@ private:
     void InitUI();
 
 private:
-    std::unique_ptr<class Renderer> pRenderer;
+    std::unique_ptr<class Scene> pScene;
 };
 
 NAMESPACE_END
