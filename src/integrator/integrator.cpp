@@ -6,6 +6,7 @@
 #include "base/aggregate.h"
 #include "base/camera.h"
 #include "base/film.h"
+#include "util/parallel.h"
 #include <ranges>
 
 NAMESPACE_BEGIN
@@ -39,13 +40,26 @@ std::vector<Color3f> ImageTileIntegrator::Render() const {
     const auto height = film->height;
 
     std::vector<Color3f> framebuffer(width * height);
-    for (const Integer y: std::views::iota(0, height)) {
-        auto index = (height - y - 1) * width;
-        for (const Integer x: std::views::iota(0, width)) {
-            auto ray = pCamera->GenerateRay(Point2f(x, y));
-            framebuffer[index + x] = Li(ray);
+    const Integer tileSizeX{8}, tileSizeY{8};
+    const Integer tileHeight = Floor(static_cast<Float>(height) / static_cast<Float>(tileSizeY));
+    const Integer tileWidth = Floor(static_cast<Float>(width) / static_cast<Float>(tileSizeX));
+
+    Parallel::For2D(0, tileSizeX, 0, tileSizeY, [&](Integer tileX, Integer tileY) {
+        auto beginY = tileY * tileHeight;
+        auto endY = (tileY + 1) * tileHeight;
+        endY = endY > height ? height : endY;
+        auto beginX = tileX * tileWidth;
+        auto endX = (tileX + 1) * tileWidth;
+        endX = endX > width ? width : endX;
+
+        for (const Integer y: std::views::iota(beginY, endY)) {
+            auto index = (height - y - 1) * width;
+            for (const Integer x: std::views::iota(beginX, endX)) {
+                auto ray = pCamera->GenerateRay(Point2f(x, y));
+                framebuffer[index + x] = Li(ray);
+            }
         }
-    }
+    });
 
     return framebuffer;
 
