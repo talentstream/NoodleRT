@@ -1,56 +1,85 @@
 <scene>
-    <integer name="spp" value="100"/>
-    <integer name="width" value="400"/>
-    <integer name="height" value="400"/>
-
-    <integrator type="normal">
+    <integrator type="whitted">
+        <integer name="spp" value="100"/>
         <integer name="maxDepth" value="50"/>
+        <aggregate type="naive">
+            <!--left red-->
+            <primitive type="geometry">
+                <shape type="quad">
+                    <point name="start" value="-3.0 -2.0 5.0"/>
+                    <vector name="horizontal" value="0.0 0.0 -4.0"/>
+                    <vector name="vertical" value="0.0 4.0 0.0"/>
+                </shape>
+                <bxdf type="lambert">
+                    <texture type="solid">
+                        <color name="albedo" value="1.0 0.2 0.2"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+            <!--back green-->
+            <primitive type="geometry">
+                <shape type="quad">
+                    <point name="start" value="-2.0 -2.0 0.0"/>
+                    <vector name="horizontal" value="4.0 0.0 0.0"/>
+                    <vector name="vertical" value="0.0 4.0 0.0"/>
+                </shape>
+                <bxdf type="lambert">
+                    <texture type="solid">
+                        <color name="albedo" value="0.2 1.0 0.2"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+            <!--right blue-->
+            <primitive type="geometry">
+                <shape type="quad">
+                    <point name="start" value="3.0 -2.0 1.0"/>
+                    <vector name="horizontal" value="0.0 0.0 4.0"/>
+                    <vector name="vertical" value="0.0 4.0 0.0"/>
+                </shape>
+                <bxdf type="lambert">
+                    <texture type="solid">
+                        <color name="albedo" value="0.2 0.2 1.0"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+            <!--upper orange-->
+            <primitive type="geometry">
+                <shape type="quad">
+                    <point name="start" value="-2.0 3.0 1.0"/>
+                    <vector name="horizontal" value="4.0 0.0 0.0"/>
+                    <vector name="vertical" value="0.0 0.0 4.0"/>
+                </shape>
+                <bxdf type="lambert">
+                    <texture type="solid">
+                        <color name="albedo" value="1.0 0.5 0.0"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+            <!--lower teal-->
+            <primitive type="geometry">
+                <shape type="quad">
+                    <point name="start" value="-2.0 -3.0 5.0"/>
+                    <vector name="horizontal" value="4.0 0.0 0.0"/>
+                    <vector name="vertical" value="0.0 0.0 -4.0"/>
+                </shape>
+                <bxdf type="lambert">
+                    <texture type="solid">
+                        <color name="albedo" value="0.2 0.8 0.8"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+
+        </aggregate>
+        <camera type="perspective">
+            <film>
+                <integer name="width" value="400"/>
+                <integer name="height" value="400"/>
+            </film>
+            <float name="fov" value="80.0"/>
+            <point name="lookFrom" value="0.0 0.0 9.0"/>
+            <point name="lookAt" value="0.0 0.0 0.0"/>
+            <vector name="up" value="0.0 1.0 0.0"/>
+        </camera>
     </integrator>
-
-    <camera type="perspective">
-        <integer name="width" value="400"/>
-        <integer name="height" value="400"/>
-        <float name="fov" value="80.0"/>
-        <point name="lookFrom" value="0.0 0.0 9.0"/>
-        <point name="lookAt" value="0.0 0.0 0.0"/>
-        <vector name="up" value="0.0 1.0 0.0"/>
-    </camera>
-
-    <aggregate type="naive">
-<!--        <primitive type="geometry">-->
-<!--            <shape type="sphere">-->
-<!--                <float name="radius" value="2.0"/>-->
-<!--                <point name="center" value="-1.0 0.0 -12.0"/>-->
-<!--            </shape>-->
-<!--            <bxdf type="lambert">-->
-<!--                <texture type="solid">-->
-<!--                    <color name="albedo" value="0.6 0.7 0.8"/>-->
-<!--                </texture>-->
-<!--            </bxdf>-->
-<!--        </primitive>-->
-<!--        <primitive type="geometry">-->
-<!--            <shape type="sphere">-->
-<!--                <float name="radius" value="1.5"/>-->
-<!--                <point name="center" value="-0.5 -0.5 -8.0"/>-->
-<!--            </shape>-->
-<!--            <bxdf type="dielectric">-->
-<!--                <float name="refractionIndex" value="1.5"/>-->
-<!--            </bxdf>-->
-<!--        </primitive>-->
-        <primitive type="geometry">
-            <shape type="quad">
-                <point name="start" value="-2.0 -2.0 0.0"/>
-                <vector name="horizontal" value="4.0 0.0 0.0"/>
-                <vector name="vertical" value="0.0 4.0 0.0"/>
-            </shape>
-            <bxdf type="lambert">
-                <texture type="solid">
-                    <color name="albedo" value="0.2 1.0 0.2"/>
-                </texture>
-            </bxdf>
-        </primitive>
-
-    </aggregate>
-
 
 </scene>

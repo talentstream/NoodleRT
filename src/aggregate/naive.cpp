@@ -32,15 +32,15 @@ public:
         }
     }
 
-    Boolean Intersect(const Ray &ray, SurfaceInteraction &interaction) const override {
+    Boolean Intersect(const Ray &ray, SurfaceInteraction &si) const override {
         Boolean hitAnything{false};
-        SurfaceInteraction tempInteraction;
+        SurfaceInteraction tempSi;
 
         for (const auto &primitive: mPrimitives) {
-            if (primitive->Intersect(ray, tempInteraction)) {
+            if (primitive->Intersect(ray, tempSi)) {
                 hitAnything = true;
-                if (tempInteraction.t < interaction.t) {
-                    interaction = tempInteraction;
+                if (tempSi.t < si.t) {
+                    si = tempSi;
                 }
             }
         }

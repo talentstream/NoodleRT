@@ -16,8 +16,8 @@ public:
         PRINT_DEBUG_INFO("Shape", "quad")
         auto n = Cross(u, v);
         unitN = Normalize(n);
-        d = Dot(n, Vector3f{q});
-        w = Normalize(n);
+        d = Dot(unitN, Vector3f{q});
+        w = n / LengthSquared(n);
     }
 
     Boolean Intersect(const Ray &ray, Float tMax, SurfaceInteraction &i) const override {
@@ -42,8 +42,8 @@ public:
 
         i.t = t;
         i.p = p;
-        i.front = Dot(ray.d, w) < 0;
-        i.n = i.front ? Normal3f{w} : Normal3f{-w};
+        i.front = Dot(ray.d, unitN) < 0;
+        i.n = i.front ? Normal3f{unitN} : Normal3f{-unitN};
         i.u = alpha;
         i.v = beta;
 
