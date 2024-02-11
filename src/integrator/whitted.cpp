@@ -19,11 +19,7 @@ public:
         PRINT_DEBUG_INFO("Integrator", "whitted")
     }
 
-    [[nodiscard]] Color3f Li(const Ray &ray) const override {
-        return Trace(ray, *pAggregate, mMaxDepth);
-    }
-
-    Color3f NewLi(const Ray &ray) const override {
+    Color3f Li(const Ray &ray) const override {
         return Trace(ray, *pAggregate, mMaxDepth);
     }
 

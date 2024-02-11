@@ -5,6 +5,7 @@
 #include "base/integrator.h"
 #include "base/aggregate.h"
 #include "base/camera.h"
+#include "base/film.h"
 #include <ranges>
 
 NAMESPACE_BEGIN
@@ -32,14 +33,21 @@ void Integrator::Initialize() {
     }
 }
 
-void ImageTileIntegrator::Render() const {
-    for (const Integer y: std::views::iota(0, 400)) {
-        auto index = (400 - y - 1) * 400;
-        for (const Integer x: std::views::iota(0, 400)) {
+std::vector<Color3f> ImageTileIntegrator::Render() const {
+    const auto film = pCamera->GetFilm();
+    const auto width = film->width;
+    const auto height = film->height;
+
+    std::vector<Color3f> framebuffer(width * height);
+    for (const Integer y: std::views::iota(0, height)) {
+        auto index = (height - y - 1) * width;
+        for (const Integer x: std::views::iota(0, width)) {
             auto ray = pCamera->GenerateRay(Point2f(x, y));
-            auto color = Li(ray);
+            framebuffer[index + x] = Li(ray);
         }
     }
+
+    return framebuffer;
 
 }
 
