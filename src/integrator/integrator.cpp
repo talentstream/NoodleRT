@@ -7,6 +7,7 @@
 #include "base/camera.h"
 #include "base/film.h"
 #include "util/parallel.h"
+#include "util/timer.h"
 #include <ranges>
 
 NAMESPACE_BEGIN
@@ -34,17 +35,18 @@ void Integrator::Initialize() {
     }
 }
 
+static Integer currentSpp{0};
+static Timer timer;
+
 void ImageTileIntegrator::Render() const {
     const auto film = pCamera->GetFilm();
     const auto width = film->width;
     const auto height = film->height;
 
-    std::vector<Color3f> framebuffer(width * height);
-    const Integer tileSizeX{8}, tileSizeY{8};
-    const Integer tileHeight = Floor(static_cast<Float>(height) / static_cast<Float>(tileSizeY));
-    const Integer tileWidth = Floor(static_cast<Float>(width) / static_cast<Float>(tileSizeX));
-
-    Parallel::For2D(0, tileSizeX, 0, tileSizeY, [&](Integer tileX, Integer tileY) {
+    static const Integer tileSizeX{8}, tileSizeY{8};
+    static const Integer tileHeight = Floor(static_cast<Float>(height) / static_cast<Float>(tileSizeY));
+    static const Integer tileWidth = Floor(static_cast<Float>(width) / static_cast<Float>(tileSizeX));
+    static auto RenderBlock = [&](Integer tileX, Integer tileY) {
         auto beginY = tileY * tileHeight;
         auto endY = (tileY + 1) * tileHeight;
         endY = endY > height ? height : endY;
@@ -56,11 +58,25 @@ void ImageTileIntegrator::Render() const {
             auto index = (height - y - 1) * width;
             for (const Integer x: std::views::iota(beginX, endX)) {
                 auto ray = pCamera->GenerateRay(Point2f(x, y));
-                auto L = Li(ray);
+                auto L = Li(ray) / mSpp;
                 film->Update(index + x, L);
             }
         }
-    });
+    };
+
+    if (currentSpp < mSpp) {
+        if (currentSpp == 0) {
+            std::print("RENDERING BEGIN============================================\n");
+        }
+        timer.Reset();
+        Parallel::For2D(0, tileSizeX, 0, tileSizeY, RenderBlock);
+        currentSpp++;
+        std::print("SPP: {} - ", currentSpp);
+        timer.PrintElapsedMillSec();
+        if(currentSpp == mSpp) {
+            std::print("RENDERING END============================================\n");
+        }
+    }
 
     film->Display();
 }

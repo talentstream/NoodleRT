@@ -16,6 +16,7 @@ class WhittedIntegrator : public ImageTileIntegrator {
 public:
     explicit WhittedIntegrator(const PropertyList &propertyList) {
         mMaxDepth = propertyList.GetInteger("depth", 1);
+        mSpp = propertyList.GetInteger("spp", 1);
         PRINT_DEBUG_INFO("Integrator", "whitted")
     }
 

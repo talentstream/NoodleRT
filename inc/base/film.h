@@ -24,7 +24,7 @@ public:
     virtual ~Film() = default;
 
     void Update(Integer index, Color3f color) {
-        framebuffer[index] = color;
+        framebuffer[index] += color;
     }
 
     // justForApplication UI Display

@@ -40,14 +40,11 @@ void Application::Run() {
         glfwSwapBuffers(window);
     });
 
-    std::print("RENDERING BEGIN============================================\n");
-
     while (!glfwWindowShouldClose(window)) {
         pIntegrator->Render();
         glfwPollEvents();
     }
 
-    std::print("RENDERING END============================================\n");
 }
 
 void Application::InitUI() {

@@ -35,6 +35,7 @@ protected:
     Camera *pCamera{nullptr};
     // std::vector<Light> mLights;
     // Sampler *pSampler{nullptr};
+    Integer mSpp{};
 };
 
 class ImageTileIntegrator : public Integrator {
