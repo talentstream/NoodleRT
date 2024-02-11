@@ -21,16 +21,16 @@ public:
     }
 
     Color3f Li(const Ray &ray) const override {
-        return Trace(ray, *pAggregate, mMaxDepth);
+        return Trace(ray, mMaxDepth);
     }
 
 private:
-    Color3f Trace(const Ray &ray, const Aggregate &aggregate, Integer depth) const {
+    Color3f Trace(const Ray &ray, Integer depth) const {
         if (depth < 0) return {0, 0, 0};
 
         // find nearest intersection
         SurfaceInteraction ni;
-        if (!aggregate.Intersect(ray, ni)) {
+        if (!pAggregate->Intersect(ray, ni)) {
             return {0.235294, 0.67451, 0.843137};
         }
 
@@ -45,7 +45,7 @@ private:
         Boolean isSpecular = ni.bxdf->ComputeScattering(ray, ni, attenuation, wo);
         Le += attenuation;
         if (isSpecular) {
-            Le += Trace(wo, aggregate, depth - 1);
+            Le += Trace(wo, depth - 1);
         }
         return Le;
     }
