@@ -27,16 +27,17 @@ public:
         framebuffer[index] = color;
     }
 
+    // justForApplication UI Display
+    void SetCallBack(std::function<void(const std::vector<Color3f> &)> callback) {
+        mCallback = std::move(callback);
+    }
+
     void Display() const {
         std::vector<Color3f> displayBuffer(framebuffer.size());
         std::ranges::transform(framebuffer, displayBuffer.begin(), [&](const Color3f &color) {
             return color.LinearToGamma();
         });
         mCallback(displayBuffer);
-    }
-
-    void SetCallBack(std::function<void(const std::vector<Color3f> &)> callback) {
-        mCallback = std::move(callback);
     }
 
     [[nodiscard]] EClassType GetClassType() const override {

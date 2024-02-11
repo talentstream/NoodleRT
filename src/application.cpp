@@ -43,7 +43,6 @@ void Application::Run() {
     std::print("RENDERING BEGIN============================================\n");
 
     while (!glfwWindowShouldClose(window)) {
-//        pRenderer->OnRender();
         pIntegrator->Render();
         glfwPollEvents();
     }
