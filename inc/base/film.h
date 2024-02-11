@@ -23,8 +23,8 @@ public:
 
     virtual ~Film() = default;
 
-    void Update(Integer index, Color3f color) {
-        framebuffer[index] += color;
+    void Update(Integer index, Color3f c) {
+        framebuffer[index] += c;
     }
 
     // justForApplication UI Display
@@ -32,10 +32,10 @@ public:
         mCallback = std::move(callback);
     }
 
-    void Display() const {
+    void Display(const Integer spp) const {
         std::vector<Color3f> displayBuffer(framebuffer.size());
-        std::ranges::transform(framebuffer, displayBuffer.begin(), [&](const Color3f &color) {
-            return color.LinearToGamma();
+        std::ranges::transform(framebuffer, displayBuffer.begin(), [&](Color3f c) {
+            return (c / spp).LinearToGamma();
         });
         mCallback(displayBuffer);
     }

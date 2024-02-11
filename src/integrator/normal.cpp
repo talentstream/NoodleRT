@@ -12,6 +12,7 @@ NAMESPACE_BEGIN
 class NormalIntegrator : public ImageTileIntegrator {
 public:
     explicit NormalIntegrator(const PropertyList &propertyList) {
+        mSpp = propertyList.GetInteger("spp", 1);
         PRINT_DEBUG_INFO("Integrator", "normal")
     }
 

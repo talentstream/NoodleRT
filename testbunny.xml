@@ -1,27 +1,20 @@
 <scene>
-    <integer name="spp" value="10"/>
-    <integer name="width" value="400"/>
-    <integer name="height" value="225"/>
-
-    <aggregate type="bvh">
+    <integrator type="normal">
+        <integer name="spp" value="10"/>
+        <aggregate type="bvh">
         <mesh>
             <string name="filename" value="../bunny.obj"/>
         </mesh>
     </aggregate>
-
-    <integrator type="whitted">
-
+        <camera type="perspective">
+            <film>
+                <integer name="width" value="400"/>
+                <integer name="height" value="400"/>
+            </film>
+            <float name="fov" value="45.0"/>
+            <point name="lookFrom" value="-0.0123771, 0.0540913, -0.239922"/>
+            <point name="lookAt" value="-0.0315182, 0.284011, 0.7331"/>
+            <vector name="up" value="0.00717446, 0.973206, -0.229822"/>
+        </camera>
     </integrator>
-
-    <camera type="perspective">
-        <integer name="width" value="400"/>
-        <integer name="height" value="225"/>
-        <float name="fov" value="45.0"/>
-        <point name="lookFrom" value="-0.0123771, 0.0540913, -0.239922"/>
-        <point name="lookAt" value="-0.0315182, 0.284011, 0.7331"/>
-        <vector name="up" value="0.00717446, 0.973206, -0.229822"/>
-    </camera>
-
-
-
 </scene>

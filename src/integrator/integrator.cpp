@@ -58,8 +58,7 @@ void ImageTileIntegrator::Render() const {
             auto index = (height - y - 1) * width;
             for (const Integer x: std::views::iota(beginX, endX)) {
                 auto ray = pCamera->GenerateRay(Point2f(x, y));
-                auto L = Li(ray) / mSpp;
-                film->Update(index + x, L);
+                film->Update(index + x, Li(ray));
             }
         }
     };
@@ -78,7 +77,7 @@ void ImageTileIntegrator::Render() const {
         }
     }
 
-    film->Display();
+    film->Display(currentSpp);
 }
 
 NAMESPACE_END
