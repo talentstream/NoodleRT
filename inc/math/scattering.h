@@ -6,6 +6,7 @@
 
 #include "core/common.h"
 #include "math/vec.h"
+#include "math/constant.h"
 
 NAMESPACE_BEGIN
 
@@ -14,15 +15,16 @@ inline Vector3f Reflect(Vector3f w, Vector3f n) {
     return -w + 2 * Dot(w, n) * n;
 }
 
-inline Vector3f Refract(Vector3f wi, Vector3f n, Float etai_over_etat) {
-    Float cos_theta = std::min(Dot(-wi, n), 1.0f);
-    Vector3f r_out_parallel = etai_over_etat * (wi + cos_theta * n);
-    Vector3f r_out_perp = -sqrtf(fabsf(1.0f - LengthSquared(r_out_parallel))) * n;
-    return r_out_parallel + r_out_perp;
+inline Vector3f Refract(Vector3f wi, Vector3f n, Float ratio) {
+    Float costTheta = Min(Dot(-wi, n), 1.0);
+    Vector3f rOutParallel = ratio * (wi + costTheta * n);
+    Vector3f rOutPerp = -Sqrt(Abs(1.0f - LengthSquared(rOutParallel))) * n;
+    return rOutParallel + rOutPerp;
+
 }
 
-inline Float Schlick(Float cosine, Float ref_idx) {
-    Float r0 = (1 - ref_idx) / (1 + ref_idx);
+inline Float Schlick(Float cosine, Float refIdx) {
+    Float r0 = (1 - refIdx) / (1 + refIdx);
     r0 = r0 * r0;
     return r0 + (1 - r0) * powf((1 - cosine), 5);
 }
