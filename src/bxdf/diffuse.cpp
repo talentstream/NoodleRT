@@ -30,6 +30,15 @@ public:
         }
     }
 
+    std::optional<Color3f>
+    Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
+        if (Dot(wo, si.n) < 0) {
+            return std::nullopt;
+        }
+        wi = Vector3f{si.n} + RandomInUnitVector();
+        return pAlbedo->Evaluate(si);
+    }
+
     std::optional<Vector3f> ComputeScattering(const SurfaceInteraction &si, Vector3f wo) const override {
         Vector3f scatterDirection = Vector3f(si.n) + RandomInUnitVector();
         auto NearZero = [](Vector3f v) {
@@ -44,6 +53,7 @@ public:
     [[nodiscard]] Color3f Evaluate(const SurfaceInteraction &si, Vector3f wo) const override {
         return pAlbedo->Evaluate(si);
     }
+
 
 private:
     Texture *pAlbedo{nullptr};

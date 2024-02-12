@@ -28,24 +28,30 @@ private:
     Color3f Trace(const Ray &ray, Integer depth) const {
         // find nearest intersection
         SurfaceInteraction si;
-        if (!pAggregate->Intersect(ray, si)) {
+        Color3f backgroundColor;
+        {
             Vector3f unitDir = Normalize(ray.d);
             Float t = 0.5f * (unitDir.y + 1.0f);
-            return (1.0f - t) * Color3f{1.0f, 1.0f, 1.0f} + t * Color3f{0.5f, 0.7f, 1.0f};
+            backgroundColor = (1.0f - t) * Color3f{1.0f, 1.0f, 1.0f} + t * Color3f{0.5f, 0.7f, 1.0f};
+        }
+        if (!pAggregate->Intersect(ray, si)) {
+            return backgroundColor;
         }
 
         // shading
         auto bxdf = si.bxdf;
-        Vector3f wo = -ray.d;
-        Color3f Le = bxdf->Evaluate(si,wo);
+        Vector3f wo = -ray.d, wi;
+        auto Le = bxdf->Sample(si, wo, wi, Point2f{});
+        if(!Le.has_value()) return backgroundColor;
+        auto le = Le.value();
+//        Color3f oldLe = bxdf->Evaluate(si, wo);
+        if (depth == mMaxDepth) return le;
 
-        if(depth == mMaxDepth) return Le;
+//        auto oldWi = bxdf->ComputeScattering(si, ray.d);
+//        if (!oldWi.has_value()) return oldLe;
 
-        auto wi = bxdf->ComputeScattering(si, ray.d);
-        if(!wi.has_value()) return Le;
-
-        Ray scattered {si.p, wi.value()};
-        return Le * Trace(scattered, depth + 1);
+        Ray scattered{si.p, wi};
+        return le * Trace(scattered, depth + 1);
 
     }
 

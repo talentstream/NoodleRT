@@ -18,6 +18,9 @@ public:
 
     virtual Color3f Evaluate(const SurfaceInteraction &si, Vector3f wo) const = 0;
 
+    virtual std::optional<Color3f>
+    Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const { return {}; };
+
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::EBxDF;
     }
