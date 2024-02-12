@@ -8,6 +8,8 @@
 
 NAMESPACE_BEGIN
 
+// Ideal Diffuse
+// Assume the same value for all incident and outgoing directions
 class Diffuse : public BxDF {
 public:
     explicit Diffuse(const PropertyList &propertyList) {

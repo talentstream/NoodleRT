@@ -27,7 +27,8 @@ public:
     RNG(uint64_t sequenceIndex) { SetSequence(sequenceIndex); }
 
     Float UniformFloat() {
-        return std::min(OneMinusEpsilon, Float(UniformUInt32() * 2.3283064365386963e-10f));
+        auto result = std::min(OneMinusEpsilon, Float(UniformUInt32() * 2.3283064365386963e-10f));
+        return result;
     }
 
 private:

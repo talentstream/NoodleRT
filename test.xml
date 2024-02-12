@@ -54,8 +54,14 @@
                     <point name="center" value="0.0 -100.5 -1.0"/>
                 </shape>
                 <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.8 0.8 0.0"/>
+                    <texture type="checker">
+                        <texture type="solid">
+                            <color name="albedo" value="0.2 0.3 0.1"/>
+                        </texture>
+                        <texture type="solid">
+                            <color name="albedo" value="0.9 0.9 0.9"/>
+                        </texture>
+                        <float name="scale" value="0.32"/>
                     </texture>
                 </bxdf>
             </primitive>

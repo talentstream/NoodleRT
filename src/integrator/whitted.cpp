@@ -21,13 +21,11 @@ public:
     }
 
     Color3f Li(const Ray &ray) const override {
-        return Trace(ray, mMaxDepth);
+        return Trace(ray, 0);
     }
 
 private:
     Color3f Trace(const Ray &ray, Integer depth) const {
-        if (depth < 0) return {0, 0, 0};
-
         // find nearest intersection
         SurfaceInteraction si;
         if (!pAggregate->Intersect(ray, si)) {
@@ -39,13 +37,16 @@ private:
         // shading
         auto bxdf = si.bxdf;
         Vector3f wo = -ray.d;
+        Color3f Le = bxdf->Evaluate(si,wo);
+
+        if(depth == mMaxDepth) return Le;
 
         auto wi = bxdf->ComputeScattering(si, ray.d);
-        if (wi.has_value()) {
-            return bxdf->Evaluate(si, wo) * Trace(Ray(si.p, wi.value()), depth - 1);
-        } else {
-            return {};
-        }
+        if(!wi.has_value()) return Le;
+
+        Ray scattered {si.p, wi.value()};
+        return Le * Trace(scattered, depth + 1);
+
     }
 
 private:

@@ -37,12 +37,12 @@ public:
         }
     }
 
-    Boolean Intersect(const Ray &ray, SurfaceInteraction &interaction) const override {
-        if (!pShape->Intersect(ray, interaction.t, interaction)) {
+    Boolean Intersect(const Ray &ray, SurfaceInteraction &si) const override {
+        if (!pShape->Intersect(ray, si.t, si)) {
             return false;
         }
 
-        interaction.bxdf = pBxDF;
+        si.bxdf = pBxDF;
 
         return true;
     }

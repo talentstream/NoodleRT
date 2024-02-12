@@ -25,6 +25,7 @@ public:
     }
 
     Color3f Evaluate(const SurfaceInteraction &si, Vector3f wo) const override {
+
         return mAlbedo;
     }
 
