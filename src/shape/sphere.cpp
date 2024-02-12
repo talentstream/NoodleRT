@@ -39,11 +39,9 @@ public:
         }
 
         // 设定Interaction Info
-        i.t = root;
-        i.p = ray(root);
-        Normal3f outNormal{(i.p - mCenter) / mRadius};
-        i.front = Dot(ray.d, Vector3f(outNormal)) < 0;
-        i.n = i.front ? outNormal : -outNormal;
+
+        Point3f hitP = ray(root);
+        i = SurfaceInteraction(root,hitP,Normal3f{hitP - mCenter},-ray.d);
 
         // uv
         auto theta = ACos(-i.n.y);

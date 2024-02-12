@@ -18,7 +18,7 @@ public:
 
     std::optional<Color3f>
     Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
-        wi = Reflect(Normalize(wo), Vector3f{si.n});
+        wi = Reflect(wo, Vector3f{si.n});
         if (Dot(wi, si.n) > 0) {
             return mAlbedo;
         }

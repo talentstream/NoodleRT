@@ -54,7 +54,7 @@
                 <integer name="width" value="400"/>
                 <integer name="height" value="225"/>
             </film>
-            <float name="fov" value="20.0"/>
+            <float name="fov" value="30.0"/>
             <point name="lookFrom" value="-2.0 2.0 1.0"/>
             <point name="lookAt" value="0.0 0.0 -1.0"/>
             <vector name="up" value="0.0 1.0 0.0"/>

@@ -16,8 +16,12 @@ class SurfaceInteraction {
 public:
     SurfaceInteraction() = default;
 
-    SurfaceInteraction(Point3f p, Normal3f n, Vector3f wo, Float t)
-            : p{p}, n{n}, wo{Normalize(wo)}, t{t} {}
+    SurfaceInteraction(Float t, Point3f p, Normal3f n, Vector3f wo)
+            : t{t},
+              p{p},
+              n{Normalize(n)},
+              wo{Normalize(wo)} {}
+
 
     Float t{Infinity};// time
     Point3f p;// position

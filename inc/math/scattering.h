@@ -9,12 +9,9 @@
 
 NAMESPACE_BEGIN
 
-// default input w & output r is outside the surface
-// return r
+// default w & n is same side of surface
 inline Vector3f Reflect(Vector3f w, Vector3f n) {
-    w = -w;
-    // w is into the surface
-    return w - 2 * Dot(w, n) * n;
+    return -w + 2 * Dot(w, n) * n;
 }
 
 inline Vector3f Refract(Vector3f wi, Vector3f n, Float etai_over_etat) {
