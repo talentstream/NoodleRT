@@ -26,23 +26,13 @@
                     <float name="refractionIndex" value="1.5"/>
                 </bxdf>
             </primitive>
-            <!--sphere left smaller-->
-            <primitive type="geometry">
-                <shape type="sphere">
-                    <float name="radius" value="0.4"/>
-                    <point name="center" value="-1.0 0.0 -1.0"/>
-                </shape>
-                <bxdf type="dielectric">
-                    <float name="refractionIndex" value="1.5"/>
-                </bxdf>
-            </primitive>
             <!--sphere right-->
             <primitive type="geometry">
                 <shape type="sphere">
                     <float name="radius" value="0.5"/>
                     <point name="center" value="1.0 0.0 -1.0"/>
                 </shape>
-                <bxdf type="metal">
+                <bxdf type="specular">
                     <color name="albedo" value="0.8 0.6 0.2"/>
                     <float name="roughness" value="0.0"/>
                 </bxdf>
@@ -54,14 +44,8 @@
                     <point name="center" value="0.0 -100.5 -1.0"/>
                 </shape>
                 <bxdf type="diffuse">
-                    <texture type="checker">
-                        <texture type="solid">
-                            <color name="albedo" value="0.2 0.3 0.1"/>
-                        </texture>
-                        <texture type="solid">
-                            <color name="albedo" value="0.9 0.9 0.9"/>
-                        </texture>
-                        <float name="scale" value="0.32"/>
+                    <texture type="solid">
+                        <color name="albedo" value="0.8 0.8 0.0"/>
                     </texture>
                 </bxdf>
             </primitive>
@@ -71,7 +55,7 @@
                 <integer name="width" value="400"/>
                 <integer name="height" value="225"/>
             </film>
-            <float name="fov" value="45.0"/>
+            <float name="fov" value="20.0"/>
             <point name="lookFrom" value="-2.0 2.0 1.0"/>
             <point name="lookAt" value="0.0 0.0 -1.0"/>
             <vector name="up" value="0.0 1.0 0.0"/>

@@ -16,14 +16,20 @@ public:
 
     Color3f() = default;
 
+    Color3f(Float v)
+            : r{v}, g{v}, b{v} {}
+
     Color3f(Float r, Float g, Float b)
             : r{r}, g{g}, b{b} {}
 
-    explicit Color3f(Point3f p) : r{p.x}, g{p.y}, b{p.z} {}
+    explicit Color3f(Point3f p)
+            : r{p.x}, g{p.y}, b{p.z} {}
 
-    explicit Color3f(Vector3f v) : r{v.x}, g{v.y}, b{v.z} {}
+    explicit Color3f(Vector3f v)
+            : r{v.x}, g{v.y}, b{v.z} {}
 
-    explicit Color3f(Normal3f n) : r{n.x}, g{n.y}, b{n.z} {}
+    explicit Color3f(Normal3f n)
+            : r{n.x}, g{n.y}, b{n.z} {}
 
     Color3f operator+(Color3f c) const {
         return Color3f{r + c.r, g + c.g, b + c.b};

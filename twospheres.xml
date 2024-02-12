@@ -1,6 +1,6 @@
 <scene>
     <integrator type="whitted">
-        <integer name="spp" value = "1"/>
+        <integer name="spp" value="100"/>
         <integer name="maxDepth" value="50"/>
         <aggregate type="naive">
             <primitive type="geometry">
@@ -8,7 +8,7 @@
                     <float name="radius" value="10.0"/>
                     <point name="center" value="0.0 -10.0 0.0"/>
                 </shape>
-                <bxdf type="lambert">
+                <bxdf type="diffuse">
                     <texture type="checker">
                         <texture type="solid">
                             <color name="albedo" value="0.2 0.3 0.1"/>
@@ -25,7 +25,7 @@
                     <float name="radius" value="10.0"/>
                     <point name="center" value="0.0 10.0 0.0"/>
                 </shape>
-                <bxdf type="lambert">
+                <bxdf type="diffuse">
                     <texture type="checker">
                         <texture type="solid">
                             <color name="albedo" value="0.2 0.3 0.1"/>
