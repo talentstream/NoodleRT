@@ -18,7 +18,7 @@ public:
 
     std::optional<Color3f>
     Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
-        if (Dot(wo, si.n) < 0) {
+        if (Dot(si.wo, si.n) < 0) {
             return std::nullopt;
         }
         wi = Vector3f{si.n} + RandomInUnitVector();

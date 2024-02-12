@@ -7,18 +7,17 @@
 
 NAMESPACE_BEGIN
 
-// Ideal Specular
-// Perfect reflection
-class Specular : public BxDF {
+// Perfect Specular reflection
+class Reflection : public BxDF {
 public:
-    explicit Specular(const PropertyList &propertyList) {
+    explicit Reflection(const PropertyList &propertyList) {
         mAlbedo = propertyList.GetColor("albedo", {0.5f, 0.5, 0.5f});
         PRINT_DEBUG_INFO("BxDF", "specular")
     }
 
     std::optional<Color3f>
     Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
-        wi = Reflect(wo, Vector3f{si.n});
+        wi = Reflect(si.wo, Vector3f{si.n});
         if (Dot(wi, si.n) > 0) {
             return mAlbedo;
         }
@@ -29,5 +28,5 @@ private:
     Color3f mAlbedo;
 };
 
-REGISTER_CLASS(Specular, "specular")
+REGISTER_CLASS(Reflection, "reflection")
 NAMESPACE_END

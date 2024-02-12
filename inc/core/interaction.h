@@ -22,7 +22,6 @@ public:
               n{Normalize(n)},
               wo{Normalize(wo)} {}
 
-
     Float t{Infinity};// time
     Point3f p;// position
     Vector3f wo;// out direction

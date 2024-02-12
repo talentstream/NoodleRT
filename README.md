@@ -17,15 +17,10 @@ Application:
   - Lights
   - Camera
     - Film
-- Sampler
+  - Sampler
 
-先重构Integrator 的代码
-已经将Aggregate移动至Integrator中
-接下来移动Camera 已完成
-接下来将Film塞入 Integrator，使得主要渲染逻辑都在Integrator，Film只负责展示
+- Todo : ? 法线坐标系转换？
 
-
-// Todo : fix bxdf or integrator bug?
 接下来
 sampler & random walk
 diffuse brdf ? 
@@ -34,3 +29,5 @@ blinn-phong brdf?
 cook-torrance brdf?
 
 path tracing & light path tracing? 
+
+[BRDF参考](https://digibug.ugr.es/bitstream/handle/10481/19751/rmontes_LSI-2012-001TR.pdf)

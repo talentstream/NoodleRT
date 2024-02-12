@@ -21,8 +21,7 @@
                     <float name="radius" value="0.5"/>
                     <point name="center" value="-1.0 0.0 -1.0"/>
                 </shape>
-                <bxdf type="specular">
-                    <float name="refractionIndex" value="1.5"/>
+                <bxdf type="transmission">
                 </bxdf>
             </primitive>
             <!--sphere right-->
@@ -31,7 +30,7 @@
                     <float name="radius" value="0.5"/>
                     <point name="center" value="1.0 0.0 -1.0"/>
                 </shape>
-                <bxdf type="specular">
+                <bxdf type="reflection">
                     <color name="albedo" value="0.8 0.6 0.2"/>
                     <float name="roughness" value="0.0"/>
                 </bxdf>
