@@ -21,7 +21,7 @@ public:
         if (Dot(wo, si.n) < 0) {
             return std::nullopt;
         }
-        wi = Vector3f{si.n} /*+ RandomInUnitVector()*/;
+        wi = Vector3f{si.n} + RandomInUnitVector();
         return pAlbedo->Evaluate(si);
     }
 
