@@ -16,6 +16,15 @@ public:
         PRINT_DEBUG_INFO("BxDF", "diffuse")
     }
 
+    std::optional<Color3f>
+    Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
+        if (Dot(wo, si.n) < 0) {
+            return std::nullopt;
+        }
+        wi = Vector3f{si.n} /*+ RandomInUnitVector()*/;
+        return pAlbedo->Evaluate(si);
+    }
+
     void AddChild(Object *object) override {
         switch (object->GetClassType()) {
             case EClassType::ETexture:
@@ -29,31 +38,6 @@ public:
             pAlbedo = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("checker", {}, true));
         }
     }
-
-    std::optional<Color3f>
-    Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
-        if (Dot(wo, si.n) < 0) {
-            return std::nullopt;
-        }
-        wi = Vector3f{si.n} + RandomInUnitVector();
-        return pAlbedo->Evaluate(si);
-    }
-
-    std::optional<Vector3f> ComputeScattering(const SurfaceInteraction &si, Vector3f wo) const override {
-        Vector3f scatterDirection = Vector3f(si.n) + RandomInUnitVector();
-        auto NearZero = [](Vector3f v) {
-            return (Abs(v.x) < Epsilon) && (Abs(v.y) < Epsilon) && (Abs(v.z) < Epsilon);
-        };
-        if (NearZero(scatterDirection)) {
-            scatterDirection = Vector3f(si.n);
-        }
-        return scatterDirection;
-    }
-
-    [[nodiscard]] Color3f Evaluate(const SurfaceInteraction &si, Vector3f wo) const override {
-        return pAlbedo->Evaluate(si);
-    }
-
 
 private:
     Texture *pAlbedo{nullptr};
