@@ -1,5 +1,4 @@
 <scene>
-
     <integrator type="whitted">
         <integer name="spp" value="100"/>
         <integer name="maxDepth" value="50"/>
@@ -22,7 +21,7 @@
                     <float name="radius" value="0.5"/>
                     <point name="center" value="-1.0 0.0 -1.0"/>
                 </shape>
-                <bxdf type="dielectric">
+                <bxdf type="specular">
                     <float name="refractionIndex" value="1.5"/>
                 </bxdf>
             </primitive>
@@ -60,8 +59,7 @@
             <point name="lookAt" value="0.0 0.0 -1.0"/>
             <vector name="up" value="0.0 1.0 0.0"/>
         </camera>
-
+        <sampler type="independent">
+        </sampler>
     </integrator>
-
-
 </scene>

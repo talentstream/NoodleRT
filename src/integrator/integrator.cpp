@@ -6,6 +6,7 @@
 #include "base/aggregate.h"
 #include "base/camera.h"
 #include "base/film.h"
+#include "base/sampler.h"
 #include "util/parallel.h"
 #include "util/timer.h"
 #include <ranges>
@@ -20,6 +21,9 @@ void Integrator::AddChild(Object *child) {
         case EClassType::ECamera:
             pCamera = dynamic_cast<Camera *>(child);
             break;
+        case EClassType::ESampler:
+            pSampler = dynamic_cast<Sampler *>(child);
+            break;
         default:
             throw std::runtime_error("Integrator Add Error Child:" +
                                      Object::ClassTypeName(child->GetClassType()));
@@ -32,6 +36,9 @@ void Integrator::Initialize() {
     }
     if (pCamera == nullptr) {
         throw std::runtime_error("Integrator Need Camera!");
+    }
+    if (pSampler == nullptr) {
+        throw std::runtime_error("Integrator Need Sampler!");
     }
 }
 
@@ -57,7 +64,7 @@ void ImageTileIntegrator::Render() const {
         for (const Integer y: std::views::iota(beginY, endY)) {
             auto index = (height - y - 1) * width;
             for (const Integer x: std::views::iota(beginX, endX)) {
-                auto ray = pCamera->GenerateRay(Point2f(x, y));
+                auto ray = pCamera->GenerateRay(Point2f(x, y), pSampler->Next2D());
                 film->Update(index + x, Li(ray));
             }
         }
@@ -72,7 +79,7 @@ void ImageTileIntegrator::Render() const {
         currentSpp++;
         std::print("SPP: {} - ", currentSpp);
         timer.PrintElapsedMillSec();
-        if(currentSpp == mSpp) {
+        if (currentSpp == mSpp) {
             std::print("RENDERING END============================================\n");
         }
     }

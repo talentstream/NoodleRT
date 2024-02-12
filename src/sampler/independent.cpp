@@ -27,4 +27,6 @@ private:
     RNG rng;
 };
 
+REGISTER_CLASS(IndependentSampler, "independent")
+
 NAMESPACE_END

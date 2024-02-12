@@ -48,5 +48,8 @@
             <point name="lookAt" value="0.0 0.0 0.0"/>
             <vector name="up" value="0.0 1.0 0.0"/>
         </camera>
+        <sampler type="independent">
+
+        </sampler>
     </integrator>
 </scene>

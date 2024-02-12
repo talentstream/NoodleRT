@@ -14,7 +14,7 @@ class Camera : public Object {
 public:
     virtual ~Camera() = default;
 
-    [[nodiscard]] virtual Ray GenerateRay(Point2f uv) const = 0;
+    [[nodiscard]] virtual Ray GenerateRay(Point2f uv,Point2f sample) const = 0;
 
     void AddChild(Object *child) override;
 

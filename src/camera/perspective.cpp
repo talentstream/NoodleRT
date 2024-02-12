@@ -42,16 +42,16 @@ public:
         pixel100Loc = Point3f{viewportUpperLeft + deltaU * 0.5 + deltaV * 0.5};
     }
 
-    Ray GenerateRay(Point2f uv) const override {
-        auto PixelSampleSquare = [this]() {
-            auto pu = -0.5f + RandomFloat();
-            auto pv = -0.5f + RandomFloat();
+    Ray GenerateRay(Point2f uv, Point2f sample) const override {
+        auto PixelSampleSquare = [&]() {
+            auto pu = -0.5f + sample.x;
+            auto pv = -0.5f + sample.y;
             return pu * deltaU + pv * deltaV;
         };
 
         auto pixelCenter = pixel100Loc + uv.x * deltaU + uv.y * deltaV;
-//            auto pixelSample = pixelCenter + PixelSampleSquare();
-        return Ray{mLookFrom, pixelCenter - mLookFrom};
+        auto pixelSample = pixelCenter + PixelSampleSquare();
+        return Ray{mLookFrom, pixelSample - mLookFrom};
     }
 
 private:
