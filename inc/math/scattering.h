@@ -15,12 +15,17 @@ inline Vector3f Reflect(Vector3f w, Vector3f n) {
     return -w + 2 * Dot(w, n) * n;
 }
 
-inline Vector3f Refract(Vector3f wi, Vector3f n, Float ratio) {
-    Float costTheta = Min(Dot(-wi, n), 1.0);
-    Vector3f rOutParallel = ratio * (wi + costTheta * n);
-    Vector3f rOutPerp = -Sqrt(Abs(1.0f - LengthSquared(rOutParallel))) * n;
-    return rOutParallel + rOutPerp;
+inline Boolean Refract(Vector3f wi, Vector3f &wo, Vector3f n, Float ratio) {
+    Float cosTheta = Dot(n, wi);
+    Float sin2ThetaI = Max(0, 1 - cosTheta * cosTheta);
+    Float sin2ThetaT = ratio * ratio * sin2ThetaI;
 
+    if(sin2ThetaT >= 1) {
+        return false;
+    }
+    Float cosThetaT = sqrtf(1 - sin2ThetaT);
+    wo = ratio * -wi + (ratio * cosTheta - cosThetaT) * n;
+    return true;
 }
 
 inline Float Schlick(Float cosine, Float refIdx) {

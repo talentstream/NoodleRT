@@ -19,14 +19,14 @@ public:
 
     std::optional<Color3f>
     Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
-        Float ratio = mIntIOR / mExtIOR;
-        Float cosTheta = AbsDot(si.wo, si.n);
-        Float sinTheta = Sqrt(1 - cosTheta * cosTheta);
-        if (ratio * sinTheta > 1) {
-            return std::nullopt;
+        Float eta = mIntIOR / mExtIOR;
+        if (Dot(si.n, si.wo) < 0) {
+            eta = 1 / eta;
         }
-        wi = Refract(si.wo, Vector3f{si.n}, ratio);
-        return mAlbedo;
+        if (Refract(si.wo, wi, Vector3f{si.n}, eta)) {
+            return mAlbedo;
+        }
+        return std::nullopt;
     }
 
 private:
