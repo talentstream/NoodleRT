@@ -1,11 +1,14 @@
 <scene>
-    <integrator type="normal">
+    <integrator type="whitted">
         <integer name="spp" value="10"/>
         <aggregate type="bvh">
-        <mesh>
-            <string name="filename" value="../bunny.obj"/>
-        </mesh>
-    </aggregate>
+            <mesh>
+                <string name="filename" value="../bunny.obj"/>
+                <bxdf type="reflection">
+
+                </bxdf>
+            </mesh>
+        </aggregate>
         <camera type="perspective">
             <film>
                 <integer name="width" value="400"/>
@@ -16,5 +19,7 @@
             <point name="lookAt" value="-0.0315182, 0.284011, 0.7331"/>
             <vector name="up" value="0.00717446, 0.973206, -0.229822"/>
         </camera>
+        <sampler type="independent">
+        </sampler>
     </integrator>
 </scene>

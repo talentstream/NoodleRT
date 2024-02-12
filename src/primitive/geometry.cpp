@@ -20,20 +20,21 @@ public:
         delete pBxDF;
     }
 
-    void AddChild(Object *object) override {
-        switch (object->GetClassType()) {
+    void AddChild(Object *child) override {
+
+        switch (child->GetClassType()) {
             case EClassType::EShape:
-                pShape = dynamic_cast<Shape *>(object);
+                pShape = dynamic_cast<Shape *>(child);
                 break;
             case EClassType::EBxDF:
-                pBxDF = dynamic_cast<BxDF *>(object);
+                pBxDF = dynamic_cast<BxDF *>(child);
                 break;
         }
     }
 
     void Initialize() override {
-        if (!pBxDF) {
-            pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("lambert", PropertyList(), true));
+        if (pBxDF == nullptr) {
+            pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList(), true));
         }
     }
 

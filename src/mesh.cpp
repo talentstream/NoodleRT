@@ -20,17 +20,19 @@ Mesh::Mesh(const PropertyList &propertyList) {
     PRINT_DEBUG_INFO("Mesh", "mesh")
 }
 
-void Mesh::AddChild(Object *object) {
-    switch (object->GetClassType()) {
+void Mesh::AddChild(Object *child) {
+
+    switch (child->GetClassType()) {
         case EClassType::EBxDF:
-            pBxDF = static_cast<BxDF *>(object);
+            pBxDF = dynamic_cast<BxDF *>(child);
             break;
     }
 }
 
 void Mesh::Initialize() {
+
     if (pBxDF == nullptr) {
-        pBxDF = static_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList()));
+        pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList(), true));
     }
 
     LoadMesh();
@@ -91,6 +93,7 @@ void Mesh::LoadMesh() {
             auto *pTriangle = new Triangle(this, i);
             auto primitive = dynamic_cast<Primitive *>(ObjectFactory::CreateInstance("geometry", PropertyList()));
             primitive->AddChild(pTriangle);
+
             primitive->AddChild(pBxDF);
             primitives.emplace_back(primitive);
 

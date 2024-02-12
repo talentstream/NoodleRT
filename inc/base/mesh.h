@@ -15,7 +15,7 @@ public:
 
     virtual ~Mesh() = default;
 
-    void AddChild(Object *object) override;
+    void AddChild(Object *child) override;
 
     void Initialize() override;
 

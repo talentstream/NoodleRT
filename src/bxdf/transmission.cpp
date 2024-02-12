@@ -19,6 +19,7 @@ public:
 
     std::optional<Color3f>
     Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
+        // Todo: test this
         Float eta = mIntIOR / mExtIOR;
         if (Dot(si.n, si.wo) < 0) {
             eta = 1 / eta;

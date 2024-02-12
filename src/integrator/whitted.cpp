@@ -41,14 +41,12 @@ private:
         // shading
         auto bxdf = si.bxdf;
         Vector3f wo = -ray.d, wi;
+
         auto Le = bxdf->Sample(si, wo, wi, Point2f{});
         if(!Le.has_value()) return backgroundColor;
         auto le = Le.value();
-//        Color3f oldLe = bxdf->Evaluate(si, wo);
-        if (depth == mMaxDepth) return le;
 
-//        auto oldWi = bxdf->ComputeScattering(si, ray.d);
-//        if (!oldWi.has_value()) return oldLe;
+        if (depth == mMaxDepth) return le;
 
         Ray scattered{si.p, wi};
         return le * Trace(scattered, depth + 1);
