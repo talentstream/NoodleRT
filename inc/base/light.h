@@ -14,6 +14,10 @@ public:
     virtual ~Light() = default;
 
     virtual Color3f SampleLi(const SurfaceInteraction &si, Vector3f &wi, Point2f &sample) const = 0;
+
+    [[nodiscard]] EClassType GetClassType() const override {
+        return EClassType::ELight;
+    }
 };
 
 NAMESPACE_END
