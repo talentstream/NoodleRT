@@ -1,10 +1,13 @@
 <scene>
-    <integrator type="normal">
+    <integrator type="whitted">
         <integer name="spp" value="100"/>
         <integer name="maxDepth" value="50"/>
         <aggregate type="bvh">
             <mesh>
                 <string name="filename" value="../spot.obj"/>
+                <bxdf type="dielectric">
+
+                </bxdf>
             </mesh>
         </aggregate>
         <camera type="perspective">
@@ -17,6 +20,8 @@
             <point name="lookAt" value="0, 0, 0"/>
             <vector name="up" value="0, 1, 0"/>
         </camera>
+        <sampler type="independent">
+        </sampler>
     </integrator>
 
 </scene>

@@ -11,7 +11,7 @@ NAMESPACE_BEGIN
 class Reflection : public BxDF {
 public:
     explicit Reflection(const PropertyList &propertyList) {
-        mAlbedo = propertyList.GetColor("albedo", {0.5f, 0.5, 0.5f});
+        mAlbedo = propertyList.GetColor("albedo", {0.5});
         PRINT_DEBUG_INFO("BxDF", "specular")
     }
 

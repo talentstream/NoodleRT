@@ -13,7 +13,7 @@ public:
     explicit Transmission(const PropertyList &propertyList) {
         mIntIOR = propertyList.GetFloat("intIOR", 1.5f);
         mExtIOR = propertyList.GetFloat("extIOR", 1.0f);
-        mAlbedo = propertyList.GetColor("albedo", {1});
+        mAlbedo = propertyList.GetColor("albedo", {0.5f});
         PRINT_DEBUG_INFO("BxDF", "transmission")
     }
 

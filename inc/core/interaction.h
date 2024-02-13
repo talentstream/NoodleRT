@@ -20,7 +20,14 @@ public:
             : t{t},
               p{p},
               n{Normalize(n)},
-              wo{Normalize(wo)} {}
+              wo{Normalize(wo)} {
+        SetFrontFace();
+    }
+
+    void SetFrontFace(){
+        front = Dot(n, wo) > 0;
+        n *= front ? 1 : -1;
+    }
 
     Float t{Infinity};// time
     Point3f p;// position

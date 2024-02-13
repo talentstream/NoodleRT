@@ -60,6 +60,11 @@ inline Float Pow<1>(Float v) {
     return v;
 }
 
+inline Float Sqr(Float v) {
+    return v * v;
+}
+
+
 inline Float Sqrt(Float v) {
     return std::sqrt(v);
 }

@@ -4,7 +4,7 @@
         <aggregate type="bvh">
             <mesh>
                 <string name="filename" value="../bunny.obj"/>
-                <bxdf type="reflection">
+                <bxdf type="dielectric">
 
                 </bxdf>
             </mesh>
