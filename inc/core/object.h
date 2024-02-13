@@ -27,6 +27,7 @@ public:
         ETexture,
         ESampler,
         EFilm,
+        ELight,
     };
 
     virtual ~Object() = default;
@@ -61,6 +62,8 @@ public:
                 return "ESampler";
             case EClassType::EFilm:
                 return "EFilm";
+            case EClassType::ELight:
+                return "ELight";
             default:
                 return "Unknown";
         };

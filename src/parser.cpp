@@ -50,6 +50,7 @@ enum class ETag : UInt8 {
     ETexture,
     ESampler,
     EFilm,
+    ELight,
 
     // Property
     EBoolean,
@@ -74,7 +75,7 @@ static std::unordered_map<std::string_view, ETag> ETagMap = {
         {"texture",    ETag::ETexture},
         {"sampler",    ETag::ESampler},
         {"film",       ETag::EFilm},
-
+        {"light",      ETag::ELight},
         // Property
         {"boolean",    ETag::EBoolean},
         {"integer",    ETag::EInteger},
