@@ -15,7 +15,10 @@ public:
 
     Color3f
     SampleLi(const SurfaceInteraction &si, Vector3f &wi, Point2f &sample) const override {
-       return mIntensity / LengthSquared(mPosition - si.p);
+        wi = Normalize(mPosition - si.p);
+        auto d = LengthSquared(mPosition - si.p);
+        if (d < Epsilon) return mIntensity;
+        return mIntensity / d;
     }
 
 private:

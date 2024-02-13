@@ -7,6 +7,7 @@
 #include "base/camera.h"
 #include "base/film.h"
 #include "base/sampler.h"
+#include "base/light.h"
 #include "util/parallel.h"
 #include "util/timer.h"
 #include <ranges>
@@ -23,6 +24,9 @@ void Integrator::AddChild(Object *child) {
             break;
         case EClassType::ESampler:
             pSampler = dynamic_cast<Sampler *>(child);
+            break;
+        case EClassType::ELight:
+            mLights.emplace_back(dynamic_cast<Light *>(child));
             break;
         default:
             throw std::runtime_error("Integrator Add Error Child:" +

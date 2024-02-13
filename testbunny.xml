@@ -1,6 +1,7 @@
 <scene>
     <integrator type="whitted">
-        <integer name="spp" value="10"/>
+        <integer name="spp" value="1000"/>
+        <integer name="maxDepth" value="50"/>
         <aggregate type="bvh">
             <mesh>
                 <string name="filename" value="../bunny.obj"/>
@@ -21,5 +22,9 @@
         </camera>
         <sampler type="independent">
         </sampler>
+        <light type="point">
+            <point name="position" value="3 3 3"/>
+            <color name="intensity" value="100 100 100"/>
+        </light>
     </integrator>
 </scene>

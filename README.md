@@ -20,10 +20,10 @@ Application:
   - Sampler
 
 - Todo : ? 法线坐标系转换？
+- Todo : Transform? 
 
 接下来
 sampler & random walk
-diffuse brdf ? 
 phong brdf ?
 blinn-phong brdf? 
 cook-torrance brdf?

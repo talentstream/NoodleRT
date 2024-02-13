@@ -14,6 +14,8 @@ class Camera;
 
 class Sampler;
 
+class Light;
+
 class Integrator : public Object {
 public:
     virtual ~Integrator() = default;
@@ -34,9 +36,9 @@ public:
 
 protected:
     Aggregate *pAggregate{nullptr};
-    // std::vector<Light> mLights;
+    std::vector<Light*> mLights;
 
-     Camera *pCamera{nullptr};
+    Camera *pCamera{nullptr};
     Sampler *pSampler{nullptr};
     Integer mSpp{};
 };

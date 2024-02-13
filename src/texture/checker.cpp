@@ -10,7 +10,7 @@ NAMESPACE_BEGIN
 class CheckerTexture : public Texture {
 public:
     explicit CheckerTexture(const PropertyList &propertyList) {
-        mInvScale = 1 / propertyList.GetFloat("scale", {0.8f});
+        mInvScale = 1 / propertyList.GetFloat("scale", {0.32f});
         PRINT_DEBUG_INFO("Texture", "checker")
     }
 
@@ -30,14 +30,14 @@ public:
     void Initialize() override {
         if (pEven == nullptr) {
             PropertyList propertyList;
-            propertyList.SetColor("albedo", {.5f, .5f, .5f});
+            propertyList.SetColor("albedo", {1});
 
             pEven = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("solid", propertyList, true));
 
         }
         if (pOdd == nullptr) {
             PropertyList propertyList;
-            propertyList.SetColor("albedo", {0.0f, 0.0f, 0.0f});
+            propertyList.SetColor("albedo", {0});
             pOdd = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("solid", propertyList, true));
         }
     }

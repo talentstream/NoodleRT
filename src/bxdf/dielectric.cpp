@@ -23,14 +23,14 @@ public:
         if(FrDielectric(cosThetaI,ratio) > RandomFloat())
         {
             if(Refract(si.wo,wi,Vector3f{si.n},ratio)) {
-                return Color3f{1};
+                return Color3f{.5};
             }
             else {
                 return std::nullopt;
             }
         }
         wi = Reflect(si.wo, Vector3f{si.n});
-        return Color3f{1};
+        return Color3f{.5};
     }
 
 private:
