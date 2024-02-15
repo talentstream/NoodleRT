@@ -18,11 +18,13 @@ constexpr Float TwoPi = 2 * Pi;
 constexpr Float InvPi = std::numbers::inv_pi_v<Float>;
 constexpr Float Sqrt2 = std::numbers::sqrt2_v<Float>;
 
-inline Float DegreeToRadian(Float
-degree) {
-return
-degree *Pi
-/ 180;
+template<typename T>
+inline void Swap(T a, T b){
+    std::swap(a,b);
+}
+
+inline Float DegreeToRadian(Float degree) {
+    return degree * Pi / 180;
 }
 
 inline Float RadianToDegree(Float radian) {
