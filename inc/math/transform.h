@@ -100,7 +100,7 @@ struct Matrix4x4 {
             for (int j = i + 1; j < 4; ++j) {
                 Float ratio = mat[j][i] / mat[i][i];
                 for (int k = 0; k < 4; ++k) {
-                    mat[j][k] = mat[j][j] - ratio * mat[i][k];
+                    mat[j][k] -= ratio * mat[i][k];
                 }
             }
         }
@@ -108,7 +108,61 @@ struct Matrix4x4 {
     }
 
     friend Matrix4x4 Inverse(const Matrix4x4 &other) {
-        Float determinant[4]{};
+        Matrix4x4 inv;
+
+        Float augmented[4][8];
+        for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < 4; ++j) {
+                augmented[i][j] = other[i][j];
+                augmented[i][j + 4] = i == j ? 1 : 0;
+            }
+        }
+
+        for (int i = 0; i < 4; ++i) {
+            int pivot = i;
+            for (int j = i + 1; j < 4; ++j) {
+                if (Abs(augmented[j][i]) > Abs(augmented[pivot][i])) {
+                    pivot = j;
+                }
+            }
+            if (pivot != i) {
+                for (int j = 0; j < 8; ++j) {
+                    Swap(augmented[i][j], augmented[pivot][j]);
+                }
+            }
+            if (augmented[i][i] == 0) {
+                return {};
+            }
+            for (int j = 0; j < 8; ++j) {
+                augmented[i][j] /= augmented[i][i];
+            }
+            for (int j = 0; j < 4; ++j) {
+                if (j == i) {
+                    continue;
+                }
+                Float ratio = augmented[j][i];
+                for (int k = 0; k < 8; ++k) {
+                    augmented[j][k] -= ratio * augmented[i][k];
+                }
+            }
+        }
+
+        // Divide each row by its pivot
+        for (int i = 0; i < 4; ++i) {
+            Float pivot = augmented[i][i];
+            for (int j = 0; j < 8; ++j) {
+                augmented[i][j] /= pivot;
+            }
+        }
+
+        // Extract inverse matrix from augmented matrix
+        for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < 4; ++j) {
+                inv[i][j] = augmented[i][j + 4];
+            }
+        }
+
+        return inv;
     }
 };
 
