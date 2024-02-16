@@ -21,7 +21,8 @@ Application:
 
 - Todo : ? 法线坐标系转换？
 - Todo : Transform? 
-
+- Todo : light interface & light sampling
+- Todo : brdf sample & brdf ? 
 接下来
 sampler & random walk
 phong brdf ?
