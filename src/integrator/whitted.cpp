@@ -57,7 +57,7 @@ private:
                 emitted = li * le * Abs(Dot(w,si.n));
             }
         }
-        if (depth == mMaxDepth) return emitted + le;
+        if (depth == mMaxDepth) return emitted;
 
         // calculate indirect illumination
 

@@ -19,8 +19,8 @@ constexpr Float InvPi = std::numbers::inv_pi_v<Float>;
 constexpr Float Sqrt2 = std::numbers::sqrt2_v<Float>;
 
 template<typename T>
-inline void Swap(T a, T b){
-    std::swap(a,b);
+inline void Swap(T a, T b) {
+    std::swap(a, b);
 }
 
 inline Float DegreeToRadian(Float degree) {
@@ -68,6 +68,9 @@ inline Float Sqr(Float v) {
 
 
 inline Float Sqrt(Float v) {
+    if (v < 0) {
+        throw std::runtime_error("Sqrt of negative number");
+    }
     return std::sqrt(v);
 }
 
