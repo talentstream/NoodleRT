@@ -29,13 +29,6 @@ private:
     Color3f Trace(const Ray &ray, Integer depth) const {
         // find nearest intersection
         SurfaceInteraction si;
-
-        {
-//            Vector3f unitDir = Normalize(ray.d);
-//            Float t = 0.5f * (unitDir.y + 1.0f);
-//            backgroundColor = (1.0f - t) * Color3f{1.0f, 1.0f, 1.0f} + t * Color3f{0.5f, 0.7f, 1.0f};
-//            backgroundColor = {0, 0, 0};
-        }
         Color3f backgroundColor{0};
         if (!pAggregate->Intersect(ray, si)) {
 
@@ -50,7 +43,7 @@ private:
         Vector3f wo = -ray.d, wi;
 
         auto Le = bxdf->Sample(si, wo, wi, Point2f{});
-        if (!Le.has_value()) return {1};
+        if (!Le.has_value()) return backgroundColor;
         auto le = Le.value();
 
         // calculate direct illumination

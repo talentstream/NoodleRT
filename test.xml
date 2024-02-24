@@ -60,5 +60,7 @@
         </camera>
         <sampler type="independent">
         </sampler>
+        <light type="infinite">
+        </light>
     </integrator>
 </scene>
