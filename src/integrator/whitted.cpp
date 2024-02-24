@@ -31,7 +31,6 @@ private:
         SurfaceInteraction si;
         Color3f backgroundColor{0};
         if (!pAggregate->Intersect(ray, si)) {
-
             for(const auto light: mLights) {
                 backgroundColor += light->Le(ray);
             }
@@ -43,7 +42,7 @@ private:
         Vector3f wo = -ray.d, wi;
 
         auto Le = bxdf->Sample(si, wo, wi, Point2f{});
-        if (!Le.has_value()) return backgroundColor;
+        if (!Le.has_value()) return {0};
         auto le = Le.value();
 
         // calculate direct illumination

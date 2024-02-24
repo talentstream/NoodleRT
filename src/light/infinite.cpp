@@ -11,7 +11,7 @@ NAMESPACE_BEGIN
 class InfiniteLight : public Light {
 public:
     explicit InfiniteLight(const PropertyList &propList) {
-        mDirection = propList.GetVector("direction", {1, 1, 1});
+        mDirection = propList.GetVector("direction", {-1, -1, -1});
         mIntensity = propList.GetColor("intensity", {0.5, 0.7, 1.0});
     }
 
