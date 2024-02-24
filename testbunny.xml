@@ -29,5 +29,7 @@
             <point name="position" value="3 3 3"/>
             <color name="intensity" value="100 100 100"/>
         </light>
+        <light type="infinite">
+        </light>
     </integrator>
 </scene>

@@ -13,13 +13,17 @@ class Light : public Object {
 public:
     virtual ~Light() = default;
 
+    // only infinite light has Le
+    virtual Color3f Le(const Ray &ray) const {
+        return {0};
+    }
+
     virtual Color3f SampleLi(const SurfaceInteraction &si, Vector3f &wi, Point2f &sample) const = 0;
 
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::ELight;
     }
 };
-
 
 
 NAMESPACE_END

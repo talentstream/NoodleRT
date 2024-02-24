@@ -29,14 +29,19 @@ private:
     Color3f Trace(const Ray &ray, Integer depth) const {
         // find nearest intersection
         SurfaceInteraction si;
-        Color3f backgroundColor;
+
         {
-            Vector3f unitDir = Normalize(ray.d);
-            Float t = 0.5f * (unitDir.y + 1.0f);
-            backgroundColor = (1.0f - t) * Color3f{1.0f, 1.0f, 1.0f} + t * Color3f{0.5f, 0.7f, 1.0f};
+//            Vector3f unitDir = Normalize(ray.d);
+//            Float t = 0.5f * (unitDir.y + 1.0f);
+//            backgroundColor = (1.0f - t) * Color3f{1.0f, 1.0f, 1.0f} + t * Color3f{0.5f, 0.7f, 1.0f};
 //            backgroundColor = {0, 0, 0};
         }
+        Color3f backgroundColor{0};
         if (!pAggregate->Intersect(ray, si)) {
+
+            for(const auto light: mLights) {
+                backgroundColor += light->Le(ray);
+            }
             return backgroundColor;
         }
 
@@ -45,14 +50,14 @@ private:
         Vector3f wo = -ray.d, wi;
 
         auto Le = bxdf->Sample(si, wo, wi, Point2f{});
-        if (!Le.has_value()) return backgroundColor;
+        if (!Le.has_value()) return {1};
         auto le = Le.value();
 
         // calculate direct illumination
         Color3f emitted{};
         for (const auto light: mLights) {
             Point2f lightSample{0.5f, 0.5f};
-            Vector3f w;
+            Vector3f w;// direction to light
             Color3f li = light->SampleLi(si, w, lightSample);
             Ray lightRay{si.p,w,si.t};
             SurfaceInteraction lightSi;
