@@ -32,9 +32,9 @@ private:
     Color3f Trace(const Ray &ray, Integer depth) const {
         //Todo: find the problem
         SurfaceInteraction si;
-        if(!pAggregate->Intersect(ray, si)) {
+        if (!pAggregate->Intersect(ray, si)) {
             Color3f backgroundColor{0};
-            for(const auto light: mLights) {
+            for (const auto light: mLights) {
                 backgroundColor += light->Le(ray);
             }
             return backgroundColor;
@@ -51,10 +51,11 @@ private:
         Point2f u = pSampler->Next2D();
         Vector3f wp = SampleUniformSphere(u);
 
-        auto fCos = Dot(wp, si.n);
-        if(depth == mMaxDepth || fCos < 0) return le;
+        auto fCos = Dot(wp, si.n) * InvPi;
+        if(fCos < 0) return {};
+        if (depth == mMaxDepth) return le;
 
-        Ray scattered{si.p,wp};
+        Ray scattered{si.p, wp};
         return le + le * fCos * Trace(scattered, depth + 1) / (1 / (4 * Pi));
     }
 

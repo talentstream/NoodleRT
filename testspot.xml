@@ -8,6 +8,9 @@
                 <bxdf type="dielectric">
 
                 </bxdf>
+                <transform name="translate" value=""/>
+                <transform name="rotate" value="0 -90 0"/>
+                <transform name="scale" value=""/>
             </mesh>
         </aggregate>
         <camera type="perspective">
@@ -15,13 +18,19 @@
                 <integer name="width" value="400"/>
                 <integer name="height" value="400"/>
             </film>
-            <float name="fov" value="90.0"/>
+            <float name="fov" value="45.0"/>
             <point name="lookFrom" value="1, 1, 1"/>
             <point name="lookAt" value="0, 0, 0"/>
             <vector name="up" value="0, 1, 0"/>
         </camera>
         <sampler type="independent">
         </sampler>
+        <light type="infinite">
+        </light>
+        <light type="point">
+            <point name="position" value="3 3 3"/>
+            <color name="intensity" value="100 100 100"/>
+        </light>
     </integrator>
 
 </scene>

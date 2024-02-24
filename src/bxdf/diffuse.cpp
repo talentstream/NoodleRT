@@ -22,7 +22,7 @@ public:
             return std::nullopt;
         }
         wi = Vector3f{si.n} + RandomInUnitVector();
-        // (brdf / pdf) * cos= [(albedo / pi) / (cos / pi)] * cos
+        // (brdf / pdf) * cos = [(albedo / pi) / (cos / pi)] * cos
         return pAlbedo->Evaluate(si);
     }
 
