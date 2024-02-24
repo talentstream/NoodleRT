@@ -14,6 +14,9 @@ public:
     virtual ~BxDF() = default;
 
     virtual std::optional<Color3f>
+    f(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) { return std::nullopt; }
+
+    virtual std::optional<Color3f>
     Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const = 0;
 
     [[nodiscard]] EClassType GetClassType() const override {

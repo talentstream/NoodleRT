@@ -15,6 +15,8 @@
 
 NAMESPACE_BEGIN
 
+// simplified version of path tracing
+// only support diffuse surface
 class RandomWalkIntegrator : public ImageTileIntegrator {
 public:
     explicit RandomWalkIntegrator(const PropertyList &propertyList) {
@@ -41,22 +43,20 @@ private:
         }
 
         // shading
+        Color3f Le{};
         auto bxdf = si.bxdf;
-        Vector3f wo = -ray.d, wi;
-        auto Le = bxdf->Sample(si, wo, wi, pSampler->Next2D());
-        if (!Le.has_value()) return {0};
-        auto le = Le.value();
+        Vector3f wo = -ray.d;
 
         // Randomly Sample
         Point2f u = pSampler->Next2D();
         Vector3f wp = SampleUniformSphere(u);
 
-        auto fCos = Dot(wp, si.n) * InvPi;
-        if(fCos < 0) return {};
-        if (depth == mMaxDepth) return le;
-
+        auto fCos = bxdf->f(si,wo,wp);
+        if(!fCos.has_value()) return Le;
+        auto fcos = fCos.value() * AbsDot(si.n, wp);
+        if(depth == mMaxDepth) return Le + fcos;
         Ray scattered{si.p, wp};
-        return le + le * fCos * Trace(scattered, depth + 1) / (1 / (4 * Pi));
+        return Le + fcos * Trace(scattered, depth + 1) / (1 / (4 * Pi));
     }
 
     Integer mMaxDepth;
