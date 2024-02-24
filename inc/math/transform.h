@@ -181,6 +181,20 @@ public:
         invMat = Inverse(mat);
     }
 
+    template <typename T>
+    Point3<T> operator()(const Point3<T> &p) const {
+        T x = p.x, y = p.y, z = p.z;
+        T xp = mat[0][0] * x + mat[0][1] * y + mat[0][2] * z + mat[0][3];
+        T yp = mat[1][0] * x + mat[1][1] * y + mat[1][2] * z + mat[1][3];
+        T zp = mat[2][0] * x + mat[2][1] * y + mat[2][2] * z + mat[2][3];
+        T wp = mat[3][0] * x + mat[3][1] * y + mat[3][2] * z + mat[3][3];
+        if (wp == 1) {
+            return {xp, yp, zp};
+        } else {
+            return Point3<T>{xp, yp, zp} / wp;
+        }
+    }
+
 private:
     Matrix4x4 mat;
     Matrix4x4 invMat;
