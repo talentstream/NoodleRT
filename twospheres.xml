@@ -40,6 +40,7 @@
         </aggregate>
         <camera type="perspective">
             <film>
+                <transform name="" value="1 0 1"/>
                 <integer name="width" value="400"/>
                 <integer name="height" value="225"/>
             </film>

@@ -40,17 +40,21 @@ Vector3f ToVector(std::string_view str) {
 Transform ToTransform(std::string_view str) {
 
     auto tokens = str | std::views::split(' ');
-    auto tokensSize = std::ranges::distance(tokens);
+    auto tokenSize = std::ranges::distance(tokens);
     Matrix4x4 result{};
-    if (tokensSize == 9) {
+    if (tokenSize == 9) {
         for (const auto [i, token]: tokens | std::views::enumerate) {
             result[i / 3][i % 3] = ToFloat(token.data());
         }
-    } else if (tokensSize == 16) {
+    } else if (tokenSize == 16) {
         for (const auto [i, token]: tokens | std::views::enumerate) {
             result[i / 4][i % 4] = ToFloat(token.data());
         }
-    } else if (tokensSize != 0) {
+    } else if (tokenSize == 3) {
+        for (const auto [i, token]: tokens | std::views::enumerate) {
+            result[i][3] = ToFloat(token.data());
+        }
+    } else if (tokenSize != 0) {
         throw std::runtime_error("transform size error while parsing");
     }
 
