@@ -44,6 +44,10 @@ public:
 
     [[nodiscard]] Vector3f GetVector(std::string_view name, Vector3f defaultValue) const;
 
+    void SetTransform(std::string_view name, Transform value);
+
+    [[nodiscard]] Transform GetTransform(std::string_view name, Transform defaultValue) const;
+
     void PrintDebugInfo() const;
 
 private:
@@ -62,7 +66,7 @@ private:
 
 
 private:
-    using Property = std::variant<Integer, Float, Boolean, std::string_view, Color3f, Point3f, Vector3f>;
+    using Property = std::variant<Integer, Float, Boolean, std::string_view, Color3f, Point3f, Vector3f, Transform>;
     std::unordered_map<std::string_view, Property> mProperties;
 };
 

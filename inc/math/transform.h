@@ -17,6 +17,7 @@ struct Matrix4x4 {
         m[0][1] = m[0][2] = m[0][3] = 0;
         m[1][0] = m[1][2] = m[1][3] = 0;
         m[2][0] = m[2][1] = m[2][3] = 0;
+        m[3][0] = m[3][1] = m[3][2] = 0;
     }
 
     Matrix4x4(Float other[4][4]) {
@@ -169,6 +170,8 @@ struct Matrix4x4 {
 class Transform {
 public:
     Transform() = default;
+
+    explicit Transform(const Matrix4x4 &m) : mat(m), invMat(Inverse(m)) {}
 
     explicit Transform(const Float m[4][4]) {
         mat = Matrix4x4(m[0][0], m[0][1], m[0][2], m[0][3],

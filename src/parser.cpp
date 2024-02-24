@@ -37,6 +37,26 @@ Vector3f ToVector(std::string_view str) {
     return result;
 }
 
+Transform ToTransform(std::string_view str) {
+
+    auto tokens = str | std::views::split(' ');
+    auto tokensSize = std::ranges::distance(tokens);
+    Matrix4x4 result{};
+    if (tokensSize == 9) {
+        for (const auto [i, token]: tokens | std::views::enumerate) {
+            result[i / 3][i % 3] = ToFloat(token.data());
+        }
+    } else if (tokensSize == 16) {
+        for (const auto [i, token]: tokens | std::views::enumerate) {
+            result[i / 4][i % 4] = ToFloat(token.data());
+        }
+    } else if (tokensSize != 0) {
+        throw std::runtime_error("transform size error while parsing");
+    }
+
+    return Transform(result);
+}
+
 //  tag <-> name map
 enum class ETag : UInt8 {
     EScene = 0,
@@ -60,6 +80,7 @@ enum class ETag : UInt8 {
     EColor,
     EPoint,
     EVector,
+    ETransform,
     EInvalid,
 };
 
@@ -83,8 +104,9 @@ static std::unordered_map<std::string_view, ETag> ETagMap = {
         {"string",     ETag::EString},
         {"color",      ETag::EColor},
         {"point",      ETag::EPoint},
-        {"vector",     ETag::EVector}
-
+        {"vector",     ETag::EVector},
+        {"transform",  ETag::ETransform},
+        {"invalid",    ETag::EInvalid},
 };
 
 Object *LoadSceneXML(const std::string_view &filename) {
@@ -130,7 +152,7 @@ Object *LoadSceneXML(const std::string_view &filename) {
             node.append_attribute("type") = "scene";
         } else if (tag == ETag::EMesh) {
             node.append_attribute("type") = "mesh";
-        }else if(tag == ETag::EFilm){
+        } else if (tag == ETag::EFilm) {
             node.append_attribute("type") = "film";
         }
 
@@ -181,6 +203,9 @@ Object *LoadSceneXML(const std::string_view &filename) {
                     break;
                 case ETag::EVector:
                     list.SetVector(name, Vector3f{ToVector(value)});
+                    break;
+                case ETag::ETransform:
+                    list.SetTransform(name, ToTransform(value));
                     break;
                 default:
                     /*throw*/

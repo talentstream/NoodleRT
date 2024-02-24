@@ -20,7 +20,7 @@ Integer windowWidth{};
 Integer windowHeight{};
 
 Application::Application() {
-    Object *obj = LoadSceneXML("../test.xml");
+    Object *obj = LoadSceneXML("../twospheres.xml");
     pScene = std::unique_ptr<Scene>(dynamic_cast<Scene *>(obj));
     windowWidth = pScene->GetIntegrator()->GetCamera()->GetFilm()->width;
     windowHeight = pScene->GetIntegrator()->GetCamera()->GetFilm()->height;
@@ -50,8 +50,7 @@ void Application::Run() {
 void Application::InitUI() {
     glfwInit();
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    window = glfwCreateWindow(windowWidth, windowHeight, "Rendering Window",
-                              nullptr, nullptr);
+    window = glfwCreateWindow(windowWidth, windowHeight, "Rendering Window", nullptr, nullptr);
     if (window == nullptr) {
         std::print("Failed to create GLFW window\n");
         glfwTerminate();

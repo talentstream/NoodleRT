@@ -32,6 +32,8 @@ PROPERTY_ACCESSOR(Point, Point3f)
 
 PROPERTY_ACCESSOR(Vector, Vector3f)
 
+PROPERTY_ACCESSOR(Transform, Transform)
+
 void PropertyList::PrintDebugInfo() const {
     for (const auto &[name, value]: mProperties) {
         std::print("{}: ", name);
@@ -51,6 +53,8 @@ void PropertyList::PrintDebugInfo() const {
                 std::print("{} {} {} ", arg.x, arg.y, arg.z);
             } else if constexpr (std::is_same_v<T, Vector3f>) {
                 std::print("{} {} {} ", arg.x, arg.y, arg.z);
+            } else if constexpr (std::is_same_v<T, Transform>) {
+                std::print("Transform ");
             } else {
                 /*throw*/
             }
