@@ -15,20 +15,22 @@
 
 NAMESPACE_BEGIN
 
+using std::string_view;
+
 // Todo: more string check
-Boolean ToBoolean(std::string_view str) {
+Boolean ToBoolean(string_view str) {
     return str == "true";
 }
 
-Integer ToInteger(std::string_view str) {
+Integer ToInteger(string_view str) {
     return std::stoi(str.data());
 }
 
-Float ToFloat(std::string_view str) {
+Float ToFloat(string_view str) {
     return std::stof(str.data());
 }
 
-Vector3f ToVector(std::string_view str) {
+Vector3f ToVector(string_view str) {
     auto tokens = str | std::views::split(' ');
     Vector3f result{};
     for (const auto [i, token]: tokens | std::views::enumerate) {
@@ -37,7 +39,7 @@ Vector3f ToVector(std::string_view str) {
     return result;
 }
 
-Transform ToTransform(std::string_view str) {
+Transform ToTransform(string_view name, string_view str) {
 
     auto tokens = str | std::views::split(' ');
     auto tokenSize = std::ranges::distance(tokens);
@@ -51,8 +53,41 @@ Transform ToTransform(std::string_view str) {
             result[i / 4][i % 4] = ToFloat(token.data());
         }
     } else if (tokenSize == 3) {
-        for (const auto [i, token]: tokens | std::views::enumerate) {
-            result[i][3] = ToFloat(token.data());
+        // defalut translate
+        if (name == "translate") {
+            for (const auto [i, token]: tokens | std::views::enumerate) {
+                result[i][3] = ToFloat(token.data());
+            }
+        } else if (name == "scale") {
+            for (const auto [i, token]: tokens | std::views::enumerate) {
+                result[i][i] = ToFloat(token.data());
+            }
+        } else if (name == "rotate") {
+            // rotation
+            auto [x, y, z] = ToVector(str);
+            x = DegreeToRadian(x);
+            y = DegreeToRadian(y);
+            z = DegreeToRadian(z);
+            auto cx = Cos(x), sx = Sin(x);
+            auto xRotation = Matrix4x4(1, 0, 0, 0,
+                                       0, cx, -sx, 0,
+                                       0, sx, cx, 0,
+                                       0, 0, 0, 1);
+            auto cy = Cos(y), sy = Sin(y);
+            auto yRotation = Matrix4x4(cy, 0, sy, 0,
+                                       0, 1, 0, 0,
+                                       -sy, 0, cy, 0,
+                                       0, 0, 0, 1);
+            auto cz = Cos(z), sz = Sin(z);
+            auto zRotation = Matrix4x4(cz, -sz, 0, 0,
+                                       sz, cz, 0, 0,
+                                       0, 0, 1, 0,
+                                       0, 0, 0, 1);
+            // General 3D Rotations
+            // https://en.wikipedia.org/wiki/Rotation_matrix
+            result = xRotation * yRotation * zRotation;
+        } else {
+            throw std::runtime_error("transform size error while parsing");
         }
     } else if (tokenSize != 0) {
         throw std::runtime_error("transform size error while parsing");
@@ -88,7 +123,7 @@ enum class ETag : UInt8 {
     EInvalid,
 };
 
-static std::unordered_map<std::string_view, ETag> ETagMap = {
+static std::unordered_map<string_view, ETag> ETagMap = {
         {"scene",      ETag::EScene},
         {"camera",     ETag::ECamera},
         {"integrator", ETag::EIntegrator},
@@ -113,12 +148,12 @@ static std::unordered_map<std::string_view, ETag> ETagMap = {
         {"invalid",    ETag::EInvalid},
 };
 
-Object *LoadSceneXML(const std::string_view &filename) {
+Object *LoadSceneXML(const string_view &filename) {
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file(filename.data());
 
     // check xml node attribute helper
-    auto CheckAttribute = [&](const pugi::xml_node &node, std::unordered_set<std::string_view> attributes) {
+    auto CheckAttribute = [&](const pugi::xml_node &node, std::unordered_set<string_view> attributes) {
         for (auto attr: node.attributes()) {
 
             if (!attributes.contains(attr.name())) {
@@ -209,7 +244,7 @@ Object *LoadSceneXML(const std::string_view &filename) {
                     list.SetVector(name, Vector3f{ToVector(value)});
                     break;
                 case ETag::ETransform:
-                    list.SetTransform(name, ToTransform(value));
+                    list.SetTransform(name, ToTransform(name, value));
                     break;
                 default:
                     /*throw*/

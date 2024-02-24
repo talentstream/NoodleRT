@@ -36,6 +36,7 @@ private:
     class BxDF *pBxDF{nullptr};
 
     std::string_view mFileName;
+    Transform mObjectToWorld;
 };
 
 NAMESPACE_END

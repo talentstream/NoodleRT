@@ -167,6 +167,10 @@ struct Matrix4x4 {
     }
 };
 
+inline Matrix4x4 operator*(const Matrix4x4 &other1, const Matrix4x4 &other2) {
+    return Matrix4x4::Mul(other1, other2);
+}
+
 class Transform {
 public:
     Transform() = default;
@@ -192,6 +196,24 @@ public:
             return {xp, yp, zp};
         } else {
             return Point3<T>{xp, yp, zp} / wp;
+        }
+    }
+
+    Transform operator*(const Transform &other) const {
+        return Transform(Matrix4x4::Mul(mat, other.mat));
+    }
+
+    Transform operator*= (const Transform &other){
+        mat = Matrix4x4::Mul(mat, other.mat);
+        invMat = Inverse(mat);
+        return *this;
+    }
+
+    void Print() const{
+        for(int i = 0; i < 4; ++i){
+            for(int j = 0; j < 4; ++j){
+                std::cout << mat[i][j] << " ";
+            }
         }
     }
 

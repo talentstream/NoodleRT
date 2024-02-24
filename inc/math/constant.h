@@ -111,8 +111,16 @@ inline Integer Floor(Float v) {
     return static_cast<Integer>(std::floor(v));
 }
 
+inline Float Cos(Float v) {
+    return std::cos(v);
+}
+
 inline Float ACos(Float v) {
     return std::acos(v);
+}
+
+inline Float Sin(Float v) {
+    return std::sin(v);
 }
 
 inline Float ASin(Float v) {

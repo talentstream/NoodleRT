@@ -54,7 +54,7 @@ void PropertyList::PrintDebugInfo() const {
             } else if constexpr (std::is_same_v<T, Vector3f>) {
                 std::print("{} {} {} ", arg.x, arg.y, arg.z);
             } else if constexpr (std::is_same_v<T, Transform>) {
-                std::print("Transform ");
+                arg.Print();
             } else {
                 /*throw*/
             }

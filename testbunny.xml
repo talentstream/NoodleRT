@@ -5,6 +5,9 @@
         <aggregate type="bvh">
             <mesh>
                 <string name="filename" value="../bunny.obj"/>
+                <transform name="translate" value=""/>
+                <transform name="rotate" value="0 -60 0"/>
+                <transform name="scale" value=""/>
                 <bxdf type="dielectric">
 
                 </bxdf>

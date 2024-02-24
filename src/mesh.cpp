@@ -16,6 +16,9 @@ NAMESPACE_BEGIN
 
 Mesh::Mesh(const PropertyList &propertyList) {
     mFileName = propertyList.GetString("filename", {});
+    mObjectToWorld *= propertyList.GetTransform("scale", {});
+    mObjectToWorld *= propertyList.GetTransform("rotate", {});
+    mObjectToWorld *= propertyList.GetTransform("translate", {});
 
     PRINT_DEBUG_INFO("Mesh", "mesh")
 }
@@ -58,7 +61,8 @@ void Mesh::LoadMesh() {
                 positions.emplace_back(attrib.vertices[3 * idx.vertex_index + 0],
                                        attrib.vertices[3 * idx.vertex_index + 1],
                                        attrib.vertices[3 * idx.vertex_index + 2]);
-
+                // object to world
+                positions.back() = mObjectToWorld(positions.back());
             };
 
             LoadPosition(idx0);
