@@ -4,6 +4,7 @@
 
 #include "base/bxdf.h"
 #include "base/texture.h"
+#include "util/sampling.h"
 #include <print>
 
 NAMESPACE_BEGIN
@@ -30,7 +31,7 @@ public:
 //        if (Dot(si.wo, si.n) < 0) {
 //            return std::nullopt;
 //        }
-        wi = Vector3f{si.shading.n} + RandomInUnitVector();
+        wi = si.shading.ToWorld(SquareToCosineHemisphere(sample));
         // (brdf / pdf) * cos = [(albedo / pi) / (cos / pi)] * cos
         return pAlbedo->Evaluate(si);
     }

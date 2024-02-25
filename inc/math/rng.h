@@ -99,12 +99,12 @@ inline Vector3f RandomInUnitVector() {
     return Normalize(RandomInUnitSphere());
 }
 
-inline Vector3f RandomInHemisphere(const Vector3f &normal) {
-    auto in_unit_sphere = RandomInUnitSphere();
-    if (Dot(in_unit_sphere, normal) > 0) {
-        return in_unit_sphere;
+inline Vector3f RandomInHemisphere(Normal3f normal) {
+    auto inUnitSphere = RandomInUnitSphere();
+    if (Dot(inUnitSphere, Vector3f{normal}) > 0) {
+        return inUnitSphere;
     } else {
-        return -in_unit_sphere;
+        return -inUnitSphere;
     }
 }
 

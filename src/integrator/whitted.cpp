@@ -8,6 +8,7 @@
 #include "base/bxdf.h"
 #include "base/light.h"
 #include "core/interaction.h"
+#include "base/sampler.h"
 
 #include <print>
 
@@ -41,7 +42,7 @@ private:
         auto bxdf = si.bxdf;
         Vector3f wo = -ray.d, wi;
 
-        auto Le = bxdf->Sample(si, wo, wi, Point2f{});
+        auto Le = bxdf->Sample(si, wo, wi, pSampler->Next2D());
         if (!Le.has_value()) return {0};
         auto le = Le.value();
 

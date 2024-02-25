@@ -15,6 +15,8 @@ constexpr Float Infinity = std::numeric_limits<Float>::infinity();
 constexpr Float Epsilon = std::numeric_limits<Float>::epsilon();
 constexpr Float Pi = std::numbers::pi_v<Float>;
 constexpr Float TwoPi = 2 * Pi;
+constexpr Float PiOver2 = Pi / 2;
+constexpr Float PiOver4 = Pi / 4;
 constexpr Float InvPi = std::numbers::inv_pi_v<Float>;
 constexpr Float Sqrt2 = std::numbers::sqrt2_v<Float>;
 
