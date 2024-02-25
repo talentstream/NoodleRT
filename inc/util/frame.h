@@ -18,6 +18,8 @@ static auto CoordinateSystem(const Vector3f &n) -> std::pair<Vector3f, Vector3f>
         t = {0, n.z * invLen, -n.y * invLen};
     }
     s = Cross(t, n);
+    s = Normalize(s);
+    t = Normalize(t);
     return {s, t};
 }
 
