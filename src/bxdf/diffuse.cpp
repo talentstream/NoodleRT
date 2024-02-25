@@ -17,7 +17,7 @@ public:
     }
 
     std::optional<Color3f>
-    f(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) override {
+    eval(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) override {
         if (Dot(si.wo, si.n) < 0) {
             return std::nullopt;
         }

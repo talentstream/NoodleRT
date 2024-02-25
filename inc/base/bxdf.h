@@ -13,8 +13,9 @@ class BxDF : public Object {
 public:
     virtual ~BxDF() = default;
 
+    // eval bxdf model
     virtual std::optional<Color3f>
-    f(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) { return std::nullopt; }
+    eval(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) { return std::nullopt; }
 
     virtual std::optional<Color3f>
     Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const = 0;

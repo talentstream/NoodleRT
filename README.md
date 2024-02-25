@@ -19,12 +19,10 @@ Application:
     - Film
   - Sampler
 
-- Todo : ? 法线坐标系转换？
-- Todo : Transform? 
-- Todo : light interface & light sampling
-- Todo : brdf sample & brdf ? 
+- Todo : ? 转化世界坐标系为法线坐标系，找到要着色点才转化
+- Todo : light sampling
+- Todo : 
 接下来
-sampler & random walk
 phong brdf ?
 blinn-phong brdf? 
 cook-torrance brdf?
