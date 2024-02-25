@@ -26,10 +26,11 @@ public:
 
     std::optional<Color3f>
     Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
-        if (Dot(si.wo, si.n) < 0) {
-            return std::nullopt;
-        }
-        wi = Vector3f{si.n} + RandomInUnitVector();
+        if(Frame::CosTheta(si.shading.ToLocal(wo)) < 0) return std::nullopt;
+//        if (Dot(si.wo, si.n) < 0) {
+//            return std::nullopt;
+//        }
+        wi = Vector3f{si.shading.n} + RandomInUnitVector();
         // (brdf / pdf) * cos = [(albedo / pi) / (cos / pi)] * cos
         return pAlbedo->Evaluate(si);
     }

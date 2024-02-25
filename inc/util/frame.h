@@ -8,7 +8,7 @@
 
 NAMESPACE_BEGIN
 
-auto CoordinateSystem(const Vector3f &n) -> std::pair<Vector3f, Vector3f> {
+static auto CoordinateSystem(const Vector3f &n) -> std::pair<Vector3f, Vector3f> {
     Vector3f s, t;
     if (Abs(n.x) > Abs(n.y)) {
         Float invLen = 1 / Sqrt(n.x * n.x + n.z * n.z);
@@ -30,6 +30,11 @@ struct Frame {
     explicit Frame(Vector3f v)
             : n(Normalize(v)) {
         std::tie(s, t) = CoordinateSystem(v);
+    }
+
+    explicit Frame(Normal3f v)
+            : n(Normalize(v)) {
+        std::tie(s, t) = CoordinateSystem(Vector3f{v});
     }
 
     explicit Frame(Vector3f s, Vector3f t, Vector3f n)

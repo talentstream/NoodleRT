@@ -7,11 +7,10 @@
 #include "base/mesh.h"
 #include <print>
 #include <vector>
-#include <set>
-#include <unordered_set>
 #include <algorithm>
 
 NAMESPACE_BEGIN
+
 struct PrimitiveInfo {
     PrimitiveInfo() = default;
 

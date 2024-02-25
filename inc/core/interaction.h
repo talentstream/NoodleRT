@@ -6,10 +6,12 @@
 
 #include "core/common.h"
 #include "core/math.h"
+#include "util/frame.h"
 
 NAMESPACE_BEGIN
 
 class BxDF;
+class Frame;
 
 // default surface interaction
 class SurfaceInteraction {
@@ -22,6 +24,7 @@ public:
               n{Normalize(n)},
               wo{Normalize(wo)} {
         SetFrontFace();
+        shading = Frame(n);
     }
 
     void SetFrontFace(){
@@ -29,11 +32,17 @@ public:
         n *= front ? 1 : -1;
     }
 
-    Float t{Infinity};// time
+    Ray GenerateRay(Vector3f d) {
+       return Ray{p,shading.ToWorld(d)};
+    }
+
     Point3f p;// position
+    Float t{Infinity};// intersect time
     Vector3f wo;// out direction
     Normal3f n;// normal
     Boolean front{};// Is normal face front
+
+    Frame shading;
 
     // texture uv
     Float u{};
