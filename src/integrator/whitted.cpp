@@ -40,7 +40,7 @@ private:
 
         // shading
         auto bxdf = si.bxdf;
-        Vector3f wo = -ray.d, wi;
+        Vector3f wo = si.shading.ToLocal(-ray.d), wi;
 
         auto Le = bxdf->Sample(si, wo, wi, pSampler->Next2D());
         if (!Le.has_value()) return {0};
@@ -63,7 +63,7 @@ private:
         // calculate indirect illumination
 
         Ray scattered{si.p, wi};
-        return emitted + le * Trace(scattered, depth + 1);
+        return emitted + le * Trace(si.GenerateRay(wi), depth + 1);
 
     }
 

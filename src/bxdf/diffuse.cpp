@@ -26,12 +26,10 @@ public:
     }
 
     std::optional<Color3f>
-    Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
-        if(Frame::CosTheta(si.shading.ToLocal(wo)) < 0) return std::nullopt;
-//        if (Dot(si.wo, si.n) < 0) {
-//            return std::nullopt;
-//        }
-        wi = si.shading.ToWorld(SquareToCosineHemisphere(sample));
+    Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample2) const override {
+        if(Frame::CosTheta(wo) < 0) return std::nullopt;
+
+        wi = SquareToCosineHemisphere(sample2);
         // (brdf / pdf) * cos = [(albedo / pi) / (cos / pi)] * cos
         return pAlbedo->Evaluate(si);
     }

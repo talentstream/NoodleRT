@@ -17,11 +17,14 @@ public:
 
     std::optional<Color3f>
     Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
-        wi = Reflect(si.wo, Vector3f{si.n});
-        if (Dot(wi, si.n) > 0) {
-            return mAlbedo;
+        wi = ReflectLocal(wo);
+
+        if (Frame::CosTheta(wo) < 0 ||
+            Frame::CosTheta(wi) < 0) {
+            return std::nullopt;
         }
-        return std::nullopt;
+
+        return mAlbedo;
     }
 
 private:

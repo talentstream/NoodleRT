@@ -21,10 +21,8 @@ public:
     Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
         // Todo: test this
         Float eta = mIntIOR / mExtIOR;
-        if (Dot(si.n, si.wo) < 0) {
-            eta = 1 / eta;
-        }
-        if (Refract(si.wo, wi, Vector3f{si.n}, eta)) {
+        eta = Frame::CosTheta(wo) > 0 ? eta : 1 / eta;
+        if (RefractLocal(wo, wi, eta)) {
             return mAlbedo;
         }
         return std::nullopt;

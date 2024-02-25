@@ -15,6 +15,10 @@ inline Vector3f Reflect(Vector3f w, Vector3f n) {
     return -w + 2 * Dot(w, n) * n;
 }
 
+inline Vector3f ReflectLocal(Vector3f w) {
+    return {-w.x, -w.y, w.z};
+}
+
 inline Boolean Refract(Vector3f wi, Vector3f &wo, Vector3f n, Float eta) {
     Float cosThetaI = Dot(n, wi);
     Float sin2ThetaI = Max(0, 1 - cosThetaI * cosThetaI);
@@ -27,6 +31,20 @@ inline Boolean Refract(Vector3f wi, Vector3f &wo, Vector3f n, Float eta) {
     wo = eta * -wi + (eta * cosThetaI - cosThetaT) * n;
     return true;
 }
+
+inline Boolean RefractLocal(Vector3f wi, Vector3f &wo, Float eta) {
+    Float cosThetaI = wi.z;
+    Float sin2ThetaI = Max(0, 1 - cosThetaI * cosThetaI);
+    Float sin2ThetaT = eta * eta * sin2ThetaI;
+
+    if (sin2ThetaT >= 1) {
+        return false;
+    }
+    Float cosThetaT = sqrtf(1 - sin2ThetaT);
+    wo = eta * Vector3f{-wi.x, -wi.y, wi.z} + (eta * cosThetaI - cosThetaT) * Vector3f{0, 0, 1};
+    return true;
+}
+
 
 inline Float FrDielectric(Float cosThetaI, Float eta) {
     cosThetaI = Clamp(cosThetaI, -1.0f, 1.0f);
