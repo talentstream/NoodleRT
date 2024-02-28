@@ -1,0 +1,113 @@
+<scene>
+    <integrator type="whitted">
+        <integer name="spp" value="32"/>
+        <integer name="maxDepth" value="50"/>
+        <aggregate type="bvh">
+            <!--quad green-->
+            <primitive type="geometry">
+                <shape type="quad">
+                    <point name="start" value="555.0 0.0 0.0"/>
+                    <vector name="horizontal" value="0.0 555.0 0.0"/>
+                    <vector name="vertical" value="0.0 0.0 555.0"/>
+                </shape>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0.12 0.45 0.15"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+            <!--quad red-->
+            <primitive type="geometry">
+                <shape type="quad">
+                    <point name="start" value="0.0 0.0 0.0"/>
+                    <vector name="horizontal" value="0.0 555.0 0.0"/>
+                    <vector name="vertical" value="0.0 0.0 555.0"/>
+                </shape>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0.65 0.05 0.05"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+            <!--quad white floor-->
+            <primitive type="geometry">
+                <shape type="quad">
+                    <point name="start" value="0.0 0.0 0.0"/>
+                    <vector name="horizontal" value="555.0 0.0 0.0"/>
+                    <vector name="vertical" value="0.0 0.0 555.0"/>
+                </shape>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0.73 0.73 0.73"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+            <!--quad white top-->
+            <primitive type="geometry">
+                <shape type="quad">
+                    <point name="start" value="555.0 555.0 555.0"/>
+                    <vector name="horizontal" value="-555.0 0.0 0.0"/>
+                    <vector name="vertical" value="0.0 0.0 -555.0"/>
+                </shape>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0.73 0.73 0.73"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+            <!--quad white back-->
+            <primitive type="geometry">
+                <shape type="quad">
+                    <point name="start" value="0.0 0.0 555.0"/>
+                    <vector name="horizontal" value="555.0 0.0 0.0"/>
+                    <vector name="vertical" value="0.0 555.0 0.0"/>
+                </shape>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0.73 0.73 0.73"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+            <!--bigger sphere-->
+            <primitive type="geometry">
+                <shape type="sphere">
+                    <point name="center" value="215 80 150"/>
+                    <float name="radius" value="80"/>
+                </shape>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0.73 0.73 0.73"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+            <!--smaller sphere-->
+            <primitive type="geometry">
+                <shape type="sphere">
+                    <point name="center" value="350 165 380"/>
+                    <float name="radius" value="80"/>
+                </shape>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0.73 0.73 0.73"/>
+                    </texture>
+                </bxdf>
+            </primitive>
+
+        </aggregate>
+        <camera type="perspective">
+            <film>
+                <integer name="width" value="600"/>
+                <integer name="height" value="600"/>
+            </film>
+            <float name="fov" value="40.0"/>
+            <point name="lookFrom" value="278.0 278.0 -800.0"/>
+            <point name="lookAt" value="278.0 278.0 0.0"/>
+            <vector name="up" value="0.0 1.0 0.0"/>
+        </camera>
+        <sampler type="independent">
+
+        </sampler>
+        <light type="infinite">
+        </light>
+    </integrator>
+</scene>
