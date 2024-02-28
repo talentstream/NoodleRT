@@ -16,11 +16,19 @@ public:
         PRINT_DEBUG_INFO("BxDF", "dielectric")
     }
 
+    Color3f F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) override {
+        return Color3f{.5};
+    }
+
+    Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const {
+        return 1.f;
+    }
+
     std::optional<Color3f>
     SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
         Float cosThetaI = Min(Frame::CosTheta(wo), 1);
         Float ratio = intIOR / extIOR;
-        if (FrDielectric(cosThetaI, ratio) > RandomFloat()) {
+        if (FrDielectric(cosThetaI, ratio) > eta) {
             if (RefractLocal(wo, wi, ratio)) {
                 return Color3f{.5};
             }

@@ -15,6 +15,14 @@ public:
         PRINT_DEBUG_INFO("BxDF", "specular")
     }
 
+    Color3f F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) override {
+        return mAlbedo;
+    }
+
+    Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const {
+        return 1.f;
+    }
+
     std::optional<Color3f>
     SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
         wi = ReflectLocal(wo);

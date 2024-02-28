@@ -17,7 +17,8 @@ public:
     virtual Color3f
     F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) { return {0.f}; }
 
-    float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const {
+    Float
+    Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const {
         if (Frame::CosTheta(wo) <= 0 ||
             Frame::CosTheta(wi) <= 0) {
             return 0;

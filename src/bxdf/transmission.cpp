@@ -17,10 +17,18 @@ public:
         PRINT_DEBUG_INFO("BxDF", "transmission")
     }
 
+    Color3f F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) override {
+        return mAlbedo;
+    }
+
+    Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const {
+        return 1.f;
+    }
+
     std::optional<Color3f>
     SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
         // Todo: test this
-        Float eta = mIntIOR / mExtIOR;
+        Float eta = mExtIOR / mIntIOR;
         eta = Frame::CosTheta(wo) > 0 ? eta : 1 / eta;
         if (RefractLocal(wo, wi, eta)) {
             return mAlbedo;

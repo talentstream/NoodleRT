@@ -71,7 +71,9 @@ public:
                 }
                 auto f = bxdf->F(si, wo, wi);
                 auto pdf = bxdf->Pdf(si, wo, wi);
-                beta *= f * Abs(Frame::CosTheta(wi)) / pdf;
+
+//                beta *= f * Abs(Frame::CosTheta(wi)) / pdf;
+                beta *= sampleF.value();
                 ray = si.GenerateRay(wi);
             }
         }
