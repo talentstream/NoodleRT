@@ -14,8 +14,8 @@ public:
     virtual ~BxDF() = default;
 
     // f bxdf model
-    virtual std::optional<Color3f>
-    F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) { return std::nullopt; }
+    virtual Color3f
+    F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) { return {0.f}; }
 
     float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const {
         if (Frame::CosTheta(wo) <= 0 ||

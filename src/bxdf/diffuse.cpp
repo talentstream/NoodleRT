@@ -17,11 +17,11 @@ public:
         PRINT_DEBUG_INFO("BxDF", "diffuse")
     }
 
-    std::optional<Color3f>
+    Color3f
     F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) override {
         if (Frame::CosTheta(wo) <= 0 ||
             Frame::CosTheta(wi) <= 0) {
-            return std::nullopt;
+            return {0.f};
         }
         return pAlbedo->Evaluate(si) * InvPi;
     }

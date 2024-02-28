@@ -40,9 +40,10 @@ private:
 
         // shading
         auto bxdf = si.bxdf;
+        if(!bxdf) return {0};
         Vector3f wo = si.shading.ToLocal(-ray.d), wi;
 
-        auto Le = bxdf->Sample(si, wo, wi, pSampler->Next2D());
+        auto Le = bxdf->SampleF(si, wo, wi, pSampler->Next2D());
         if (!Le.has_value()) return {0};
         auto le = Le.value();
 

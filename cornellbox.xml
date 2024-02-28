@@ -1,6 +1,6 @@
 <scene>
     <integrator type="whitted">
-        <integer name="spp" value="32"/>
+        <integer name="spp" value="200"/>
         <integer name="maxDepth" value="50"/>
         <aggregate type="bvh">
             <!--quad green-->
@@ -74,10 +74,7 @@
                     <point name="center" value="215 80 150"/>
                     <float name="radius" value="80"/>
                 </shape>
-                <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.73 0.73 0.73"/>
-                    </texture>
+                <bxdf type="reflection">
                 </bxdf>
             </primitive>
             <!--smaller sphere-->
@@ -86,10 +83,7 @@
                     <point name="center" value="350 165 380"/>
                     <float name="radius" value="80"/>
                 </shape>
-                <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.73 0.73 0.73"/>
-                    </texture>
+                <bxdf type="dielectric">
                 </bxdf>
             </primitive>
 
@@ -107,7 +101,12 @@
         <sampler type="independent">
 
         </sampler>
+<!--        <light type="point">-->
+<!--            <point name="position" value="343 500 332"/>-->
+<!--            <color name="intensity" value="15000 150 150"/>-->
+<!--        </light>-->
         <light type="infinite">
+
         </light>
     </integrator>
 </scene>

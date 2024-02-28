@@ -51,9 +51,7 @@ private:
         Point2f u = pSampler->Next2D();
         Vector3f wp = SampleUniformSphere(u);
 
-        auto fCos = bxdf->eval(si, wo, wp);
-        if(!fCos.has_value()) return Le;
-        auto fcos = fCos.value() * AbsDot(si.n, wp);
+        auto fcos = bxdf->F(si, wo, wp) * AbsDot(si.n, wp);
         if(depth == mMaxDepth) return Le + fcos;
         Ray scattered{si.p, wp};
         return Le + fcos * Trace(scattered, depth + 1) / (1 / (4 * Pi));

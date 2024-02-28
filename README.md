@@ -19,9 +19,8 @@ Application:
     - Film
   - Sampler
 
-- Todo : ? 转化世界坐标系为法线坐标系，找到要着色点才转化
-- Todo : light sampling,
-- Todo : 
+- Todo : light sampling, path tracing, diffuseAreaLight, environment light?
+- 
 接下来
 phong brdf ?
 blinn-phong brdf? 
