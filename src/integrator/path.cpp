@@ -65,11 +65,13 @@ public:
             {
                 Point2f bsdfSample = pSampler->Next2D();
                 Vector3f wo = si.shading.ToLocal(-ray.d), wi;
-                auto f = bxdf->SampleF(si, wo, wi, bsdfSample);
-                if (!f.has_value()) {
+                auto sampleF = bxdf->SampleF(si, wo, wi, bsdfSample);
+                if (!sampleF.has_value()) {
                     break;
                 }
-                beta *= f.value() * Abs(Frame::CosTheta(wi));
+                auto f = bxdf->F(si, wo, wi);
+                auto pdf = bxdf->Pdf(si, wo, wi);
+                beta *= f * Abs(Frame::CosTheta(wi)) / pdf;
                 ray = si.GenerateRay(wi);
             }
         }
