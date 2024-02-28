@@ -16,7 +16,7 @@ public:
     }
 
     std::optional<Color3f>
-    Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
+    SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
         wi = ReflectLocal(wo);
 
         if (Frame::CosTheta(wo) < 0 ||

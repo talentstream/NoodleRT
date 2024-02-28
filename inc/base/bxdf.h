@@ -13,12 +13,20 @@ class BxDF : public Object {
 public:
     virtual ~BxDF() = default;
 
-    // eval bxdf model
+    // f bxdf model
     virtual std::optional<Color3f>
-    eval(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) { return std::nullopt; }
+    F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) { return std::nullopt; }
+
+    float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const {
+        if (Frame::CosTheta(wo) <= 0 ||
+            Frame::CosTheta(wi) <= 0) {
+            return 0;
+        }
+        return Frame::CosTheta(wi) * InvPi;
+    }
 
     virtual std::optional<Color3f>
-    Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const = 0;
+    SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const = 0;
 
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::EBxDF;

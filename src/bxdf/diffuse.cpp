@@ -18,16 +18,17 @@ public:
     }
 
     std::optional<Color3f>
-    eval(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) override {
-        if (Dot(si.wo, si.n) < 0) {
+    F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) override {
+        if (Frame::CosTheta(wo) <= 0 ||
+            Frame::CosTheta(wi) <= 0) {
             return std::nullopt;
         }
         return pAlbedo->Evaluate(si) * InvPi;
     }
 
     std::optional<Color3f>
-    Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample2) const override {
-        if(Frame::CosTheta(wo) < 0) return std::nullopt;
+    SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample2) const override {
+        if (Frame::CosTheta(wo) < 0) return std::nullopt;
 
         wi = SquareToCosineHemisphere(sample2);
         // (brdf / pdf) * cos = [(albedo / pi) / (cos / pi)] * cos

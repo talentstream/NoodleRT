@@ -17,7 +17,7 @@ public:
     }
 
     std::optional<Color3f>
-    Sample(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
+    SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
         Float cosThetaI = Min(Frame::CosTheta(wo), 1);
         Float ratio = intIOR / extIOR;
         if (FrDielectric(cosThetaI, ratio) > RandomFloat()) {
