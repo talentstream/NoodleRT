@@ -1,5 +1,5 @@
 <scene>
-    <integrator type="whitted">
+    <integrator type="path">
         <integer name="spp" value="200"/>
         <integer name="maxDepth" value="50"/>
         <aggregate type="bvh">

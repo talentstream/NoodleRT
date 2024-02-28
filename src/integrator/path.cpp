@@ -10,6 +10,7 @@
 #include "base/sampler.h"
 #include "core/interaction.h"
 #include "util/sampling.h"
+#include <print>
 
 NAMESPACE_BEGIN
 
@@ -70,10 +71,16 @@ public:
                     break;
                 }
                 auto f = bxdf->F(si, wo, wi);
+                // Todo : bug? random pdf
                 auto pdf = bxdf->Pdf(si, wo, wi);
-
-//                beta *= f * Abs(Frame::CosTheta(wi)) / pdf;
                 beta *= sampleF.value();
+                if (Abs(pdf) < Epsilon) {
+                    std::print("1:{}\n", pdf);
+                    beta *= sampleF.value();
+                } else {
+                    std::print("2:{}\n", pdf);
+                    beta *= f * Abs(Frame::CosTheta(wi)) / pdf;
+                }
                 ray = si.GenerateRay(wi);
             }
         }

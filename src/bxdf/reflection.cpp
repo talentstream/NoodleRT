@@ -16,11 +16,11 @@ public:
     }
 
     Color3f F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) override {
-        return mAlbedo;
+        return {0.f};
     }
 
     Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const {
-        return 1.f;
+        return 0.f;
     }
 
     std::optional<Color3f>
