@@ -19,7 +19,7 @@ public:
         return mAlbedo;
     }
 
-    Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override{
+    Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
         return 1.f;
     }
 
@@ -33,6 +33,10 @@ public:
         }
 
         return mAlbedo;
+    }
+
+    BxDFFlag Flag() const override{
+        return EReflection;
     }
 
 private:

@@ -36,6 +36,10 @@ public:
         return std::nullopt;
     }
 
+    BxDFFlag Flag() const override {
+        return ETransmission;
+    }
+
 private:
     Float mIntIOR;
     Float mExtIOR;

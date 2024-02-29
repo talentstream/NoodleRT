@@ -37,6 +37,10 @@ public:
         return Color3f{.5f};
     }
 
+    BxDFFlag Flag() const override {
+        return EReflectionTransmission;
+    }
+
 private:
     Float intIOR;
     Float extIOR;

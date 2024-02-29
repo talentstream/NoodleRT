@@ -23,6 +23,7 @@ public:
     }
 
     [[nodiscard]] Color3f Li(const Ray &r) const override {
+        // Todo: has bug
         Ray ray = r;
         Color3f L{0}, beta(1.0f);
         Integer depth{0};
@@ -75,10 +76,11 @@ public:
                 }
                 auto f = bxdf->F(si, wo, wi);
                 auto pdf = bxdf->Pdf(si, wo, wi);
-                if(!pdf) {
+                if (!pdf) {
                     break;
                 }
-                beta *= f * Abs(Frame::CosTheta(wi)) / pdf;
+                beta *= sampleF.value();
+//                beta *= f * Abs(Frame::CosTheta(wi)) / pdf;
 
                 ray = si.GenerateRay(wi);
             }

@@ -51,6 +51,10 @@ public:
         }
     }
 
+    BxDFFlag Flag() const override {
+        return EDiffuse;
+    }
+
     void Initialize() override {
         if (pAlbedo == nullptr) {
             pAlbedo = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("checker", {}, true));
@@ -60,6 +64,7 @@ public:
 private:
     Texture *pAlbedo{nullptr};
 };
+
 
 REGISTER_CLASS(Diffuse, "diffuse")
 
