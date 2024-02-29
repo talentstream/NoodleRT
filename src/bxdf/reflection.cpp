@@ -15,12 +15,12 @@ public:
         PRINT_DEBUG_INFO("BxDF", "specular")
     }
 
-    Color3f F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) override {
-        return {0.f};
+    Color3f F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
+        return mAlbedo;
     }
 
-    Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const {
-        return 0.f;
+    Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override{
+        return 1.f;
     }
 
     std::optional<Color3f>

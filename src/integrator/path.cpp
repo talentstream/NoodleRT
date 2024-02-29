@@ -38,7 +38,7 @@ public:
             }
 
             // End path if max depth is reached
-            if (depth == mMaxDepth) {
+            if (depth++ == mMaxDepth) {
                 break;
             }
 
@@ -64,23 +64,18 @@ public:
             }
             // Sample outgoing direction at intersection to continue path
             {
-                Point2f bsdfSample = pSampler->Next2D();
+                Point2f bxdfSample = pSampler->Next2D();
                 Vector3f wo = si.shading.ToLocal(-ray.d), wi;
-                auto sampleF = bxdf->SampleF(si, wo, wi, bsdfSample);
+                auto sampleF = bxdf->SampleF(si, wo, wi, bxdfSample);
                 if (!sampleF.has_value()) {
                     break;
                 }
                 auto f = bxdf->F(si, wo, wi);
-                // Todo : bug? random pdf
                 auto pdf = bxdf->Pdf(si, wo, wi);
-                beta *= sampleF.value();
-                if (Abs(pdf) < Epsilon) {
-                    std::print("1:{}\n", pdf);
-                    beta *= sampleF.value();
-                } else {
-                    std::print("2:{}\n", pdf);
-                    beta *= f * Abs(Frame::CosTheta(wi)) / pdf;
+                if(!pdf) {
+                    break;
                 }
+                beta *= f * Abs(Frame::CosTheta(wi)) / pdf;
                 ray = si.GenerateRay(wi);
             }
         }

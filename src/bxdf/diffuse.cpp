@@ -18,12 +18,20 @@ public:
     }
 
     Color3f
-    F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) override {
+    F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
         if (Frame::CosTheta(wo) <= 0 ||
             Frame::CosTheta(wi) <= 0) {
             return {0.f};
         }
         return pAlbedo->Evaluate(si) * InvPi;
+    }
+
+    Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
+        if (Frame::CosTheta(wo) <= 0 ||
+            Frame::CosTheta(wi) <= 0) {
+            return 0.f;
+        }
+        return Frame::CosTheta(wi) * InvPi;
     }
 
     std::optional<Color3f>

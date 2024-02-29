@@ -1,7 +1,7 @@
 <scene>
     <integrator type="path">
         <integer name="spp" value="100"/>
-        <integer name="maxDepth" value="50"/>
+        <integer name="depth" value="100"/>
         <aggregate type="bvh">
             <!--sphere center-->
             <primitive type="geometry">
