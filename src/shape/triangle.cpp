@@ -25,7 +25,7 @@ Boolean Triangle::Intersect(const Ray &ray, Float tMax, SurfaceInteraction &si) 
     Vector3f edge2 = v2 - v0;
     Vector3f rayCrossEdge2 = Cross(ray.d, edge2);
     Float det = Dot(edge1, rayCrossEdge2);
-    if (Abs(det) < Epsilon) {
+    if (det < Epsilon) {
         return false;
     }
 

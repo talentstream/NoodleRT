@@ -17,6 +17,7 @@ public:
     }
 
     [[nodiscard]] Color3f Li(const Ray &ray) const override {
+
         SurfaceInteraction si;
         if (!pAggregate->Intersect(ray, si)) {
             return {0.5f, 0.7f, 1.0f};

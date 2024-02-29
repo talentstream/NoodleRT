@@ -36,7 +36,7 @@ public:
 
     std::optional<Color3f>
     SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample2) const override {
-//        if (Frame::CosTheta(wo) < 0) return std::nullopt;
+        if (Frame::CosTheta(wo) < 0) return std::nullopt;
 
         wi = SquareToCosineHemisphere(sample2);
         // (brdf / pdf) * cos = [(albedo / pi) / (cos / pi)] * cos

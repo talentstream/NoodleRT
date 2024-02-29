@@ -168,7 +168,7 @@ struct Matrix4x4 {
 };
 
 inline Matrix4x4 operator*(const Matrix4x4 &other1, const Matrix4x4 &other2) {
-    return Matrix4x4::Mul(other1, other2);
+    return Matrix4x4::Mul(other2, other1);
 }
 
 class Transform {

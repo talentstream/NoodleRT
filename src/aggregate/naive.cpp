@@ -36,6 +36,7 @@ public:
         Boolean hitAnything{false};
         SurfaceInteraction tempSi;
 
+        // Todo: naive has bug
         for (const auto &primitive: mPrimitives) {
             if (primitive->Intersect(ray, tempSi)) {
                 hitAnything = true;

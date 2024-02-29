@@ -17,8 +17,8 @@ NAMESPACE_BEGIN
 
 Mesh::Mesh(const PropertyList &propertyList) {
     mFileName = propertyList.GetString("filename", {});
-    mObjectToWorld *= propertyList.GetTransform("scale", {});
     mObjectToWorld *= propertyList.GetTransform("rotate", {});
+    mObjectToWorld *= propertyList.GetTransform("scale", {});
     mObjectToWorld *= propertyList.GetTransform("translate", {});
 
     PRINT_DEBUG_INFO("Mesh", "mesh")
@@ -75,12 +75,11 @@ void Mesh::LoadMesh() {
 
 
             auto LoadNormal = [&](const auto &idx) -> void {
-                if (idx.normal_index < 0) {
-                    return;
+                if (idx.normal_index > 0) {
+                    normals.emplace_back(attrib.normals[3 * idx.normal_index + 0],
+                                         attrib.normals[3 * idx.normal_index + 1],
+                                         attrib.normals[3 * idx.normal_index + 2]);
                 }
-                normals.emplace_back(attrib.normals[3 * idx.normal_index + 0],
-                                     attrib.normals[3 * idx.normal_index + 1],
-                                     attrib.normals[3 * idx.normal_index + 2]);
             };
             LoadNormal(idx0);
             LoadNormal(idx1);
@@ -112,6 +111,7 @@ void Mesh::LoadMesh() {
             primitives.emplace_back(primitive);
 
         };
+
     }
 
 }
