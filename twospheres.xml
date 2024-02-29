@@ -1,7 +1,7 @@
 <scene>
     <integrator type="path">
         <integer name="spp" value="1000"/>
-        <integer name="maxDepth" value="50"/>
+        <integer name="depth" value="50"/>
         <aggregate type="naive">
             <primitive type="geometry">
                 <shape type="sphere">

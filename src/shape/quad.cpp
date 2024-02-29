@@ -40,10 +40,7 @@ public:
             return false;
         }
 
-        i.t = t;
-        i.p = p;
-        i.front = Dot(ray.d, unitN) < 0;
-        i.n = i.front ? Normal3f{unitN} : Normal3f{-unitN};
+        i = SurfaceInteraction(t,p,Normal3f{unitN},-ray.d);
         i.u = alpha;
         i.v = beta;
 

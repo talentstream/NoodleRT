@@ -101,10 +101,10 @@
         <sampler type="independent">
 
         </sampler>
-<!--        <light type="point">-->
-<!--            <point name="position" value="343 500 332"/>-->
-<!--            <color name="intensity" value="15000 150 150"/>-->
-<!--        </light>-->
+        <light type="point">
+            <point name="position" value="343 500 332"/>
+            <color name="intensity" value="15 15 15"/>
+        </light>
         <light type="infinite">
 
         </light>

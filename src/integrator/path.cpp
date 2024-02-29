@@ -76,6 +76,7 @@ public:
                     break;
                 }
                 beta *= f * Abs(Frame::CosTheta(wi)) / pdf;
+
                 ray = si.GenerateRay(wi);
             }
         }
