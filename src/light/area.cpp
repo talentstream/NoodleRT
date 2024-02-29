@@ -13,17 +13,18 @@ public:
         mIntensity = propList.GetColor("intensity", {1});
     }
 
-    void AddChild(Object *child) override {
-        switch (child->GetClassType()) {
-            case EClassType::EShape:
-                pShape = dynamic_cast<Shape *>(child);
-                break;
-        }
+    Color3f L(const SurfaceInteraction &si, const Vector3f &w) const override {
+        return mIntensity;
+    }
+
+    Color3f SampleLi(const SurfaceInteraction &si, Vector3f &wi, Point2f &sample) const override {
+        return {0.f};
     }
 
 private:
-    Shape *pShape;
     Color3f mIntensity;
 };
+
+REGISTER_CLASS(AreaLight, "area")
 
 NAMESPACE_END

@@ -5,6 +5,7 @@
 #include "base/primitive.h"
 #include "base/shape.h"
 #include "base/bxdf.h"
+#include "base/light.h"
 #include <print>
 
 NAMESPACE_BEGIN
@@ -29,6 +30,9 @@ public:
             case EClassType::EBxDF:
                 pBxDF = dynamic_cast<BxDF *>(child);
                 break;
+            case EClassType::ELight:
+                pLight = dynamic_cast<Light *>(child);
+                break;
         }
     }
 
@@ -44,7 +48,7 @@ public:
         }
 
         si.bxdf = pBxDF;
-
+        si.areaLight = pLight;
         return true;
     }
 
@@ -55,6 +59,7 @@ public:
 private:
     Shape *pShape;
     BxDF *pBxDF{nullptr};
+    Light *pLight{nullptr};
 };
 
 REGISTER_CLASS(GeometryPrimitive, "geometry")

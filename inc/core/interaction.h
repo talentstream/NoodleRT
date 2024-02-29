@@ -11,6 +11,7 @@
 NAMESPACE_BEGIN
 
 class BxDF;
+class Light;
 class Frame;
 
 // default surface interaction
@@ -36,6 +37,9 @@ public:
        return Ray{p,shading.ToWorld(d)};
     }
 
+    Color3f Le(Vector3f w);
+
+
     Point3f p;// position
     Float t{Infinity};// intersect time
     Vector3f wo;// out direction
@@ -50,6 +54,9 @@ public:
 
     // material
     BxDF *bxdf{nullptr};
+
+    // emissive light
+    Light *areaLight{nullptr};
 };
 
 NAMESPACE_END
