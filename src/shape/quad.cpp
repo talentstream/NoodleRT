@@ -40,7 +40,7 @@ public:
             return false;
         }
 
-        i = SurfaceInteraction(t,p,Normal3f{unitN},-ray.d);
+        i = SurfaceInteraction(t, p, Normal3f{unitN}, -ray.d);
         i.u = alpha;
         i.v = beta;
 

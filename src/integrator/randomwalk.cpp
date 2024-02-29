@@ -46,7 +46,7 @@ private:
         Color3f Le{};
         auto bxdf = si.bxdf;
         Vector3f wo = -ray.d;
-
+        Le = si.Le(wo);
         // Randomly Sample
         Point2f u = pSampler->Next2D();
         Vector3f wp = SampleUniformSphere(u);

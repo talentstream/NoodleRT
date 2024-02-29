@@ -37,6 +37,9 @@ public:
                 break;
             }
 
+            // Add emitted light at intersection
+            L += beta * si.Le(-ray.d);
+
             // End path if max depth is reached
             if (depth++ == mMaxDepth) {
                 break;

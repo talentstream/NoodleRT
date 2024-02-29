@@ -31,8 +31,12 @@ private:
         // find nearest intersection
         SurfaceInteraction si;
         Color3f backgroundColor{0};
+
+        if (depth == mMaxDepth) {
+            return backgroundColor;
+        }
         if (!pAggregate->Intersect(ray, si)) {
-            for(const auto light: mLights) {
+            for (const auto light: mLights) {
                 backgroundColor += light->Le(ray);
             }
             return backgroundColor;
@@ -40,15 +44,17 @@ private:
 
         // shading
         auto bxdf = si.bxdf;
-        if(!bxdf) return {0};
+        if (!bxdf) return {0};
         Vector3f wo = si.shading.ToLocal(-ray.d), wi;
 
+        Color3f emitted = si.Le(-ray.d);
+
         auto Le = bxdf->SampleF(si, wo, wi, pSampler->Next2D());
-        if (!Le.has_value()) return {0};
+        if (!Le.has_value()) return emitted;
         auto le = Le.value();
 
         // calculate direct illumination
-        Color3f emitted{};
+
         for (const auto light: mLights) {
             Point2f lightSample{0.5f, 0.5f};
             Vector3f w;// direction to light
@@ -59,11 +65,9 @@ private:
                 emitted = li * le * Abs(Dot(w,si.n));
             }
         }
-        if (depth == mMaxDepth) return emitted;
 
         // calculate indirect illumination
 
-        Ray scattered{si.p, wi};
         return emitted + le * Trace(si.GenerateRay(wi), depth + 1);
 
     }
