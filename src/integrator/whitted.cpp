@@ -59,16 +59,20 @@ private:
             Point2f lightSample{0.5f, 0.5f};
             Vector3f w;// direction to light
             Color3f li = light->SampleLi(si, w, lightSample);
-            Ray lightRay{si.p,w,si.t};
+            Ray lightRay{si.p, w, si.t};
             SurfaceInteraction lightSi;
-            if(!pAggregate->Intersect(lightRay, lightSi)) {
-                emitted = li * le * Abs(Dot(w,si.n));
+            if (!pAggregate->Intersect(lightRay, lightSi)) {
+                emitted = li * le * Abs(Dot(w, si.n));
             }
         }
 
         // calculate indirect illumination
-
-        return emitted + le * Trace(si.GenerateRay(wi), depth + 1);
+        auto flag = bxdf->Flag();
+        if (IsDiffuse(flag)) {
+            return emitted + le;
+        } else {
+            return emitted + le * Trace(si.GenerateRay(wi), depth + 1);
+        }
 
     }
 

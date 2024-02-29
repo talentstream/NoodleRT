@@ -61,8 +61,11 @@ public:
                     Color3f Li = light->SampleLi(si, wi, lightSample);
                     Ray lightRay{si.p, wi, si.t};
                     SurfaceInteraction lightSi;
+
                     if (!pAggregate->Intersect(lightRay, lightSi)) {
+
                         L += beta * bxdf->F(si, wo, wi) * Li * AbsDot(wi, si.shading.n);
+
                     }
                 }
             }
