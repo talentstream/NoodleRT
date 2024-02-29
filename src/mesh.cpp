@@ -4,6 +4,7 @@
 
 #include "base/mesh.h"
 #include "base/bxdf.h"
+#include "base/light.h"
 #include "base/primitive.h"
 #include "shape/triangle.h"
 #include <print>
@@ -28,6 +29,9 @@ void Mesh::AddChild(Object *child) {
     switch (child->GetClassType()) {
         case EClassType::EBxDF:
             pBxDF = dynamic_cast<BxDF *>(child);
+            break;
+        case EClassType::ELight:
+            pLight = dynamic_cast<Light *>(child);
             break;
     }
 }
@@ -99,6 +103,12 @@ void Mesh::LoadMesh() {
             primitive->AddChild(pTriangle);
 
             primitive->AddChild(pBxDF);
+
+            // calculate emission Object
+            if (pLight) {
+                primitive->AddChild(pLight);
+            }
+
             primitives.emplace_back(primitive);
 
         };

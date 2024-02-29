@@ -1,5 +1,5 @@
 <scene>
-    <integrator type="path">
+    <integrator type="whitted">
         <integer name="spp" value="100"/>
         <integer name="depth" value="100"/>
         <aggregate type="bvh">
@@ -19,6 +19,15 @@
             <primitive type="geometry">
                 <shape type="sphere">
                     <float name="radius" value="0.5"/>
+                    <point name="center" value="-1.0 0.0 -1.0"/>
+                </shape>
+                <bxdf type="dielectric">
+                </bxdf>
+            </primitive>
+            <!--sphere left smaller-->
+            <primitive type="geometry">
+                <shape type="sphere">
+                    <float name="radius" value="0.4"/>
                     <point name="center" value="-1.0 0.0 -1.0"/>
                 </shape>
                 <bxdf type="dielectric">

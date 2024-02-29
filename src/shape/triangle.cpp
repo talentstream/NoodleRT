@@ -55,6 +55,7 @@ Boolean Triangle::Intersect(const Ray &ray, Float tMax, SurfaceInteraction &si) 
             const Normal3f &n3 = pMesh->normals[mIndices[2]];
             outNormal = Normalize((1 - u - v) * n1 + u * n2 + v * n3);
         }
+
         si = SurfaceInteraction(t,ray(t),outNormal,-ray.d);
 
         // uv

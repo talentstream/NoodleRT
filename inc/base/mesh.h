@@ -34,7 +34,7 @@ public:
 
 private:
     class BxDF *pBxDF{nullptr};
-
+    class Light *pLight{nullptr};
     std::string_view mFileName;
     Transform mObjectToWorld;
 };

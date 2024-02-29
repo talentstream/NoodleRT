@@ -1,112 +1,82 @@
 <scene>
-    <integrator type="whitted">
-        <integer name="spp" value="200"/>
-        <integer name="depth" value="50"/>
+    <integrator type="path">
+        <integer name="spp" value="1000"/>
+        <integer name="depth" value="100"/>
         <aggregate type="bvh">
-            <!--quad green-->
-            <primitive type="geometry">
-                <shape type="quad">
-                    <point name="start" value="555.0 0.0 0.0"/>
-                    <vector name="horizontal" value="0.0 555.0 0.0"/>
-                    <vector name="vertical" value="0.0 0.0 555.0"/>
-                </shape>
+            <!--floor-->
+            <mesh>
+                <string name="filename" value="../floor.obj"/>
                 <bxdf type="diffuse">
                     <texture type="solid">
-                        <color name="albedo" value="0.12 0.45 0.15"/>
+                        <color name="albedo" value="0.725 0.71 0.68"/>
                     </texture>
                 </bxdf>
-            </primitive>
-            <!--quad red-->
-            <primitive type="geometry">
-                <shape type="quad">
-                    <point name="start" value="0.0 0.0 0.0"/>
-                    <vector name="horizontal" value="0.0 555.0 0.0"/>
-                    <vector name="vertical" value="0.0 0.0 555.0"/>
-                </shape>
-                <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.65 0.05 0.05"/>
-                    </texture>
-                </bxdf>
-            </primitive>
-            <!--quad white floor-->
-            <primitive type="geometry">
-                <shape type="quad">
-                    <point name="start" value="0.0 0.0 0.0"/>
-                    <vector name="horizontal" value="555.0 0.0 0.0"/>
-                    <vector name="vertical" value="0.0 0.0 555.0"/>
-                </shape>
-                <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.73 0.73 0.73"/>
-                    </texture>
-                </bxdf>
-            </primitive>
-            <!--quad white top-->
-            <primitive type="geometry">
-                <shape type="quad">
-                    <point name="start" value="555.0 555.0 555.0"/>
-                    <vector name="horizontal" value="-555.0 0.0 0.0"/>
-                    <vector name="vertical" value="0.0 0.0 -555.0"/>
-                </shape>
-                <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.73 0.73 0.73"/>
-                    </texture>
-                </bxdf>
-            </primitive>
-            <!--quad white back-->
-            <primitive type="geometry">
-                <shape type="quad">
-                    <point name="start" value="0.0 0.0 555.0"/>
-                    <vector name="horizontal" value="555.0 0.0 0.0"/>
-                    <vector name="vertical" value="0.0 555.0 0.0"/>
-                </shape>
-                <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.73 0.73 0.73"/>
-                    </texture>
-                </bxdf>
-            </primitive>
-            <!--bigger sphere-->
+            </mesh>
+            <!--light-->
+<!--            <mesh>-->
+<!--                <string name="filename" value="../light.obj"/>-->
+<!--                <light type="area">-->
+<!--                    <color name="intensity" value="23.948 19.283 15.541"/>-->
+<!--                </light>-->
+<!--            </mesh>-->
             <primitive type="geometry">
                 <shape type="sphere">
-                    <point name="center" value="215 80 150"/>
-                    <float name="radius" value="80"/>
+                    <float name="radius" value="100"/>
+                    <point name="center" value="250 250 250"/>
                 </shape>
-                <bxdf type="reflection">
-                </bxdf>
+                <light type="area">
+                    <color name="intensity" value="23.948 19.283 15.541"/>
+                </light>
             </primitive>
-            <!--smaller sphere-->
-            <primitive type="geometry">
-                <shape type="sphere">
-                    <point name="center" value="350 165 380"/>
-                    <float name="radius" value="80"/>
-                </shape>
-                <bxdf type="dielectric">
+            <!--left-->
+            <mesh>
+                <string name="filename" value="../left.obj"/>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0.63 0.065 0.05"/>
+                    </texture>
                 </bxdf>
-            </primitive>
-
+            </mesh>
+            <!--right-->
+            <mesh>
+                <string name="filename" value="../right.obj"/>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0.14 0.45 0.091"/>
+                    </texture>
+                </bxdf>
+            </mesh>
+<!--            &lt;!&ndash;shortbox&ndash;&gt;-->
+<!--            <mesh>-->
+<!--                <string name="filename" value="../shortbox.obj"/>-->
+<!--                <bxdf type="diffuse">-->
+<!--                    <texture type="diffuse">-->
+<!--                        <color name="albedo" value="0.725 0.71 0.68"/>-->
+<!--                    </texture>-->
+<!--                </bxdf>-->
+<!--            </mesh>-->
+<!--            &lt;!&ndash;tallbox&ndash;&gt;-->
+<!--            <mesh>-->
+<!--                <string name="filename" value="../tallbox.obj"/>-->
+<!--                <bxdf type="diffuse">-->
+<!--                    <texture type="solid">-->
+<!--                        <color name="albedo" value="0.725 0.71 0.68"/>-->
+<!--                    </texture>-->
+<!--                </bxdf>-->
+<!--            </mesh>-->
         </aggregate>
         <camera type="perspective">
             <film>
                 <integer name="width" value="600"/>
                 <integer name="height" value="600"/>
             </film>
-            <float name="fov" value="40.0"/>
-            <point name="lookFrom" value="278.0 278.0 -800.0"/>
-            <point name="lookAt" value="278.0 278.0 0.0"/>
+            <float name="fov" value="38.0"/>
+            <point name="lookFrom" value="278 273 -790"/>
+            <point name="lookAt" value="278 273 0"/>
             <vector name="up" value="0.0 1.0 0.0"/>
         </camera>
         <sampler type="independent">
 
         </sampler>
-        <light type="point">
-            <point name="position" value="343 500 332"/>
-            <color name="intensity" value="15 15 15"/>
-        </light>
-        <light type="infinite">
-
-        </light>
     </integrator>
 </scene>
