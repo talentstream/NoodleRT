@@ -1,8 +1,26 @@
 <scene>
-    <integrator type="path">
-        <integer name="spp" value="1000"/>
-        <integer name="depth" value="100"/>
+    <integrator type="whitted">
+        <integer name="spp" value="100"/>
+        <integer name="depth" value="50"/>
         <aggregate type="bvh">
+            <!--top-->
+            <mesh>
+                <string name="filename" value="../top.obj"/>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0.05 0.05 0.05"/>
+                    </texture>
+                </bxdf>
+            </mesh>
+            <!--back-->
+            <mesh>
+                <string name="filename" value="../back.obj"/>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0.725 0.71 0.68"/>
+                    </texture>
+                </bxdf>
+            </mesh>
             <!--floor-->
             <mesh>
                 <string name="filename" value="../floor.obj"/>
@@ -40,19 +58,13 @@
             <!--shortbox-->
             <mesh>
                 <string name="filename" value="../shortbox.obj"/>
-                <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.725 0.71 0.68"/>
-                    </texture>
+                <bxdf type="reflection">
                 </bxdf>
             </mesh>
             <!--tallbox-->
             <mesh>
                 <string name="filename" value="../tallbox.obj"/>
-                <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.725 0.71 0.68"/>
-                    </texture>
+                <bxdf type="reflection">
                 </bxdf>
             </mesh>
             <!--sphere-->
