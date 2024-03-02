@@ -49,7 +49,7 @@ private:
         Le = si.Le(wo);
         // Randomly Sample
         Point2f u = pSampler->Next2D();
-        Vector3f wp = SampleUniformSphere(u);
+        Vector3f wp = Warp::SampleUniformSphere(u);
 
         auto fcos = bxdf->F(si, wo, wp) * AbsDot(si.n, wp);
         if(depth == mMaxDepth) return Le + fcos;

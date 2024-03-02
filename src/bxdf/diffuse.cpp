@@ -32,14 +32,14 @@ public:
             return 0.f;
         }
 
-        return SquareToCosineHemispherePdf(wo);
+        return Warp::SquareToCosineHemispherePdf(wo);
     }
 
     std::optional<Color3f>
     SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample2) const override {
         if (Frame::CosTheta(wo) < 0) return std::nullopt;
 
-        wi = SquareToCosineHemisphere(sample2);
+        wi = Warp::SquareToCosineHemisphere(sample2);
         // (brdf / pdf) * cos = [(albedo / pi) / (cos / pi)] * cos
         return pAlbedo->Evaluate(si);
     }
@@ -47,8 +47,8 @@ public:
     Color3f
     Sample(BxDFSampleRecord &bRec, Float &pdf, const Point2f &sample) const override {
         if (Frame::CosTheta(bRec.wi) <= 0) return {0.f};
-        bRec.wo = SquareToCosineHemisphere(sample);
-        pdf = SquareToCosineHemispherePdf(bRec.wo);
+        bRec.wo = Warp::SquareToCosineHemisphere(sample);
+        pdf = Warp::SquareToCosineHemispherePdf(bRec.wo);
         return pAlbedo->Evaluate(bRec.si);
     }
 
