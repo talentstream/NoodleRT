@@ -25,6 +25,17 @@ public:
         return mAlbedo;
     }
 
+    Color3f
+    Eval(const BxDFSampleRecord &bRec) const override {
+        if(Frame::CosTheta(bRec.wo) <= 0 ||
+           Frame::CosTheta(bRec.wi) <= 0 ||
+           Abs(Dot(ReflectLocal(bRec.wi),bRec.wo)) > Epsilon) {
+            return {0.f};
+        }
+
+        return mAlbedo;
+    }
+
     Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
         if(Frame::CosTheta(wo) <= 0 ||
            Frame::CosTheta(wi) <= 0 ||

@@ -68,12 +68,15 @@ inline Float Sqr(Float v) {
     return v * v;
 }
 
-
 inline Float Sqrt(Float v) {
     if (v < 0) {
         throw std::runtime_error("Sqrt of negative number");
     }
     return std::sqrt(v);
+}
+
+inline Float SafeSqrt(Float v) {
+    return Sqrt(std::max(v, 0.f));
 }
 
 inline Float Abs(Float v) {
