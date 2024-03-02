@@ -5,6 +5,7 @@
 #pragma once
 
 #include "base/bxdf.h"
+#include <print>
 
 NAMESPACE_BEGIN
 

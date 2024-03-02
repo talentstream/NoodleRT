@@ -24,6 +24,7 @@ public:
     Color3f
     Sample_Li(LightSampleRecord &lRec) const override {
         lRec.wi = Normalize(mPosition - lRec.si.p);
+
         lRec.pdf = 1.f;
         return mIntensity / LengthSquared(mPosition - lRec.si.p);
     }

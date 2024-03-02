@@ -14,7 +14,7 @@ NAMESPACE_BEGIN
 class RoughDiffuse : public BxDF {
 public:
     explicit RoughDiffuse(const PropertyList &propertyList) {
-        mAlbedo = propertyList.GetColor("albedo", {1.f});
+        mReflectance = propertyList.GetColor("albedo", {1.f});
         mRoughness = propertyList.GetFloat("roughness", 0.5f);
         Float r2 = mRoughness * mRoughness;
         A = 1 - (r2 / (2 * (r2 + 0.33f)));
@@ -50,7 +50,7 @@ public:
             tanBeta = sinThetaO / Frame::AbsCosTheta(wo);
         }
 
-        return mAlbedo * InvPi * (A + B * maxCos * sinAlpha * tanBeta);
+        return mReflectance * InvPi * (A + B * maxCos * sinAlpha * tanBeta);
     }
 
     Color3f
@@ -81,7 +81,7 @@ public:
             tanBeta = sinThetaO / Frame::AbsCosTheta(bRec.wo);
         }
 
-        return mAlbedo * InvPi * (A + B * maxCos * sinAlpha * tanBeta);
+        return mReflectance * InvPi * (A + B * maxCos * sinAlpha * tanBeta);
 
     }
 
@@ -110,7 +110,7 @@ public:
 
         wi = Warp::SquareToCosineHemisphere(sample);
         // (brdf / pdf) * cos = [(albedo / pi) / (cos / pi)] * cos
-        return mAlbedo;
+        return mReflectance;
     }
 
     Color3f
@@ -129,7 +129,7 @@ public:
     }
 
 private:
-    Color3f mAlbedo;
+    Color3f mReflectance;
     Float mRoughness;
     Float A, B;
 

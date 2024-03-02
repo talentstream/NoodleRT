@@ -33,6 +33,9 @@ public:
             // Account for infinite lights if ray has no intersection
             if (!pAggregate->Intersect(ray, si)) {
                 for (const auto light: mLights) {
+                    if (!IsInfiniteLight(light->Flag())) {
+                        continue;
+                    }
                     L += beta * light->Le(ray);
                 }
                 break;
@@ -56,15 +59,22 @@ public:
             {
                 Vector3f wo = -ray.d;
                 for (const auto light: mLights) {
-                    Point2f lightSample = pSampler->Next2D();
-                    Vector3f wi;
-                    Color3f Li = light->SampleLi(si, wi, lightSample);
-                    Ray lightRay{si.p, wi, si.t};
-                    SurfaceInteraction lightSi;
+                    if(IsInfiniteLight(light->Flag())){
+                        continue;
+                    }
+                    LightSampleRecord lRec{si,pSampler};
+                    Color3f li = light->Sample_Li(lRec);
+                    if (li.IsZero() || lRec.pdf == 0) {
+                        continue;
+                    }
+                    Ray lr {si.p, -lRec.wi, 0};
+                    SurfaceInteraction lsi;
+                    BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(Normalize(wo)),si.shading.ToLocal(lRec.wi)};
+                    if(!pAggregate->Intersect(lr, lsi)) {
+                        Vector3f LDir = Normalize(lRec.wi);
+                        Float LoN = AbsDot(LDir, si.shading.n);
 
-                    if (!pAggregate->Intersect(lightRay, lightSi)) {
-
-                        L += beta * bxdf->F(si, wo, wi) * Li * AbsDot(wi, si.shading.n);
+                        L += beta * bxdf->Eval(bRec) * li * LoN / lRec.pdf;
 
                     }
                 }
