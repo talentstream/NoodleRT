@@ -9,8 +9,8 @@
 
 NAMESPACE_BEGIN
 
-// Ideal Diffuse
-// Assume the same value for all incident and outgoing directions
+// Ideal Diffuse, Lambertian
+// Represents an ideally diffuse material with a user-specified amount of reflectance.
 class Diffuse : public BxDF {
 public:
     explicit Diffuse(const PropertyList &propertyList) {
@@ -32,7 +32,7 @@ public:
             return 0.f;
         }
 
-        return Frame::CosTheta(wo) * InvPi;
+        return SquareToCosineHemispherePdf(wo);
     }
 
     std::optional<Color3f>

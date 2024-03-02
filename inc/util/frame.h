@@ -54,6 +54,10 @@ struct Frame {
         return w.z;
     }
 
+    static Float AbsCosTheta(Vector3f w){
+        return Abs(w.z);
+    }
+
     static Float SinTheta(Vector3f w) {
         return Sqrt(Max(0, SinTheta2(w)));
     }

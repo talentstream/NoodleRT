@@ -37,4 +37,8 @@ inline Vector3f SquareToCosineHemisphere(Point2f sample2) {
     return {p.x, p.y, z};
 }
 
+inline Float SquareToCosineHemispherePdf(const Vector3f &v) {
+    return Frame::CosTheta(v) * InvPi;
+}
+
 NAMESPACE_END
