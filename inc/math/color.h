@@ -131,6 +131,10 @@ public:
         return {std::sqrt(r), std::sqrt(g), std::sqrt(b)};
     }
 
+    Boolean IsZero() const {
+        return r == 0 && g == 0 && b == 0;
+    }
+
 };
 
 inline Color3f operator*(Float s, Color3f c) {

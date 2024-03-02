@@ -1,6 +1,6 @@
 <scene>
     <integrator type="path">
-        <integer name="spp" value="1000"/>
+        <integer name="spp" value="256"/>
         <integer name="depth" value="100"/>
         <aggregate type="bvh">
             <!--top-->
@@ -74,19 +74,19 @@
                 </bxdf>
             </mesh>
             <!--sphere-->
-            <primitive type="geometry">
-                <shape type="sphere">
-                    <float name="radius" value="100.0"/>
-                    <point name="center" value="278 278 278"/>
-                </shape>
-                <bxdf type="dielectric">
-                </bxdf>
-            </primitive>
+<!--            <primitive type="geometry">-->
+<!--                <shape type="sphere">-->
+<!--                    <float name="radius" value="100.0"/>-->
+<!--                    <point name="center" value="278 278 278"/>-->
+<!--                </shape>-->
+<!--                <bxdf type="dielectric">-->
+<!--                </bxdf>-->
+<!--            </primitive>-->
         </aggregate>
         <camera type="perspective">
             <film>
-                <integer name="width" value="800"/>
-                <integer name="height" value="800"/>
+                <integer name="width" value="400"/>
+                <integer name="height" value="400"/>
             </film>
             <float name="fov" value="38.0"/>
             <point name="lookFrom" value="278 273 -790"/>

@@ -47,6 +47,12 @@ struct BxDFSampleRecord {
 
     inline BxDFSampleRecord(const SurfaceInteraction &si, const Vector3f &wi, const Vector3f &wo)
             : BxDFSampleRecord(si, nullptr, wi, wo) {}
+
+    inline BxDFSampleRecord(const SurfaceInteraction &si, Sampler *sampler, const Vector3f &wi)
+            : BxDFSampleRecord(si, sampler, wi, {}) {}
+
+    inline BxDFSampleRecord(const SurfaceInteraction &si, const Vector3f &wi)
+            : BxDFSampleRecord(si, nullptr, wi, {}) {}
 };
 
 class BxDF : public Object {
@@ -58,15 +64,21 @@ public:
     virtual Color3f
     F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const { return {0.f}; }
 
+    virtual Color3f
+    Eval(const BxDFSampleRecord &bRec) const { return {0.f}; }
+
     virtual Float
     Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const { return 0.f; };
+
+    virtual Float
+    pdf(const BxDFSampleRecord &bRec) const { return 0.f; };
 
     virtual std::optional<Color3f>
     SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const = 0;
 
     // Sample bxdf & return pdf
     virtual Color3f
-    Sample(BxDFSampleRecord &bRec, Float &pdf, const Point2f &sample) const{return {0.f};};
+    Sample(BxDFSampleRecord &bRec, Float &pdf, const Point2f &sample) const { return {0.f}; };
 
     virtual BxDFFlag
     Flag() const = 0;

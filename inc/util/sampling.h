@@ -36,6 +36,7 @@ public:
     static Vector3f SquareToCosineHemisphere(Point2f sample2) {
         Point2f p = ConcentricSampleDisk(sample2);
         Float z = Sqrt(Max(0, 1 - Sqr(p.x) - Sqr(p.y)));
+
         return {p.x, p.y, z};
     }
 

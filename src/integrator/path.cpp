@@ -72,18 +72,31 @@ public:
             // Sample outgoing direction at intersection to continue path
             {
                 Point2f bxdfSample = pSampler->Next2D();
-                Vector3f wo = si.shading.ToLocal(-ray.d), wi;
+                Vector3f wo = si.shading.ToLocal(si.wo), wi;
+
                 auto sampleF = bxdf->SampleF(si, wo, wi, bxdfSample);
                 if (!sampleF.has_value()) {
                     break;
                 }
+                Vector3f newWi = Normalize(si.shading.ToLocal(-ray.d));
+
+                Float bsdfPdf;
+                BxDFSampleRecord bRec{si, pSampler, newWi};
+                Color3f bxdfWeight = bxdf->Sample(bRec, bsdfPdf, bxdfSample);
+
+                if (bxdfWeight.IsZero()) {
+                    break;
+                }
                 auto f = bxdf->F(si, wo, wi);
+                auto newf = bxdf->Eval(bRec);
                 auto pdf = bxdf->Pdf(si, wo, wi);
+                auto newpdf = bxdf->pdf(bRec);
+
                 if (!pdf) {
                     break;
                 }
 //                beta *= sampleF.value();
-                beta *= f / pdf;
+                beta *= newf / newpdf;
 
                 ray = si.GenerateRay(wi);
             }

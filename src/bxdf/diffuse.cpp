@@ -26,6 +26,15 @@ public:
         return pAlbedo->Evaluate(si) * Frame::CosTheta(wo) * InvPi;
     }
 
+    Color3f
+    Eval(const BxDFSampleRecord &bRec) const override {
+        if (Frame::CosTheta(bRec.wo) <= 0 ||
+            Frame::CosTheta(bRec.wi) <= 0) {
+            return {0.f};
+        }
+        return pAlbedo->Evaluate(bRec.si) * Frame::CosTheta(bRec.wo) * InvPi;
+    }
+
     Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
         if (Frame::CosTheta(wo) <= 0 ||
             Frame::CosTheta(wi) <= 0) {
@@ -33,6 +42,14 @@ public:
         }
 
         return Warp::SquareToCosineHemispherePdf(wo);
+    }
+
+    Float pdf(const BxDFSampleRecord &bRec) const override {
+        if (Frame::CosTheta(bRec.wo) <= 0 ||
+            Frame::CosTheta(bRec.wi) <= 0) {
+            return 0.f;
+        }
+        return Warp::SquareToCosineHemispherePdf(bRec.wo);
     }
 
     std::optional<Color3f>
@@ -47,7 +64,9 @@ public:
     Color3f
     Sample(BxDFSampleRecord &bRec, Float &pdf, const Point2f &sample) const override {
         if (Frame::CosTheta(bRec.wi) <= 0) return {0.f};
+
         bRec.wo = Warp::SquareToCosineHemisphere(sample);
+
         pdf = Warp::SquareToCosineHemispherePdf(bRec.wo);
         return pAlbedo->Evaluate(bRec.si);
     }
