@@ -74,14 +74,14 @@
                 </bxdf>
             </mesh>
             <!--sphere-->
-<!--            <primitive type="geometry">-->
-<!--                <shape type="sphere">-->
-<!--                    <float name="radius" value="100.0"/>-->
-<!--                    <point name="center" value="278 278 278"/>-->
-<!--                </shape>-->
-<!--                <bxdf type="dielectric">-->
-<!--                </bxdf>-->
-<!--            </primitive>-->
+            <primitive type="geometry">
+                <shape type="sphere">
+                    <float name="radius" value="100.0"/>
+                    <point name="center" value="278 278 278"/>
+                </shape>
+                <bxdf type="roughdiffuse">
+                </bxdf>
+            </primitive>
         </aggregate>
         <camera type="perspective">
             <film>
