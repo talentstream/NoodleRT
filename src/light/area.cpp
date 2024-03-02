@@ -21,6 +21,11 @@ public:
         return {0.f};
     }
 
+    LightFlag
+    Flag() const override {
+        return LightFlag::EArea;
+    }
+
 private:
     Color3f mIntensity;
 };

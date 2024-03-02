@@ -6,28 +6,38 @@
 
 #include "core/object.h"
 #include "core/interaction.h"
+#include "base/sampler.h"
 
 NAMESPACE_BEGIN
 
-enum class LightType {
+enum class LightFlag {
     EDeltaPosition,
     EDeltaDirection,
     EArea,
     EInfinite
 };
 
-inline Boolean IsDeltaLight(LightType type) {
-    return (type == LightType::EDeltaPosition ||
-            type == LightType::EDeltaDirection);
+inline Boolean IsAreaLight(LightFlag type) {
+    return (type == LightFlag::EArea);
 }
 
-inline Boolean IsAreaLight(LightType type) {
-    return (type == LightType::EArea);
+inline Boolean IsInfiniteLight(LightFlag type) {
+    return (type == LightFlag::EInfinite);
 }
 
-inline Boolean IsInfiniteLight(LightType type) {
-    return (type == LightType::EInfinite);
-}
+struct LightSampleRecord {
+    const SurfaceInteraction &si;
+    Sampler *sampler;
+
+    Vector3f wi; // light direction
+    Float pdf;
+
+    inline LightSampleRecord(const SurfaceInteraction &si)
+            : LightSampleRecord(si, nullptr) {}
+
+    inline LightSampleRecord(const SurfaceInteraction &si, Sampler *sampler)
+            : si{si}, sampler{sampler} {}
+};
 
 class Light : public Object {
 public:
@@ -46,6 +56,12 @@ public:
 
     virtual Color3f
     SampleLi(const SurfaceInteraction &si, Vector3f &wi, Point2f &sample) const = 0;
+
+    virtual Color3f
+    Sample_Li(LightSampleRecord &lRec) const { return {0.f}; }
+
+    virtual LightFlag
+    Flag() const = 0;
 
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::ELight;

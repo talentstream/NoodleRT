@@ -15,7 +15,8 @@ public:
         mIntensity = propList.GetColor("intensity", {0.5, 0.7, 1.0});
     }
 
-    Color3f Le(const Ray &ray) const override {
+    Color3f
+    Le(const Ray &ray) const override {
         return mIntensity;
     }
 
@@ -23,6 +24,11 @@ public:
     SampleLi(const SurfaceInteraction &si, Vector3f &wi, Point2f &sample) const override {
         wi = Normalize(mDirection);
         return mIntensity;
+    }
+
+    LightFlag
+    Flag() const override {
+        return LightFlag::EInfinite;
     }
 
 private:
