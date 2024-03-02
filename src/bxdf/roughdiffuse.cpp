@@ -14,7 +14,7 @@ NAMESPACE_BEGIN
 class RoughDiffuse : public BxDF {
 public:
     explicit RoughDiffuse(const PropertyList &propertyList) {
-        mAlbedo = propertyList.GetColor("albedo", {0.5f});
+        mAlbedo = propertyList.GetColor("albedo", {1.f});
         mRoughness = propertyList.GetFloat("roughness", 0.5f);
         Float r2 = mRoughness * mRoughness;
         A = 1 - (r2 / (2 * (r2 + 0.33f)));
