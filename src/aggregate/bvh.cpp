@@ -89,8 +89,14 @@ public:
         primitiveInfo.clear();
     }
 
-    Boolean Intersect(const Ray &ray, SurfaceInteraction &interaction) const override {
+    Boolean
+    Intersect(const Ray &ray, SurfaceInteraction &interaction) const override {
         return RecursiveIntersect(mRoot, ray, interaction);
+    }
+
+    Boolean
+    UnOccluded(const Ray &ray) const override {
+        return RecursiveIntersectP(mRoot, ray);
     }
 
 private:
@@ -181,6 +187,26 @@ private:
 //            }
         Boolean hitRight = RecursiveIntersect(node->children[1], ray, interaction);
         return hitLeft || hitRight;
+    }
+
+    Boolean
+    RecursiveIntersectP(const BVHNode *node, const Ray &ray) const {
+        if (!node || !node->bound.IntersectP(ray, Infinity)) {
+            return false;
+        }
+
+        // leaf node
+        if (node->primitiveNumber > 0) {
+            for (auto i{0}; i < node->primitiveNumber; ++i) {
+                if (mPrimitives[node->firstPrimIndex + i]->IntersectP(ray)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // interior node
+        return RecursiveIntersectP(node->children[0], ray) || RecursiveIntersectP(node->children[1], ray);
     }
 
 private:

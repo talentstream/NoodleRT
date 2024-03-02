@@ -14,6 +14,8 @@ public:
 
     Boolean Intersect(const Ray &ray, Float tMax, SurfaceInteraction &si) const override;
 
+    Boolean IntersectP(const Ray &ray, Float tMax) const override;
+
     Bound3f BoundingBox() const override;
 
 private:

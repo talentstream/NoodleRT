@@ -56,7 +56,7 @@ Boolean Triangle::Intersect(const Ray &ray, Float tMax, SurfaceInteraction &si) 
             outNormal = Normalize((1 - u - v) * n1 + u * n2 + v * n3);
         }
 
-        si = SurfaceInteraction(t,ray(t),outNormal,-ray.d);
+        si = SurfaceInteraction(t, ray(t), outNormal, -ray.d);
 
         // uv
         if (!pMesh->uvs.size() == 0) {
@@ -70,6 +70,41 @@ Boolean Triangle::Intersect(const Ray &ray, Float tMax, SurfaceInteraction &si) 
             si.v = (1 - u - v) * 0 + u * 0 + v * 1;
         }
 
+        return true;
+    }
+    return false;
+}
+
+Boolean Triangle::IntersectP(const nrt::Ray &ray, Float tMax) const {
+    const Point3f &v0 = pMesh->positions[mIndices[0]];
+    const Point3f &v1 = pMesh->positions[mIndices[1]];
+    const Point3f &v2 = pMesh->positions[mIndices[2]];
+
+    // en.wikipedia.org/wiki/Möller–Trumbore_intersection_algorithm
+    Vector3f edge1 = v1 - v0;
+    Vector3f edge2 = v2 - v0;
+    Vector3f rayCrossEdge2 = Cross(ray.d, edge2);
+    Float det = Dot(edge1, rayCrossEdge2);
+    if (det < Epsilon) {
+        return false;
+    }
+
+    Float invDet = 1 / det;
+    Vector3f s = ray.o - v0;
+    Float u = Dot(s, rayCrossEdge2) * invDet;
+    if (u < 0 || u > 1) {
+        return false;
+    }
+
+    Vector3f sCrossEdge1 = Cross(s, edge1);
+    Float v = Dot(ray.d, sCrossEdge1) * invDet;
+    if (v < 0 || u + v > 1) {
+        return false;
+    }
+
+    Float t = Dot(edge2, sCrossEdge1) * invDet;
+
+    if (t > Epsilon) {
         return true;
     }
     return false;

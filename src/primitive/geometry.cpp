@@ -21,6 +21,27 @@ public:
         delete pBxDF;
     }
 
+    Boolean
+    Intersect(const Ray &ray, SurfaceInteraction &si) const override {
+        if (!pShape->Intersect(ray, si.t, si)) {
+            return false;
+        }
+
+        si.bxdf = pBxDF;
+        si.areaLight = pLight;
+        return true;
+    }
+
+    Boolean
+    IntersectP(const Ray &ray) const override {
+        return pShape->IntersectP(ray, Infinity);
+    }
+
+    Bound3f
+    BoundingBox() const override {
+        return pShape->BoundingBox();
+    }
+
     void AddChild(Object *child) override {
 
         switch (child->GetClassType()) {
@@ -40,20 +61,6 @@ public:
         if (pBxDF == nullptr) {
             pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList(), true));
         }
-    }
-
-    Boolean Intersect(const Ray &ray, SurfaceInteraction &si) const override {
-        if (!pShape->Intersect(ray, si.t, si)) {
-            return false;
-        }
-
-        si.bxdf = pBxDF;
-        si.areaLight = pLight;
-        return true;
-    }
-
-    Bound3f BoundingBox() const override {
-        return pShape->BoundingBox();
     }
 
 private:

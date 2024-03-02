@@ -9,9 +9,14 @@ class Primitive : public Object {
 public:
     virtual ~Primitive() = default;
 
-    virtual Boolean Intersect(const Ray &ray, SurfaceInteraction &interaction) const = 0;
+    virtual Boolean
+    Intersect(const Ray &ray, SurfaceInteraction &interaction) const = 0;
 
-    virtual Bound3f BoundingBox() const = 0;
+    virtual Boolean
+    IntersectP(const Ray &ray) const = 0;
+
+    virtual Bound3f
+    BoundingBox() const = 0;
 
     [[nodiscard]] EClassType GetClassType() const override {
         return EClassType::EPrimitive;

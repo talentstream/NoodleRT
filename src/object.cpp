@@ -29,3 +29,4 @@ Object *ObjectFactory::CreateInstance(std::string_view name, const PropertyList 
 }
 
 NAMESPACE_END
+

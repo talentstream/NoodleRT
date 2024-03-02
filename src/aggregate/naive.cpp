@@ -50,6 +50,13 @@ public:
 
     }
 
+    Boolean
+    UnOccluded(const Ray &ray) const override {
+        return std::ranges::all_of(mPrimitives, [&ray](const auto &primitive) {
+            return !primitive->IntersectP(ray);
+        });
+    }
+
 private:
     std::vector<Primitive *> mPrimitives;
 };

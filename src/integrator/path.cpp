@@ -68,11 +68,10 @@ public:
                         continue;
                     }
                     Ray lr {si.p, -lRec.wi, 0};
-                    SurfaceInteraction lsi;
-                    BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(Normalize(wo)),si.shading.ToLocal(lRec.wi)};
-                    if(!pAggregate->Intersect(lr, lsi)) {
+                    BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(lRec.wi),si.shading.ToLocal(Normalize(-ray.d))};
+                    if(!pAggregate->UnOccluded(lr)) {
                         Vector3f LDir = Normalize(lRec.wi);
-                        Float LoN = AbsDot(LDir, si.shading.n);
+                        Float LoN = Max(0.f,Dot(LDir, si.shading.n));
 
                         L += beta * bxdf->Eval(bRec) * li * LoN / lRec.pdf;
 
