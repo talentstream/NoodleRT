@@ -79,7 +79,7 @@
                     <float name="radius" value="100.0"/>
                     <point name="center" value="278 278 278"/>
                 </shape>
-                <bxdf type="roughdiffuse">
+                <bxdf type="dielectric">
                 </bxdf>
             </primitive>
         </aggregate>
