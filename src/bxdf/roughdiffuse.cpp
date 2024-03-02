@@ -72,6 +72,10 @@ public:
         return mAlbedo;
     }
 
+    BxDFFlag Flag() const override {
+        return EDiffuseReflection;
+    }
+
 private:
     Color3f mAlbedo;
     Float mRoughness;
