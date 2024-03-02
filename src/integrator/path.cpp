@@ -82,8 +82,8 @@ public:
                 if (!pdf) {
                     break;
                 }
-                beta *= sampleF.value();
-//                beta *= f * Abs(Frame::CosTheta(wi)) / pdf;
+//                beta *= sampleF.value();
+                beta *= f / pdf;
 
                 ray = si.GenerateRay(wi);
             }

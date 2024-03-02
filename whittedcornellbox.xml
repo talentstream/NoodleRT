@@ -31,12 +31,12 @@
                 </bxdf>
             </mesh>
             <!--light-->
-            <mesh>
-                <string name="filename" value="../light.obj"/>
-                <light type="area">
-                    <color name="intensity" value="23.948 19.283 15.541"/>
-                </light>
-            </mesh>
+<!--            <mesh>-->
+<!--                <string name="filename" value="../light.obj"/>-->
+<!--                <light type="area">-->
+<!--                    <color name="intensity" value="23.948 19.283 15.541"/>-->
+<!--                </light>-->
+<!--            </mesh>-->
             <!--left-->
             <mesh>
                 <string name="filename" value="../left.obj"/>
@@ -90,5 +90,9 @@
         <sampler type="independent">
 
         </sampler>
+        <light type="point">
+            <point name="position" value="278 547 278"/>
+            <color name="intensity" value="23.948 19.283 15.541"/>
+        </light>
     </integrator>
 </scene>

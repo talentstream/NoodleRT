@@ -16,10 +16,22 @@ public:
     }
 
     Color3f F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
+        if(Frame::CosTheta(wo) <= 0 ||
+           Frame::CosTheta(wi) <= 0 ||
+           Abs(Dot(ReflectLocal(wi),wo)) > Epsilon) {
+            return {0.f};
+        }
+
         return mAlbedo;
     }
 
     Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
+        if(Frame::CosTheta(wo) <= 0 ||
+           Frame::CosTheta(wi) <= 0 ||
+           Abs(Dot(ReflectLocal(wi),wo)) > Epsilon) {
+            return 0.f;
+        }
+
         return 1.f;
     }
 
