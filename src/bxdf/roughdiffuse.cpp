@@ -42,7 +42,7 @@ public:
             maxCos = Max(0, dCos);
         }
         Float sinAlpha, tanBeta;
-        if(Frame::AbsCosTheta(wi) > Frame::AbsCosTheta(wo)) {
+        if (Frame::AbsCosTheta(wi) > Frame::AbsCosTheta(wo)) {
             sinAlpha = sinThetaO;
             tanBeta = sinThetaI / Frame::AbsCosTheta(wi);
         } else {
@@ -50,7 +50,7 @@ public:
             tanBeta = sinThetaO / Frame::AbsCosTheta(wo);
         }
 
-        return mAlbedo * InvPi * (A + B * maxCos * sinAlpha * tanBeta);
+        return mAlbedo * InvPi * Frame::CosTheta(wo) * (A + B * maxCos * sinAlpha * tanBeta);
     }
 
     Float
