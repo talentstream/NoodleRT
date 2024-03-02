@@ -19,17 +19,17 @@ class SurfaceInteraction {
 public:
     SurfaceInteraction() = default;
 
-    SurfaceInteraction(Float t, Point3f p, Normal3f n, Vector3f wo)
+    SurfaceInteraction(Float t, Point3f p, Normal3f n, Vector3f wi)
             : t{t},
               p{p},
               n{Normalize(n)},
-              wo{Normalize(wo)} {
+              wi{Normalize(wi)} {
         SetFrontFace();
         shading = Frame(n);
     }
 
     void SetFrontFace(){
-        front = Dot(n, wo) > 0;
+        front = Dot(n, wi) > 0;
         n *= front ? 1 : -1;
     }
 
@@ -42,7 +42,7 @@ public:
 
     Point3f p;// position
     Float t{Infinity};// intersect time
-    Vector3f wo;// out direction
+    Vector3f wi;// in direction
     Normal3f n;// normal
     Boolean front{};// Is normal face front
 

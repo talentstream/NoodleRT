@@ -71,34 +71,23 @@ public:
             }
             // Sample outgoing direction at intersection to continue path
             {
-                Point2f bxdfSample = pSampler->Next2D();
-                Vector3f wo = si.shading.ToLocal(si.wo), wi;
-
-                auto sampleF = bxdf->SampleF(si, wo, wi, bxdfSample);
-                if (!sampleF.has_value()) {
-                    break;
-                }
-                Vector3f newWi = Normalize(si.shading.ToLocal(-ray.d));
-
                 Float bsdfPdf;
-                BxDFSampleRecord bRec{si, pSampler, newWi};
-                Color3f bxdfWeight = bxdf->Sample(bRec, bsdfPdf, bxdfSample);
-
+                BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(si.wi)};
+                Color3f bxdfWeight = bxdf->Sample(bRec, bsdfPdf, pSampler->Next2D());
                 if (bxdfWeight.IsZero()) {
                     break;
                 }
-                auto f = bxdf->F(si, wo, wi);
-                auto newf = bxdf->Eval(bRec);
-                auto pdf = bxdf->Pdf(si, wo, wi);
-                auto newpdf = bxdf->pdf(bRec);
+
+                auto f = bxdf->Eval(bRec);
+                auto pdf = bxdf->pdf(bRec);
 
                 if (!pdf) {
                     break;
                 }
-//                beta *= sampleF.value();
-                beta *= newf / newpdf;
 
-                ray = si.GenerateRay(wi);
+                beta *= f / pdf;
+
+                ray = si.GenerateRay(bRec.wo);
             }
         }
         return L;
