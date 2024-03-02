@@ -44,6 +44,14 @@ public:
         return pAlbedo->Evaluate(si);
     }
 
+    Color3f
+    Sample(BxDFSampleRecord &bRec, Float &pdf, const Point2f &sample) const override {
+        if (Frame::CosTheta(bRec.wi) <= 0) return {0.f};
+        bRec.wo = SquareToCosineHemisphere(sample);
+        pdf = SquareToCosineHemispherePdf(bRec.wo);
+        return pAlbedo->Evaluate(bRec.si);
+    }
+
     void AddChild(Object *object) override {
         switch (object->GetClassType()) {
             case EClassType::ETexture:

@@ -6,6 +6,7 @@
 
 #include "core/object.h"
 #include "core/interaction.h"
+#include "base/sampler.h"
 
 NAMESPACE_BEGIN
 
@@ -33,9 +34,25 @@ inline Boolean IsTransmission(BxDFFlag type) {
     return (type & ETransmission);
 }
 
+struct BxDFSampleRecord {
+    const SurfaceInteraction &si;
+    Sampler *sampler;
+
+    // shading local coordinate
+    Vector3f wi;
+    Vector3f wo;
+
+    inline BxDFSampleRecord(const SurfaceInteraction &si, Sampler *sampler, const Vector3f &wi, const Vector3f &wo)
+            : si{si}, sampler{sampler}, wi{wi}, wo{wo} {}
+
+    inline BxDFSampleRecord(const SurfaceInteraction &si, const Vector3f &wi, const Vector3f &wo)
+            : BxDFSampleRecord(si, nullptr, wi, wo) {}
+};
+
 class BxDF : public Object {
 public:
-    virtual ~BxDF() = default;
+    virtual
+    ~BxDF() = default;
 
     // f bxdf model
     virtual Color3f
@@ -46,6 +63,10 @@ public:
 
     virtual std::optional<Color3f>
     SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const = 0;
+
+    // Sample bxdf & return pdf
+    virtual Color3f
+    Sample(BxDFSampleRecord &bRec, Float &pdf, const Point2f &sample) const{return {0.f};};
 
     virtual BxDFFlag
     Flag() const = 0;
