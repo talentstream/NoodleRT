@@ -19,7 +19,7 @@ public:
     }
 
     Color3f SampleLi(const SurfaceInteraction &si, Vector3f &wi, Point2f &sample) const override {
-        return {0.f};
+        return {1.f};
     }
 
     Color3f Sample_Li(LightSampleRecord &lRec) const override {
