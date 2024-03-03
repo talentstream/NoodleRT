@@ -9,12 +9,15 @@
 
 NAMESPACE_BEGIN
 
-class ShapeSampleRecord{
+class ShapeSampleRecord {
 public:
     Point3f ref;// origin reference point
     Point3f p;// Sampled point
     Normal3f n;// Sampled normal
     Float pdf;// Probability of the sample
+
+    explicit ShapeSampleRecord(const Point3f &ref)
+            : ref{ref} {}
 };
 
 NAMESPACE_END

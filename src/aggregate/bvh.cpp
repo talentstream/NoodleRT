@@ -56,13 +56,13 @@ public:
         PRINT_DEBUG_INFO("Aggregate", "bvh")
     }
 
-    void AddChild(Object *object) override {
-        switch (object->GetClassType()) {
+    void AddChild(Object *child) override {
+        switch (child->GetClassType()) {
             case EClassType::EPrimitive:
-                mPrimitives.emplace_back(dynamic_cast<Primitive *>(object));
+                mPrimitives.emplace_back(dynamic_cast<Primitive *>(child));
                 break;
             case EClassType::EMesh: {
-                auto mesh = dynamic_cast<Mesh *>(object);
+                auto mesh = dynamic_cast<Mesh *>(child);
                 mPrimitives.insert(mPrimitives.end(), mesh->primitives.begin(), mesh->primitives.end());
                 break;
             }
