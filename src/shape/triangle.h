@@ -12,11 +12,21 @@ class Triangle : public Shape {
 public:
     explicit Triangle(class Mesh *mesh, Integer index);
 
-    Boolean Intersect(const Ray &ray, Float tMax, SurfaceInteraction &si) const override;
+    Boolean
+    Intersect(const Ray &ray, Float tMax, SurfaceInteraction &si) const override;
 
-    Boolean IntersectP(const Ray &ray, Float tMax) const override;
+    Boolean
+    IntersectP(const Ray &ray, Float tMax) const override;
 
-    Bound3f BoundingBox() const override;
+    Bound3f
+    BoundingBox() const override;
+
+    void
+    Sample(ShapeSampleRecord &sRec, const Point2f &sample) const override;
+
+    Float
+    Area() const override;
+
 
 private:
     Mesh *pMesh{nullptr};

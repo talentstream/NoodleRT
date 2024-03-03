@@ -27,7 +27,7 @@ public:
     Sample(ShapeSampleRecord& sRec, const Point2f &sample) const = 0;
 
     virtual Float
-    Pdf(const ShapeSampleRecord& sRec) const = 0;
+    Pdf(const ShapeSampleRecord& sRec) const { return 1 / Area(); };
 
     virtual Float
     Area() const = 0;

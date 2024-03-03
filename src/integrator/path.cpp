@@ -52,7 +52,7 @@ public:
             auto bxdf = si.bxdf;
             if (!bxdf) {
                 //
-                continue;
+                break;
             }
 
             // Sample direct illumination

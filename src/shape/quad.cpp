@@ -77,6 +77,22 @@ public:
         return Padding(Bound3f{q, q + u + v}, Epsilon);
     }
 
+    void
+    Sample(ShapeSampleRecord &sRec, const Point2f &sample) const override {
+        sRec.p = q + sample.x * u + sample.y * v;
+        sRec.pdf = 1 / Area();
+    }
+
+    Float
+    Pdf(const ShapeSampleRecord &sRec) const override {
+        return 1 / Area();
+    }
+
+    Float
+    Area() const override {
+        return Length(Cross(u, v));
+    }
+
 private:
     Point3f q;
     Vector3f u, v;

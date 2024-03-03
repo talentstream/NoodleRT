@@ -81,6 +81,22 @@ public:
         return Bound3f{mCenter - radiusVec, mCenter + radiusVec};
     }
 
+    void
+    Sample(ShapeSampleRecord& sRec, const Point2f &sample) const override{
+
+    }
+
+    Float
+    Pdf(const ShapeSampleRecord& sRec) const override{
+        return 0.f;
+    }
+
+    Float
+    Area() const override{
+        return 0.f;
+    }
+
+
 private:
     Float mRadius;
     Point3f mCenter;

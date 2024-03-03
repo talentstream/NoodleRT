@@ -13,6 +13,7 @@ Triangle::Triangle(Mesh *mesh, Integer index)
     for (Integer i = 0; i < 3; i++) {
         mIndices[i] = index + i;
     }
+
 }
 
 Boolean Triangle::Intersect(const Ray &ray, Float tMax, SurfaceInteraction &si) const {
@@ -117,5 +118,37 @@ Bound3f Triangle::BoundingBox() const {
     return Union(Bound3f{v0, v1}, v2);
 }
 
+void
+Triangle::Sample(ShapeSampleRecord &sRec, const Point2f &sample) const {
+    auto UniformSampleTriangle = [](const Point2f &u) -> Point2f {
+        Float su0 = Sqrt(u[0]);
+        return {1 - su0, u[1] * su0};
+    };
+    const Point3f &p0 = pMesh->positions[mIndices[0]];
+    const Point3f &p1 = pMesh->positions[mIndices[1]];
+    const Point3f &p2 = pMesh->positions[mIndices[2]];
+    Point2f b = UniformSampleTriangle(sample);
+
+    sRec.p = b[0] * p0 + b[1] * p1 + (1 - b[0] - b[1]) * p2;
+
+    if(!pMesh->normals.empty()){
+        const Normal3f &n0 = pMesh->normals[mIndices[0]];
+        const Normal3f &n1 = pMesh->normals[mIndices[1]];
+        const Normal3f &n2 = pMesh->normals[mIndices[2]];
+        sRec.n = Normalize(b[0] * n0 + b[1] * n1 + (1 - b[0] - b[1]) * n2);
+    } else {
+        sRec.n = Normalize(Normal3f{Cross(p1 - p0, p2 - p0)});
+    }
+
+    sRec.pdf = 1 / Area();
+}
+
+Float
+Triangle::Area() const {
+    const Point3f &v0 = pMesh->positions[mIndices[0]];
+    const Point3f &v1 = pMesh->positions[mIndices[1]];
+    const Point3f &v2 = pMesh->positions[mIndices[2]];
+    return 0.5 * Length(Cross(v1 - v0, v2 - v0));
+}
 
 NAMESPACE_END
