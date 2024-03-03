@@ -51,7 +51,7 @@ public:
 
         auto pixelCenter = pixel100Loc + uv.x * deltaU + uv.y * deltaV;
         auto pixelSample = pixelCenter + PixelSampleSquare();
-        return Ray{mLookFrom, pixelSample - mLookFrom};
+        return Ray{mLookFrom, Normalize(pixelSample - mLookFrom)};
     }
 
 private:
