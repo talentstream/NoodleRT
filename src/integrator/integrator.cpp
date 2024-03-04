@@ -17,7 +17,7 @@ NAMESPACE_BEGIN
 void Integrator::AddChild(Object *child) {
     switch (child->GetClassType()) {
         case EClassType::EAggregate:
-            pAggregate = dynamic_cast<Aggregate *>(child);
+            pAggregate = dynamic_cast<aggregate *>(child);
             break;
         case EClassType::ECamera:
             pCamera = dynamic_cast<Camera *>(child);

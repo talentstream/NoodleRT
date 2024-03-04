@@ -65,14 +65,16 @@ private:
 class naive : public aggregate {
 public:
     explicit naive(const PropertyList &propertyList) {
-        PRINT_DEBUG_INFO("Aggregate", "naive")
+        mShapeOffset.push_back(0u);
+
+        PRINT_DEBUG_INFO("aggregate", "naive")
     }
 
     void
     Build() override {
         auto size = GetPrimitiveCount();
         mShapeIndices.resize(size);
-        for(auto i{0}; i < size; i++) {
+        for (auto i{0}; i < size; i++) {
             mShapeIndices[i] = i;
         }
     }
@@ -81,10 +83,10 @@ public:
     Intersect(const Ray &ray, SurfaceInteraction &si) const override {
         Boolean hitAnything{false};
         SurfaceInteraction tempSi;
-        for(auto i{0}; i < mShapeIndices.size(); i++) {
+        for (auto i{0}; i < mShapeIndices.size(); i++) {
             auto idx = mShapeIndices[i];
             const auto s = mShapes[FindShape(idx)];
-            if (s->Intersect(idx, ray, si.t,tempSi)) {
+            if (s->Intersect(idx, ray, si.t, tempSi)) {
                 hitAnything = true;
                 if (tempSi.t < si.t) {
                     si = tempSi;
@@ -108,5 +110,7 @@ public:
 };
 
 REGISTER_CLASS(NaiveAggregate, "naive")
+
+REGISTER_CLASS(naive, "naive1")
 
 NAMESPACE_END

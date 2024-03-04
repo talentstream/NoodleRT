@@ -35,7 +35,8 @@ public:
     }
 
 protected:
-    Aggregate *pAggregate{nullptr};
+    class aggregate *pAggregate{nullptr};
+
     std::vector<Light*> mLights;
 
     Camera *pCamera{nullptr};

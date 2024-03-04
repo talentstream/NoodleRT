@@ -41,6 +41,9 @@ public:
     void
     AddChild(Object *child) override;
 
+    void
+    Initialize() override;
+
     EClassType
     GetClassType() const override {
         return EClassType::EAggregate;

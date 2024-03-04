@@ -20,7 +20,7 @@ Integer windowWidth{};
 Integer windowHeight{};
 
 Application::Application() {
-    Object *obj = LoadSceneXML("../cornellbox.xml");
+    Object *obj = LoadSceneXML("../testnewScene.xml");
     pScene = std::unique_ptr<Scene>(dynamic_cast<Scene *>(obj));
     windowWidth = pScene->GetIntegrator()->GetCamera()->GetFilm()->width;
     windowHeight = pScene->GetIntegrator()->GetCamera()->GetFilm()->height;

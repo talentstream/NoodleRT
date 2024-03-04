@@ -8,6 +8,7 @@ NAMESPACE_BEGIN
 
 void
 aggregate::AddChild(Object *child) {
+
     switch (child->GetClassType()) {
         case EClassType::EShape:
             AddShape(dynamic_cast<shape *>(child));
@@ -16,6 +17,11 @@ aggregate::AddChild(Object *child) {
             // throw exception
             break;
     }
+}
+
+void
+aggregate::Initialize() {
+    Build();
 }
 
 UInt32

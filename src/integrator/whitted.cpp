@@ -36,6 +36,7 @@ private:
             return backgroundColor;
         }
         if (!pAggregate->Intersect(ray, si)) {
+
             for (const auto light: mLights) {
                 backgroundColor += light->Le(ray);
             }
