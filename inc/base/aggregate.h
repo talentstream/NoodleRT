@@ -38,13 +38,13 @@ public:
     virtual Boolean
     UnOccluded(const Ray &ray) const = 0;
 
+    void
+    AddChild(Object *child) override;
+
     EClassType
     GetClassType() const override {
         return EClassType::EAggregate;
     }
-
-    void
-    AddChild(Object *child) override;
 
 protected:
     void
@@ -62,7 +62,7 @@ protected:
     std::vector<Shape *> mShapes;
     std::vector<UInt32> mShapeOffset;
     std::vector<UInt32> mShapeIndices;
-    Bound3f mBBox;
+    Bound3f mBbox;
 };
 
 NAMESPACE_END

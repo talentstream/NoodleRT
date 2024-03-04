@@ -80,6 +80,15 @@ public:
         return true;
     }
 
+    Bound3<T>
+    Expand(Point3<T> p) {
+        return Bound3<T>{Min(pMin, p), Max(pMax, p)};
+    }
+
+    Bound3<T>
+    Expand(Bound3<T> b) {
+        return Bound3<T>{Min(pMin, b.pMin), Max(pMax, b.pMax)};
+    }
 };
 
 template<typename T>

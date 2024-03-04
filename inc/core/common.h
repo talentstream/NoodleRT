@@ -11,6 +11,7 @@ using Float = float;
 using Integer = int;
 using Boolean = bool;
 using UInt8 = unsigned char;
+using UInt32 = unsigned int;
 
 #define NON_COPY(ClassName) \
     ClassName(const ClassName&) = delete; \
