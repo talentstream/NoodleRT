@@ -19,4 +19,10 @@ shape::AddChild(Object *child) {
     }
 }
 
+void
+shape::Initialize() {
+    if(pBxDF == nullptr) {
+        pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList(), true));
+    }
+}
 NAMESPACE_END

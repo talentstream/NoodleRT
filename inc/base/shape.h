@@ -69,7 +69,7 @@ public:
     GetBoundingBox(UInt32 idx) const = 0;
 
     virtual Point3f
-    GetCentroid() const = 0;
+    GetCentroid(UInt32 idx) const = 0;
 
     const BxDF
     *GetBxDF() const {
@@ -78,6 +78,9 @@ public:
 
     void
     AddChild(Object *child) override;
+
+    void
+    Initialize() override;
 
     EClassType
     GetClassType() const override {

@@ -61,12 +61,12 @@ struct triangle {
     }
 
     Bound3f
-    GetBoundingBox() {
+    GetBoundingBox() const {
         return Union(Bound3f{p0, p1}, p2);
     }
 
     Point3f
-    GetCentroid() {
+    GetCentroid() const {
         return (p0 + p1 + p2) / 3.f;
     }
 
@@ -97,8 +97,10 @@ struct triangle {
 
     Boolean
     IntersectP(const Ray &ray, Float tMax) const {
-
+        Float u, v, t;
+        return Intersect(ray, tMax, u, v, t);
     }
+
 };
 
 NAMESPACE_END

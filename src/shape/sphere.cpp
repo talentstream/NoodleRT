@@ -197,7 +197,7 @@ public:
     }
 
     Point3f
-    GetCentroid() const override {
+    GetCentroid(UInt32 idx) const override {
         return mCenter;
     }
 

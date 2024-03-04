@@ -46,13 +46,13 @@ aggregate::FindShape(UInt32 &idx) const {
 Bound3f
 aggregate::FindShapeBoundingBox(UInt32 idx) const {
     auto shapeIdx = FindShape(idx);
-    return mShapes[shapeIdx]->GetBoundingBox();
+    return mShapes[shapeIdx]->GetBoundingBox(idx);
 }
 
 Point3f
 aggregate::FindShapeCentroid(UInt32 idx) const {
     auto shapeIdx = FindShape(idx);
-    return mShapes[shapeIdx]->GetCentroid();
+    return mShapes[shapeIdx]->GetCentroid(idx);
 }
 
 NAMESPACE_END
