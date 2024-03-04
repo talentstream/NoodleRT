@@ -30,7 +30,7 @@ struct LightSampleRecord {
     Sampler *sampler;
 
     Point3f p;
-    Vector3f wi; // light direction
+    Vector3f wi; // light to point
     Float pdf;
 
     inline LightSampleRecord(const SurfaceInteraction &si)

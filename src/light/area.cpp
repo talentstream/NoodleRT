@@ -25,7 +25,7 @@ public:
     Color3f Sample_Li(LightSampleRecord &lRec) const override {
         ShapeSampleRecord sRec{lRec.si.p};
         pShape->Sample(sRec, lRec.sampler->Next2D());
-        lRec.wi = Normalize(sRec.p - lRec.si.p);
+        lRec.wi = Normalize(sRec.p - lRec.si.p);// light -> point
         lRec.pdf = sRec.pdf;
         return Dot(sRec.n, -lRec.wi) > 0 ? mIntensity : Color3f{};
     }

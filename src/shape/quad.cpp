@@ -80,7 +80,7 @@ public:
     void
     Sample(ShapeSampleRecord &sRec, const Point2f &sample) const override {
         sRec.p = q + sample.x * u + sample.y * v;
-        sRec.n = Normal3f {unitN};
+        sRec.n = Normal3f {-unitN};
         sRec.pdf = 1 / Area();
     }
 

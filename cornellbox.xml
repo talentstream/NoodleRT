@@ -24,13 +24,13 @@
             <!--floor-->
             <mesh>
                 <string name="filename" value="../floor.obj"/>
-                <bxdf type="diffuse">
+                  <bxdf type="diffuse">
                     <texture type="solid">
                         <color name="albedo" value="0.525 0.51 0.48"/>
                     </texture>
                 </bxdf>
             </mesh>
-            <!--light-->
+<!--            light-->
             <mesh>
                 <string name="filename" value="../light.obj"/>
                 <light type="area">
@@ -41,6 +41,7 @@
             <mesh>
                 <string name="filename" value="../left.obj"/>
                 <bxdf type="diffuse">
+                    <color name="reflectance" value="0.63 0.065 0.05"/>
                     <texture type="solid">
                         <color name="albedo" value="0.63 0.065 0.05"/>
                     </texture>
@@ -55,7 +56,7 @@
                     </texture>
                 </bxdf>
             </mesh>
-            <!--shortbox-->
+<!--            shortbox-->
             <mesh>
                 <string name="filename" value="../shortbox.obj"/>
                 <bxdf type="diffuse">
@@ -64,7 +65,7 @@
                     </texture>
                 </bxdf>
             </mesh>
-            <!--tallbox-->
+<!--            tallbox-->
             <mesh>
                 <string name="filename" value="../tallbox.obj"/>
                 <bxdf type="diffuse">
@@ -73,20 +74,20 @@
                     </texture>
                 </bxdf>
             </mesh>
-            <!--sphere-->
+<!--            sphere-->
             <primitive type="geometry">
                 <shape type="sphere">
                     <float name="radius" value="100.0"/>
                     <point name="center" value="278 278 278"/>
                 </shape>
-                <bxdf type="conductor">
+                <bxdf type="dielectric">
                 </bxdf>
             </primitive>
         </aggregate>
         <camera type="perspective">
             <film>
-                <integer name="width" value="400"/>
-                <integer name="height" value="400"/>
+                <integer name="width" value="512"/>
+                <integer name="height" value="512"/>
             </film>
             <float name="fov" value="38.0"/>
             <point name="lookFrom" value="278 273 -790"/>
@@ -96,5 +97,21 @@
         <sampler type="independent">
 
         </sampler>
+<!--        <light type="point">-->
+<!--            <point name="position" value="278 500 278"/>-->
+<!--            <color name="intensity" value="239480 192830 155410"/>-->
+<!--        </light>-->
+<!--        <light type="area">-->
+<!--&lt;!&ndash;            <shape type="quad">&ndash;&gt;-->
+<!--&lt;!&ndash;                <point name="start" value="213 548 227"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <vector name="horizontal" value="0 0 105"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <vector name="vertical" value="130 0 0"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            </shape>&ndash;&gt;-->
+<!--            <mesh type="rectangle">-->
+<!--                <transform name="translate" value="213 548 227"/>-->
+<!--                <transform name="rotate" value="0 0 0"/>-->
+<!--                <transform name="scale" value="130 130 130"/>-->
+<!--            </mesh>-->
+<!--        </light>-->
     </integrator>
 </scene>

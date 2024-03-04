@@ -32,11 +32,15 @@ public:
     std::vector<Normal3f> normals;
     std::vector<Point2f> uvs;
 
-private:
+protected:
     class BxDF *pBxDF{nullptr};
+
     class Light *pLight{nullptr};
-    std::string_view mFileName;
+
     Transform mObjectToWorld;
+private:
+    std::string_view mFileName;
+
 };
 
 NAMESPACE_END

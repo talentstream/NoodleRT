@@ -67,7 +67,8 @@ public:
                     if (li.IsZero() || lRec.pdf == 0) {
                         continue;
                     }
-                    Ray lr {si.p, -lRec.wi, 0};
+
+                    Ray lr {si.p, lRec.wi, 0};
                     BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(lRec.wi),si.shading.ToLocal(Normalize(-ray.d))};
                     if(!pAggregate->UnOccluded(lr)) {
                         Vector3f LDir = Normalize(lRec.wi);

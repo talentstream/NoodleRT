@@ -157,6 +157,7 @@ Object *LoadSceneXML(const string_view &filename) {
         for (auto attr: node.attributes()) {
 
             if (!attributes.contains(attr.name())) {
+
                 throw std::runtime_error(std::format("Error while parsing {} : unexpected attribute {} in {}",
                                                      filename.data(), attr.name(), node.name()));
             }
@@ -190,7 +191,9 @@ Object *LoadSceneXML(const string_view &filename) {
         if (tag == ETag::EScene) {
             node.append_attribute("type") = "scene";
         } else if (tag == ETag::EMesh) {
-            node.append_attribute("type") = "mesh";
+            if(!node.attribute("type")) {
+                node.append_attribute("type") = "mesh";
+            }
         } else if (tag == ETag::EFilm) {
             node.append_attribute("type") = "film";
         }

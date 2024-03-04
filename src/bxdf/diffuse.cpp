@@ -14,6 +14,7 @@ NAMESPACE_BEGIN
 class Diffuse : public BxDF {
 public:
     explicit Diffuse(const PropertyList &propertyList) {
+        mReflectance = propertyList.GetColor("reflectance",{1.f});
         PRINT_DEBUG_INFO("BxDF", "diffuse")
     }
 
@@ -32,7 +33,9 @@ public:
             Frame::CosTheta(bRec.wi) <= 0) {
             return {0.f};
         }
-        return pAlbedo->Evaluate(bRec.si) * Frame::CosTheta(bRec.wo) * InvPi;
+
+        return pAlbedo->Evaluate({}) * Frame::CosTheta(bRec.wo) * InvPi;
+
     }
 
     Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
@@ -90,6 +93,7 @@ public:
     }
 
 private:
+    Color3f mReflectance;
     Texture *pAlbedo{nullptr};
 };
 
