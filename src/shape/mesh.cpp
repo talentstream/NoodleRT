@@ -14,9 +14,9 @@
 
 NAMESPACE_BEGIN
 
-class Mesh : public shape {
+class mesh : public shape {
 public:
-    explicit Mesh(const PropertyList &propertyList) {
+    explicit mesh(const PropertyList &propertyList) {
         mFilename = propertyList.GetString("filename", {});
         mObjectToWorld *= propertyList.GetTransform("rotate", {});
         mObjectToWorld *= propertyList.GetTransform("scale", {});
@@ -44,6 +44,7 @@ public:
             si.u = (1 - u - v) * 0 + u * 1 + v * 1;
             si.v = (1 - u - v) * 0 + u * 0 + v * 1;
         }
+        si.bxdf = pBxDF;
         return true;
     }
 
@@ -63,8 +64,13 @@ public:
     }
 
     Float
-    Area() const = 0 {
+    Area() const override {
+        return 0.f;
+    }
 
+    UInt32
+    GetPrimitiveCount() const override {
+        return mTriangles.size();
     }
 
     Bound3f
@@ -136,5 +142,7 @@ private:
         }
     }
 };
+
+REGISTER_CLASS(mesh, "mesh1")
 
 NAMESPACE_END
