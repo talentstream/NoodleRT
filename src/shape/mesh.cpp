@@ -6,9 +6,15 @@
 
 NAMESPACE_BEGIN
 
-class Mesh : public shape
-{
+class Mesh : public shape {
+public:
+    explicit Mesh(const PropertyList &propertyList) {
 
+    }
+
+private:
+    Transform mObjectToWorld;
+    std::string_view mFilename;
 };
 
 NAMESPACE_END
