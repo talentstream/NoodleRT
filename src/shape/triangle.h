@@ -37,7 +37,7 @@ struct triangle {
     Point3f p0, p1, p2;
     Normal3f n0, n1, n2;
     Boolean hasNormal;
-    Point2f uv0, uv1;
+    Point2f uv0, uv1, uv2;
     Boolean hasUV;
 
     triangle(Point3f p0, Point3f p1, Point3f p2)
@@ -54,9 +54,10 @@ struct triangle {
     }
 
     void
-    SetUV(Point2f uv0, Point2f uv1) {
+    SetUV(Point2f uv0, Point2f uv1, Point2f uv2) {
         this->uv0 = uv0;
         this->uv1 = uv1;
+        this->uv2 = uv2;
         hasUV = true;
     }
 
