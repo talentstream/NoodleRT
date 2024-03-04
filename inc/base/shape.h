@@ -43,10 +43,10 @@ public:
     ~shape() = default;
 
     virtual Boolean
-    Intersect(const Ray &ray, Float tMax, SurfaceInteraction &) const = 0;
+    Intersect(UInt32 idx, const Ray &ray, Float tMax, SurfaceInteraction &si) const = 0;
 
     virtual Boolean
-    IntersectP(const Ray &ray, Float tMax) const = 0;
+    IntersectP(UInt32 idx, const Ray &ray, Float tMax = Infinity) const = 0;
 
     virtual void
     Sample(ShapeSampleRecord &sRec, const Point2f &sample) const = 0;
@@ -56,6 +56,9 @@ public:
 
     virtual Float
     Area() const = 0;
+
+    virtual UInt32
+    GetPrimitiveCount() const = 0;
 
     const Bound3f
     &GetBoundingBox() const {
@@ -67,6 +70,11 @@ public:
 
     virtual Point3f
     GetCentroid() const = 0;
+
+    const BxDF
+    *GetBxDF() const {
+        return pBxDF;
+    }
 
     void
     AddChild(Object *child) override;

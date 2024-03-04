@@ -33,7 +33,7 @@ public:
     ~aggregate() = default;
 
     virtual Boolean
-    Intersect(const Ray &ray, SurfaceInteraction &interaction) const = 0;
+    Intersect(const Ray &ray, SurfaceInteraction &si) const = 0;
 
     virtual Boolean
     UnOccluded(const Ray &ray) const = 0;
@@ -47,11 +47,18 @@ public:
     }
 
 protected:
-    void
-    AddShape(Shape *shape);
+    virtual
+    void Build() = 0;
 
+    void
+    AddShape(shape *shape);
+
+    UInt32
+    GetPrimitiveCount() const;
+
+    // return shapeIdx & new idx in shape
     virtual UInt32
-    FindShape(UInt32 idx) const;
+    FindShape(UInt32 &idx) const;
 
     virtual Bound3f
     FindShapeBoundingBox(UInt32 idx) const;
@@ -59,7 +66,7 @@ protected:
     virtual Point3f
     FindShapeCentroid(UInt32 idx) const;
 
-    std::vector<Shape *> mShapes;
+    std::vector<shape *> mShapes;
     std::vector<UInt32> mShapeOffset;
     std::vector<UInt32> mShapeIndices;
     Bound3f mBbox;
