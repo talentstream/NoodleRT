@@ -5,7 +5,6 @@
 #pragma once
 
 #include "base/shape.h"
-#include <print>
 
 NAMESPACE_BEGIN
 
@@ -15,7 +14,6 @@ public:
         mRadius = propertyList.GetFloat("radius", 1.0f);
         mCenter = propertyList.GetPoint("center", {});
         PRINT_DEBUG_INFO("Shape", "sphere")
-
     }
 
     Boolean
@@ -139,6 +137,8 @@ public:
         Point3f hitP = ray(root);
         si = SurfaceInteraction(root, hitP, Normal3f{hitP - mCenter}, -ray.d);
         si.bxdf = pBxDF;
+        si.areaLight = pLight;
+
         // uv
         auto theta = ACos(-si.n.y);
         auto phi = ATan2(-si.n.z, si.n.x) + Pi;

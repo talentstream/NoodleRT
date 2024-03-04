@@ -95,7 +95,7 @@ public:
                     break;
                 }
 
-                beta *= f / pdf;
+                beta *= bxdfWeight / pdf;
 
                 ray = si.GenerateRay(bRec.wo);
             }

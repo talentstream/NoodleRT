@@ -2,12 +2,10 @@
     <integrator type="path">
         <integer name="spp" value="1000"/>
         <integer name="depth" value="50"/>
-        <aggregate type="bvh">
-            <primitive type="geometry">
-                <shape type="sphere">
-                    <float name="radius" value="1000.0"/>
-                    <point name="center" value="0.0 -1000.0 0.0"/>
-                </shape>
+        <aggregate type="naive">
+            <shape type="sphere1">
+                <float name="radius" value="1000.0"/>
+                <point name="center" value="0.0 -1000.0 0.0"/>
                 <bxdf type="diffuse">
                     <texture type="checker">
                         <texture type="solid">
@@ -19,12 +17,11 @@
                         <float name="scale" value="0.32"/>
                     </texture>
                 </bxdf>
-            </primitive>
-            <primitive type="geometry">
-                <shape type="sphere">
-                    <float name="radius" value="2.0"/>
-                    <point name="center" value="0.0 2.0 0.0"/>
-                </shape>
+            </shape>
+
+            <shape type="sphere1">
+                <float name="radius" value="2.0"/>
+                <point name="center" value="0.0 2.0 0.0"/>
                 <bxdf type="diffuse">
                     <texture type="checker">
                         <texture type="solid">
@@ -36,34 +33,32 @@
                         <float name="scale" value="0.32"/>
                     </texture>
                 </bxdf>
-            </primitive>
-            <primitive type="geometry">
-                <shape type="sphere">
-                    <float name="radius" value="2.0"/>
-                    <point name="center" value="0.0 2.0 4.0"/>
-                </shape>
-                <bxdf type="reflection">
+            </shape>
+
+            <shape type="sphere1">
+                <float name="radius" value="2.0"/>
+                <point name="center" value="0.0 2.0 4.0"/>
+                <bxdf type="conductor">
                 </bxdf>
-            </primitive>
-            <primitive type="geometry">
-                <shape type="quad">
-                    <point name="start" value="3.0 1.0 -2.0"/>
-                    <vector name="horizontal" value="2.0 0.0 0.0"/>
-                    <vector name="vertical" value="0.0 2.0 0.0"/>
-                </shape>
+            </shape>
+
+            <shape type="rectangle">
+                <transform name="scale" value="2 1 2"/>
+                <transform name="translate" value="3 1 -2"/>
+                <transform name="rotate" value="0 0 90"/>
                 <light type="area">
                     <color name="intensity" value="4 4 4"/>
                 </light>
-            </primitive>
-            <primitive type="geometry">
-                <shape type="sphere">
-                    <point name="center" value="0.0 7.0 0.0"/>
-                    <float name="radius" value="2"/>
-                </shape>
+            </shape>
+
+            <shape type="sphere1">
+                <point name="center" value="0.0 7.0 0.0"/>
+                <float name="radius" value="2"/>
                 <light type="area">
                     <color name="intensity" value="4 4 4"/>
                 </light>
-            </primitive>
+            </shape>
+
         </aggregate>
         <camera type="perspective">
             <film>

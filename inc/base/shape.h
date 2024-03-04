@@ -90,6 +90,7 @@ public:
 
 protected:
     BxDF *pBxDF{nullptr};
+    Light *pLight{nullptr};
     Bound3f mBbox;
 };
 

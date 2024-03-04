@@ -38,8 +38,8 @@ public:
         }
         si = SurfaceInteraction(t, ray(t), outNormal, -ray.d);
         if (tri.hasUV) {
-            si.u = (1 - u - v) * tri.uv0.x + u * tri.uv1.x + v * tri.uv1.x;
-            si.v = (1 - u - v) * tri.uv0.y + u * tri.uv1.y + v * tri.uv1.y;
+            si.u = (1 - u - v) * tri.uv0.x + u * tri.uv1.x + v * tri.uv2.x;
+            si.v = (1 - u - v) * tri.uv0.y + u * tri.uv1.y + v * tri.uv2.y;
         } else {
             si.u = (1 - u - v) * 0 + u * 1 + v * 1;
             si.v = (1 - u - v) * 0 + u * 0 + v * 1;
@@ -134,7 +134,7 @@ private:
                         return {attrib.texcoords[2 * idx.texcoord_index + 0],
                                 1 - attrib.texcoords[2 * idx.texcoord_index + 1]};
                     };
-                    tri.SetUV(LoadUV(idx0), LoadUV(idx1));
+                    tri.SetUV(LoadUV(idx0), LoadUV(idx1), LoadUV(idx2));
                 }
 
                 mTriangles.emplace_back(tri);

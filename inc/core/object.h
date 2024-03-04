@@ -11,6 +11,12 @@
 #include <string_view>
 #include <map>
 
+#ifndef NDEBUG
+
+#include <print>
+
+#endif
+
 NAMESPACE_BEGIN
 
 class Object {

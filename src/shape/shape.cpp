@@ -4,6 +4,7 @@
 
 #include "base/shape.h"
 #include "base/bxdf.h"
+#include "base/light.h"
 
 NAMESPACE_BEGIN
 
@@ -12,6 +13,9 @@ shape::AddChild(Object *child) {
     switch (child->GetClassType()) {
         case EClassType::EBxDF:
             pBxDF = dynamic_cast<BxDF *>(child);
+            break;
+        case EClassType::ELight:
+            pLight = dynamic_cast<Light *>(child);
             break;
         default:
             // throw exception
