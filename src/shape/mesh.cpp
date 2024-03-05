@@ -28,14 +28,17 @@ public:
     Intersect(UInt32 idx, const Ray &ray, Float tMax, IntersectionRecord &si) const override {
         Float u, v, t;
         auto tri = mTriangles[idx];
-        Boolean hit = tri.Intersect(ray, tMax, u, v, t);
-        if (!hit) return false;
+        if(!tri.Intersect(ray, tMax, u, v, t)) {
+            return false;
+        }
+
         Normal3f outNormal;
         if (tri.hasNormal) {
             outNormal = Normalize((1 - u - v) * tri.n0 + u * tri.n1 + v * tri.n2);
         } else {
             outNormal = Normalize(Normal3f{Cross(tri.p1 - tri.p0, tri.p2 - tri.p0)});
         }
+
         si = IntersectionRecord(t, ray(t), outNormal);
         if (tri.hasUV) {
             si.uv = (1 - u - v) * tri.uv0 + u * tri.uv1 + v * tri.uv2;

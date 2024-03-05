@@ -38,7 +38,7 @@ struct triangle {
     Normal3f n0, n1, n2;
     Boolean hasNormal;
     Point2f uv0, uv1, uv2;
-    Boolean hasUV;
+    Boolean hasUV{false};
 
     triangle(Point3f p0, Point3f p1, Point3f p2)
             : p0{p0}, p1{p1}, p2{p2} {
