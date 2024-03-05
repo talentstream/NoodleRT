@@ -23,26 +23,27 @@ public:
     }
 
     Boolean
-    Intersect(UInt32 idx, const Ray &ray, Float tMax, IntersectionRecord &si) const override {
+    Intersect(UInt32 idx, const Ray &ray, IntersectionRecord &iRec) const override {
         Float u, v, t;
         auto tri = mTriangles[idx];
-        Boolean hit = tri.Intersect(ray, tMax, u, v, t);
-        if (!hit) return false;
+        if (!tri.Intersect(ray, iRec.t, u, v, t)) {
+            return false;
+        }
         Normal3f outNormal;
         if (tri.hasNormal) {
             outNormal = Normalize((1 - u - v) * tri.n0 + u * tri.n1 + v * tri.n2);
         } else {
             outNormal = Normalize(Normal3f{Cross(tri.p1 - tri.p0, tri.p2 - tri.p0)});
         }
-        si = IntersectionRecord(t, ray(t), outNormal);
-        si.SetFlipNormal(ray.d);
+        iRec = IntersectionRecord(t, ray(t), outNormal);
+        iRec.SetFlipNormal(ray.d);
         if (tri.hasUV) {
-            si.uv = (1 - u - v) * tri.uv0 + u * tri.uv1 + v * tri.uv2;
+            iRec.uv = (1 - u - v) * tri.uv0 + u * tri.uv1 + v * tri.uv2;
         } else {
-            si.uv = Point2f{u + v, v};
+            iRec.uv = Point2f{u + v, v};
         }
-        si.bxdf = pBxDF;
-        si.emitter = pEmitter;
+        iRec.bxdf = pBxDF;
+        iRec.emitter = pEmitter;
         return true;
     }
 

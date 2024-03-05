@@ -59,7 +59,7 @@ public:
                 for (auto i{node.Start()}, end{node.End()}; i < end; i++) {
                     auto idx = mShapeIndices[i];
                     const auto s = mShapes[FindShape(idx)];
-                    if (s->Intersect(idx, ray, si.t, tempIRec)) {
+                    if (s->Intersect(idx, ray, si)) {
                         hitAnything = true;
                         if (tempIRec.t < si.t) {
                             si = tempIRec;

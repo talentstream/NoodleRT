@@ -19,7 +19,7 @@ public:
     }
 
     Boolean
-    Intersect(UInt32 idx, const Ray &ray, Float tMax, IntersectionRecord &iRec) const override {
+    Intersect(UInt32 idx, const Ray &ray, IntersectionRecord &iRec) const override {
 
         Vector3f oc = ray.o - mCenter;
 
@@ -34,9 +34,9 @@ public:
         Float sqrtD = Sqrt(discriminant);
         Float root = (-halfB - sqrtD) / a;
         // 判断是否相交
-        if (root < 0.001f || root > tMax) {
+        if (root < 0.001f || root > iRec.t) {
             root = (-halfB + sqrtD) / a;
-            if (root < 0.001f || root > tMax) {
+            if (root < 0.001f || root > iRec.t) {
                 return false;
             }
         }

@@ -226,20 +226,17 @@ public:
 
     Boolean
     Intersect(const Ray &ray, IntersectionRecord &si) const override {
-        Boolean hitAnything{false};
+        Boolean findIntersection{false};
         IntersectionRecord tempSi;
         for (auto i{0}; i < mShapeIndices.size(); i++) {
             auto idx = mShapeIndices[i];
             const auto s = mShapes[FindShape(idx)];
-            if (s->Intersect(idx, ray, si.t, tempSi)) {
-                hitAnything = true;
-                if (tempSi.t < si.t) {
-                    si = tempSi;
-                }
+            if (s->Intersect(idx, ray, si)) {
+                findIntersection = true;
             }
         }
 
-        return hitAnything;
+        return findIntersection;
     }
 
     Boolean

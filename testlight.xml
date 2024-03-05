@@ -3,14 +3,14 @@
         <integer name="spp" value="64"/>
         <integer name="depth" value="64"/>
         <aggregate type="naive">
-            <shape type="sphere1">
+            <shape type="sphere">
                 <float name="radius" value="1000.0"/>
                 <point name="center" value="0.0 -1000.0 0.0"/>
                 <bxdf type="diffuse">
                 </bxdf>
             </shape>
 
-            <shape type="sphere1">
+            <shape type="sphere">
                 <float name="radius" value="2.0"/>
                 <point name="center" value="0.0 2.0 0.0"/>
                 <bxdf type="diffuse">
@@ -26,7 +26,7 @@
                 </bxdf>
             </shape>
 
-            <shape type="sphere1">
+            <shape type="sphere">
                 <float name="radius" value="2.0"/>
                 <point name="center" value="0.0 2.0 4.0"/>
                 <bxdf type="conductor">
@@ -42,7 +42,7 @@
                 </light>
             </shape>
 
-            <shape type="sphere1">
+            <shape type="sphere">
                 <point name="center" value="0.0 7.0 0.0"/>
                 <float name="radius" value="2"/>
                 <light type="area">

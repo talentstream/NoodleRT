@@ -15,7 +15,7 @@ public:
     ~shape() = default;
 
     virtual Boolean
-    Intersect(UInt32 idx, const Ray &ray, Float tMax, IntersectionRecord &si) const = 0;
+    Intersect(UInt32 idx, const Ray &ray, IntersectionRecord &si) const = 0;
 
     virtual Boolean
     IntersectP(UInt32 idx, const Ray &ray, Float tMax = Infinity) const = 0;

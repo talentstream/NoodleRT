@@ -25,10 +25,10 @@ public:
     }
 
     Boolean
-    Intersect(UInt32 idx, const Ray &ray, Float tMax, IntersectionRecord &si) const override {
+    Intersect(UInt32 idx, const Ray &ray, IntersectionRecord &iRec) const override {
         Float u, v, t;
         auto tri = mTriangles[idx];
-        if(!tri.Intersect(ray, tMax, u, v, t)) {
+        if (!tri.Intersect(ray, iRec.t, u, v, t)) {
             return false;
         }
 
@@ -39,15 +39,15 @@ public:
             outNormal = Normalize(Normal3f{Cross(tri.p1 - tri.p0, tri.p2 - tri.p0)});
         }
 
-        si = IntersectionRecord(t, ray(t), outNormal);
-        si.SetFlipNormal(ray.d);
+        iRec = IntersectionRecord(t, ray(t), outNormal);
+        iRec.SetFlipNormal(ray.d);
         if (tri.hasUV) {
-            si.uv = (1 - u - v) * tri.uv0 + u * tri.uv1 + v * tri.uv2;
+            iRec.uv = (1 - u - v) * tri.uv0 + u * tri.uv1 + v * tri.uv2;
         } else {
-            si.uv = Point2f{u + v, v};
+            iRec.uv = Point2f{u + v, v};
         }
-        si.bxdf = pBxDF;
-        si.emitter = pEmitter;
+        iRec.bxdf = pBxDF;
+        iRec.emitter = pEmitter;
         return true;
     }
 
@@ -126,8 +126,8 @@ private:
                 if (idx0.normal_index > 0) {
                     auto LoadNormal = [&](const auto &idx) -> Normal3f {
                         return Normalize(Normal3f{mObjectToWorld(Point3f{attrib.normals[3 * idx.normal_index + 0],
-                                attrib.normals[3 * idx.normal_index + 1],
-                                attrib.normals[3 * idx.normal_index + 2]})});
+                                                                         attrib.normals[3 * idx.normal_index + 1],
+                                                                         attrib.normals[3 * idx.normal_index + 2]})});
                     };
                     tri.SetNormal(LoadNormal(idx0), LoadNormal(idx1), LoadNormal(idx2));
                 }
