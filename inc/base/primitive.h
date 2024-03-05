@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/object.h"
-#include "core/interaction.h"
+#include "core/record.h"
 
 NAMESPACE_BEGIN
 

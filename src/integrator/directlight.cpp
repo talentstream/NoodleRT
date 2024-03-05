@@ -8,7 +8,7 @@
 #include "base/bxdf.h"
 #include "base/light.h"
 #include "base/sampler.h"
-#include "core/interaction.h"
+#include "core/record.h"
 #include "util/sampling.h"
 
 #include <print>

@@ -58,21 +58,24 @@ struct IntersectionRecord {
         return Ray{p, d};
     }
 
-    Color3f Le(Vector3f w);
+    // Before use, should guarantee w is on world coordinate
+    Color3f Le(const Vector3f& w);
 };
 
 struct BxDFRecord {
 // members
-    Vector3f wi;// incident direction in shading coordinate
+    Vector3f wi;// incident direction in shading coordinate, should same hemisphere with normal
     Vector3f wo;// outgoing direction in shading coordinate
     Point2f uv;// for sample texture
     Point3f p;// intersect point
 
 // functions
     // for call BxDF Sample Function
+    // Before using, should transform wi to shading coordinate
     explicit BxDFRecord(const Vector3f &wi)
             : wi{wi} {}
 
+    // before using, should transform wi, wo to shading coordinate
     // for query bxdf, if it knows wi, wo (in direct lighting?)
     explicit BxDFRecord(const Vector3f &wi, const Vector3f &wo)
             : wi{wi}, wo{wo} {}

@@ -5,7 +5,7 @@
 #pragma once
 
 #include "core/object.h"
-#include "core/interaction.h"
+#include "core/record.h"
 #include "base/sampler.h"
 #include "core/record.h"
 

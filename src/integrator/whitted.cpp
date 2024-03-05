@@ -7,7 +7,7 @@
 #include "base/camera.h"
 #include "base/bxdf.h"
 #include "base/light.h"
-#include "core/interaction.h"
+#include "core/record.h"
 #include "base/sampler.h"
 
 #include <print>
@@ -28,33 +28,29 @@ public:
 
 private:
     Color3f Trace(const Ray &ray, Integer depth) const {
+        Color3f L{0.f};
+
         // find nearest intersection
-        IntersectionRecord si;
-        Color3f L{0};
-        if (!pAggregate->Intersect(ray, si)) {
+        IntersectionRecord iRec;
+        if (!pAggregate->Intersect(ray, iRec)) {
             for (const auto light: mLights) {
                 if (IsInfiniteLight(light->Flag())) {
                     L += light->Le(ray);
                 }
-
             }
             return L;
         }
 
-        // shading
-        auto bxdf = si.bxdf;
+        // emitter
+        L += iRec.Le(-ray.d);
+
+        auto bxdf = iRec.bxdf;
         if (!bxdf) return {0};
-        Vector3f wi = -ray.d;
 
-        // emitted color
-        Color3f emitted;// = si.Le(wi);
-
-        BxDFRecord bRec{si.ToLocal(wi)};
-        bRec.uv = si.uv;
+        BxDFRecord bRec{iRec.ToLocal(-ray.d)};
+        bRec.uv = iRec.uv;
         Float pdf;
         auto bxdfValue = bxdf->Sample(bRec, pdf, pSampler->Next2D());
-
-        auto le = bxdfValue;
 
         // calculate direct illumination
 
@@ -72,9 +68,9 @@ private:
         // calculate indirect illumination
         if (depth + 1 < mMaxDepth) {
             if (IsDiffuse(bxdf->Flag())) {
-                return emitted + le;
+                L += bxdfValue;
             } else {
-                return emitted + le * Trace(si.GenerateRay(si.shading.ToWorld(bRec.wo)), depth + 1);
+                L += bxdfValue * Trace(iRec.GenerateRay(iRec.ToWorld(bRec.wo)), depth + 1);
             }
         }
         return L;

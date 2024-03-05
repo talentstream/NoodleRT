@@ -13,7 +13,7 @@ NAMESPACE_BEGIN
 class Conductor : public BxDF {
 public:
     explicit Conductor(const PropertyList &propertyList) {
-        mReflectance = propertyList.GetColor("albedo", {1.f});
+        mReflectance = propertyList.GetColor("reflectance", {1.f});
         mEta = propertyList.GetFloat("eta", 0.f);
         mK = propertyList.GetFloat("k", 1.f);
         PRINT_DEBUG_INFO("BxDF", "conductor")

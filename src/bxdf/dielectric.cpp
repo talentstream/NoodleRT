@@ -14,7 +14,7 @@ public:
         Float extIOR = propertyList.GetFloat("extIOR", 1.0f);
         mEta = intIOR / extIOR;
         mInvEta = 1 / mEta;
-        mReflectance = propertyList.GetColor("reflectance", {1.0f});
+        mReflectance = propertyList.GetColor("reflectance", {.5f});
         mTransmittance = propertyList.GetColor("transmittance", {1.0f});
         PRINT_DEBUG_INFO("BxDF", "dielectric")
     }
@@ -50,6 +50,9 @@ public:
 
         Float Rs = (cosThetaI - eta * cosThetaT) / (cosThetaI + eta * cosThetaT);
         Float Rp = (eta * cosThetaI - cosThetaT) / (eta * cosThetaI + cosThetaT);
+
+        cosThetaT_ = (cosThetaI_ > 0) ? -cosThetaT : cosThetaT;
+
         return 0.5f * (Rs * Rs + Rp * Rp);
     }
 
@@ -108,7 +111,7 @@ public:
     Sample(BxDFRecord &bRec, Float &pdf, const Point2f &sample) const override {
         Float cosThetaT;
         Float f = fresnelDielectric(Frame::CosTheta(bRec.wi), cosThetaT, mEta);
-        if(sample.x <= f) {
+        if (sample.x <= f) {
             bRec.wo = reflect(bRec.wi);
             pdf = f;
             return mReflectance;
@@ -117,7 +120,6 @@ public:
             pdf = 1 - f;
             return mTransmittance;
         }
-        return {0.f};
     }
 
     BxDFFlag Flag() const override {
