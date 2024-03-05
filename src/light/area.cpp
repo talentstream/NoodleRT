@@ -8,17 +8,17 @@
 #include <print>
 
 NAMESPACE_BEGIN
-class AreaLight : public Light {
+class AreaLight : public Emitter {
 public:
     explicit AreaLight(const PropertyList &propList) {
         mIntensity = propList.GetColor("intensity", {1});
     }
 
-    Color3f L(const SurfaceInteraction &si, const Vector3f &w) const override {
+    Color3f L(const IntersectionRecord &si, const Vector3f &w) const override {
         return Dot(si.n, w) > 0 ? mIntensity : Color3f{};
     }
 
-    Color3f SampleLi(const SurfaceInteraction &si, Vector3f &wi, Point2f &sample) const override {
+    Color3f SampleLi(const IntersectionRecord &si, Vector3f &wi, Point2f &sample) const override {
         return {1.f};
     }
 
@@ -35,18 +35,26 @@ public:
         return LightFlag::EArea;
     }
 
-    void AddChild(Object *child) override {
-        switch (child->GetClassType()) {
+    void
+    SetParent(Object *parent) override {
+        switch (parent->GetClassType()) {
             case EClassType::EShape:
-                pShape = dynamic_cast<Shape *>(child);
+                pShape = dynamic_cast<shape *>(parent);
                 break;
             default:
+                /* throw exception*/
                 break;
         }
     }
 
+    void Initialize() {
+        if(pShape == nullptr){
+            /* throw exception */
+        }
+    }
+
 private:
-    Shape *pShape{nullptr};
+    shape *pShape{nullptr};
     Color3f mIntensity;
 };
 

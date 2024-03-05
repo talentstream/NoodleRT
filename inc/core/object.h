@@ -40,7 +40,9 @@ public:
 
     [[nodiscard]] virtual EClassType GetClassType() const = 0;
 
-    virtual void AddChild(Object *child) {/*throw*/}
+    virtual void AddChild(Object *child) {/*Do nothing*/}
+
+    virtual void SetParent(Object *parent) {/*Do nothing*/}
 
     virtual void Initialize() {}
 
@@ -99,7 +101,7 @@ static struct Class ##Register { \
 } Class ##RegisterInstance;
 
 #ifdef NDEBUG
-#define PRINT_DEBUG_INFO(Name,Type)
+#define PRINT_DEBUG_INFO(Name, Type)
 #else
 #define PRINT_DEBUG_INFO(Name, Type) \
 std::print("{}->{} --- ",Name,Type); \

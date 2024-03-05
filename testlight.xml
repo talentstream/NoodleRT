@@ -1,7 +1,7 @@
 <scene>
     <integrator type="path">
-        <integer name="spp" value="1000"/>
-        <integer name="depth" value="50"/>
+        <integer name="spp" value="64"/>
+        <integer name="depth" value="64"/>
         <aggregate type="naive">
             <shape type="sphere1">
                 <float name="radius" value="1000.0"/>
@@ -62,8 +62,8 @@
         </aggregate>
         <camera type="perspective">
             <film>
-                <integer name="width" value="800"/>
-                <integer name="height" value="450"/>
+                <integer name="width" value="512"/>
+                <integer name="height" value="512"/>
             </film>
             <float name="fov" value="20.0"/>
             <point name="lookFrom" value="26.0 3.0 6.0"/>

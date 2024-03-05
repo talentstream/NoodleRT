@@ -25,7 +25,7 @@ public:
     }
 
     Boolean
-    Intersect(UInt32 idx, const Ray &ray, Float tMax, SurfaceInteraction &si) const override {
+    Intersect(UInt32 idx, const Ray &ray, Float tMax, IntersectionRecord &si) const override {
         Float u, v, t;
         auto tri = mTriangles[idx];
         Boolean hit = tri.Intersect(ray, tMax, u, v, t);
@@ -36,15 +36,14 @@ public:
         } else {
             outNormal = Normalize(Normal3f{Cross(tri.p1 - tri.p0, tri.p2 - tri.p0)});
         }
-        si = SurfaceInteraction(t, ray(t), outNormal, -ray.d);
+        si = IntersectionRecord(t, ray(t), outNormal);
         if (tri.hasUV) {
-            si.u = (1 - u - v) * tri.uv0.x + u * tri.uv1.x + v * tri.uv2.x;
-            si.v = (1 - u - v) * tri.uv0.y + u * tri.uv1.y + v * tri.uv2.y;
+            si.uv = (1 - u - v) * tri.uv0 + u * tri.uv1 + v * tri.uv2;
         } else {
-            si.u = (1 - u - v) * 0 + u * 1 + v * 1;
-            si.v = (1 - u - v) * 0 + u * 0 + v * 1;
+            si.uv = Point2f{u + v, v};
         }
         si.bxdf = pBxDF;
+        si.emitter = pEmitter;
         return true;
     }
 

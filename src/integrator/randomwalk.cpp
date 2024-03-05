@@ -33,7 +33,7 @@ private:
 
     Color3f Trace(const Ray &ray, Integer depth) const {
         //Todo: find the problem
-        SurfaceInteraction si;
+        IntersectionRecord si;
         if (!pAggregate->Intersect(ray, si)) {
             Color3f backgroundColor{0};
             for (const auto light: mLights) {

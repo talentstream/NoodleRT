@@ -31,7 +31,7 @@ void Mesh::AddChild(Object *child) {
             pBxDF = dynamic_cast<BxDF *>(child);
             break;
         case EClassType::ELight:
-            pLight = dynamic_cast<Light *>(child);
+            pLight = dynamic_cast<Emitter *>(child);
             break;
     }
 }

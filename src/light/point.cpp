@@ -6,7 +6,7 @@
 
 NAMESPACE_BEGIN
 
-class PointLight : public Light {
+class PointLight : public Emitter {
 public:
     explicit PointLight(const PropertyList &propList) {
         mPosition = propList.GetPoint("position", {});
@@ -14,10 +14,10 @@ public:
     }
 
     Color3f
-    SampleLi(const SurfaceInteraction &si, Vector3f &wi, Point2f &sample) const override {
+    SampleLi(const IntersectionRecord &si, Vector3f &wi, Point2f &sample) const override {
         wi = Normalize(mPosition - si.p);
         auto d = LengthSquared(mPosition - si.p);
-        if (d < Epsilon) return mIntensity;
+        if (mIntensity.r / d > mIntensity.r) return mIntensity;
         return mIntensity / d;
     }
 

@@ -7,8 +7,8 @@
 
 NAMESPACE_BEGIN
 
-Color3f SurfaceInteraction::Le(Vector3f w) {
-    if(areaLight) return areaLight->L(*this, w);
+Color3f IntersectionRecord::Le(Vector3f w) {
+    if(emitter) return emitter->L(*this, shading.ToLocal(w));
     return {0.f};
 }
 

@@ -16,7 +16,7 @@ Triangle::Triangle(Mesh *mesh, Integer index)
 
 }
 
-Boolean Triangle::Intersect(const Ray &ray, Float tMax, SurfaceInteraction &si) const {
+Boolean Triangle::Intersect(const Ray &ray, Float tMax, IntersectionRecord &si) const {
     const Point3f &v0 = pMesh->positions[mIndices[0]];
     const Point3f &v1 = pMesh->positions[mIndices[1]];
     const Point3f &v2 = pMesh->positions[mIndices[2]];
@@ -57,18 +57,16 @@ Boolean Triangle::Intersect(const Ray &ray, Float tMax, SurfaceInteraction &si) 
             outNormal = Normalize((1 - u - v) * n1 + u * n2 + v * n3);
         }
 
-        si = SurfaceInteraction(t, ray(t), outNormal, -ray.d);
+        si = IntersectionRecord(t, ray(t), outNormal);
 
         // uv
         if (!pMesh->uvs.size() == 0) {
             const Point2f &uv1 = pMesh->uvs[mIndices[0]];
             const Point2f &uv2 = pMesh->uvs[mIndices[1]];
             const Point2f &uv3 = pMesh->uvs[mIndices[2]];
-            si.u = (1 - u - v) * uv1.x + u * uv2.x + v * uv3.x;
-            si.v = (1 - u - v) * uv1.y + u * uv2.y + v * uv3.y;
+            si.uv = (1 - u - v) * uv1 + u * uv2 + v * uv3;
         } else {
-            si.u = (1 - u - v) * 0 + u * 1 + v * 1;
-            si.v = (1 - u - v) * 0 + u * 0 + v * 1;
+            si.uv = Point2f{u + v, v};
         }
 
         return true;
@@ -131,7 +129,7 @@ Triangle::Sample(ShapeSampleRecord &sRec, const Point2f &sample) const {
 
     sRec.p = b[0] * p0 + b[1] * p1 + (1 - b[0] - b[1]) * p2;
 
-    if(!pMesh->normals.empty()){
+    if (!pMesh->normals.empty()) {
         const Normal3f &n0 = pMesh->normals[mIndices[0]];
         const Normal3f &n1 = pMesh->normals[mIndices[1]];
         const Normal3f &n2 = pMesh->normals[mIndices[2]];

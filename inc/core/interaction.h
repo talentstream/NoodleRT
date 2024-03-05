@@ -11,52 +11,41 @@
 NAMESPACE_BEGIN
 
 class BxDF;
-class Light;
-class Frame;
+
+class Emitter;
 
 // default surface interaction
-class SurfaceInteraction {
-public:
-    SurfaceInteraction() = default;
+class IntersectionRecord {
+public:// members
+    Point3f p; // intersect world position
+    Normal3f n; // intersect world normal
+    Point2f uv; // intersect uv
+    Float t{Infinity};// intersect time
+    Frame shading;// Transform from world to shading coordinate
 
-    SurfaceInteraction(Float t, Point3f p, Normal3f n, Vector3f wi)
+    BxDF *bxdf{nullptr}; // intersect shape bxdf
+    Emitter *emitter{nullptr}; // intersect shape emitter
+public:
+    IntersectionRecord() = default;
+
+    IntersectionRecord(Float t, Point3f p, Normal3f n)
             : t{t},
               p{p},
-              n{Normalize(n)},
-              wi{Normalize(wi)} {
-        SetFrontFace();
+              n{Normalize(n)} {
         shading = Frame(n);
     }
 
-    void SetFrontFace(){
-        front = Dot(n, wi) > 0;
-        n *= front ? 1 : -1;
+    void SetFlipNormal(Vector3f wi) {
+        n *= Dot(n,wi) ? 1 : -1;
     }
 
+    // Generate ray from world coordinate
+    // Before using this function, you should transform the direction to world coordinate
     Ray GenerateRay(Vector3f d) {
-       return Ray{p,shading.ToWorld(d)};
+        return Ray{p, d};
     }
 
     Color3f Le(Vector3f w);
-
-
-    Point3f p;// position
-    Float t{Infinity};// intersect time
-    Vector3f wi;// in direction
-    Normal3f n;// normal
-    Boolean front{};// Is normal face front
-
-    Frame shading;
-
-    // texture uv
-    Float u{};
-    Float v{};
-
-    // material
-    BxDF *bxdf{nullptr};
-
-    // emissive light
-    Light *areaLight{nullptr};
 };
 
 NAMESPACE_END

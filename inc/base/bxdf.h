@@ -35,23 +35,23 @@ inline Boolean IsTransmission(BxDFFlag type) {
 }
 
 struct BxDFSampleRecord {
-    const SurfaceInteraction &si;
+    const IntersectionRecord &si;
     Sampler *sampler;
 
     // shading local coordinate
     Vector3f wi;
     Vector3f wo;
 
-    inline BxDFSampleRecord(const SurfaceInteraction &si, Sampler *sampler, const Vector3f &wi, const Vector3f &wo)
+    inline BxDFSampleRecord(const IntersectionRecord &si, Sampler *sampler, const Vector3f &wi, const Vector3f &wo)
             : si{si}, sampler{sampler}, wi{wi}, wo{wo} {}
 
-    inline BxDFSampleRecord(const SurfaceInteraction &si, const Vector3f &wi, const Vector3f &wo)
+    inline BxDFSampleRecord(const IntersectionRecord &si, const Vector3f &wi, const Vector3f &wo)
             : BxDFSampleRecord(si, nullptr, wi, wo) {}
 
-    inline BxDFSampleRecord(const SurfaceInteraction &si, Sampler *sampler, const Vector3f &wi)
+    inline BxDFSampleRecord(const IntersectionRecord &si, Sampler *sampler, const Vector3f &wi)
             : BxDFSampleRecord(si, sampler, wi, {}) {}
 
-    inline BxDFSampleRecord(const SurfaceInteraction &si, const Vector3f &wi)
+    inline BxDFSampleRecord(const IntersectionRecord &si, const Vector3f &wi)
             : BxDFSampleRecord(si, nullptr, wi, {}) {}
 };
 
@@ -62,19 +62,19 @@ public:
 
     // f bxdf model
     virtual Color3f
-    F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const { return {0.f}; }
+    F(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const { return {0.f}; }
 
     virtual Color3f
     Eval(const BxDFSampleRecord &bRec) const { return {0.f}; }
 
     virtual Float
-    Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const { return 0.f; };
+    Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const { return 0.f; };
 
     virtual Float
     pdf(const BxDFSampleRecord &bRec) const { return 0.f; };
 
     virtual std::optional<Color3f>
-    SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const = 0;
+    SampleF(const IntersectionRecord &si, const Vector3f wo, Vector3f &wi, Point2f sample) const = 0;
 
     // Sample bxdf & return pdf
     virtual Color3f

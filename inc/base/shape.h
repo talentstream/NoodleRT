@@ -15,7 +15,7 @@ public:
     virtual ~Shape() = default;
 
     virtual Boolean
-    Intersect(const Ray &ray, Float tMax, SurfaceInteraction &) const = 0;
+    Intersect(const Ray &ray, Float tMax, IntersectionRecord &) const = 0;
 
     virtual Boolean
     IntersectP(const Ray &ray, Float tMax) const = 0;
@@ -43,7 +43,7 @@ public:
     ~shape() = default;
 
     virtual Boolean
-    Intersect(UInt32 idx, const Ray &ray, Float tMax, SurfaceInteraction &si) const = 0;
+    Intersect(UInt32 idx, const Ray &ray, Float tMax, IntersectionRecord &si) const = 0;
 
     virtual Boolean
     IntersectP(UInt32 idx, const Ray &ray, Float tMax = Infinity) const = 0;
@@ -63,6 +63,11 @@ public:
     const Bound3f
     &GetBoundingBox() const {
         return mBbox;
+    }
+
+    Boolean
+    IsEmitter() const {
+        return pEmitter != nullptr;
     }
 
     virtual Bound3f
@@ -90,7 +95,7 @@ public:
 
 protected:
     BxDF *pBxDF{nullptr};
-    Light *pLight{nullptr};
+    Emitter *pEmitter{nullptr};
     Bound3f mBbox;
 };
 

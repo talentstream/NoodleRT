@@ -15,7 +15,7 @@ public:
         PRINT_DEBUG_INFO("BxDF", "specular")
     }
 
-    Color3f F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
+    Color3f F(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
         if(Frame::CosTheta(wo) <= 0 ||
            Frame::CosTheta(wi) <= 0 ||
            Abs(Dot(ReflectLocal(wi),wo)) > Epsilon) {
@@ -36,7 +36,7 @@ public:
         return mAlbedo;
     }
 
-    Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
+    Float Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
         if(Frame::CosTheta(wo) <= 0 ||
            Frame::CosTheta(wi) <= 0 ||
            Abs(Dot(ReflectLocal(wi),wo)) > Epsilon) {
@@ -47,7 +47,7 @@ public:
     }
 
     std::optional<Color3f>
-    SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
+    SampleF(const IntersectionRecord &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
         wi = ReflectLocal(wo);
 
         if (Frame::CosTheta(wo) < 0 ||

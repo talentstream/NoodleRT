@@ -13,7 +13,7 @@ public:
     explicit Triangle(class Mesh *mesh, Integer index);
 
     Boolean
-    Intersect(const Ray &ray, Float tMax, SurfaceInteraction &si) const override;
+    Intersect(const Ray &ray, Float tMax, IntersectionRecord &si) const override;
 
     Boolean
     IntersectP(const Ray &ray, Float tMax) const override;
@@ -93,7 +93,7 @@ struct triangle {
         }
 
         t = Dot(e2, qVec) * invDet;
-        return t >= 0.001f && t <= tMax;
+        return t >= Epsilon && t <= tMax;
     }
 
     Boolean

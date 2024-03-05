@@ -3,7 +3,6 @@
 //
 #include "base/camera.h"
 #include "base/film.h"
-#include <print>
 
 NAMESPACE_BEGIN
 
@@ -24,6 +23,7 @@ public:
         mHeight = pFilm->height;
         Float aspectRatio = Float(mWidth) / Float(mHeight);
         Float focalLength = Length(mLookFrom - mLookAt);
+
         auto theta = DegreeToRadian(mFov);
         Float h = Tan(theta / 2.0);
         Float viewportHeight = 2.0f * h * focalLength;

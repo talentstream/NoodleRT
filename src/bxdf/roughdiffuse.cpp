@@ -23,7 +23,7 @@ public:
     }
 
     Color3f
-    F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
+    F(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
         if (Frame::CosTheta(wo) <= 0 ||
             Frame::CosTheta(wi) <= 0) {
             return {0.f};
@@ -86,7 +86,7 @@ public:
     }
 
     Float
-    Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
+    Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
         if (Frame::CosTheta(wo) <= 0 ||
             Frame::CosTheta(wi) <= 0) {
             return 0.f;
@@ -105,7 +105,7 @@ public:
     }
 
     std::optional<Color3f>
-    SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
+    SampleF(const IntersectionRecord &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
         if (Frame::CosTheta(wo) < 0) return std::nullopt;
 
         wi = Warp::SquareToCosineHemisphere(sample);

@@ -26,23 +26,23 @@ inline Boolean IsInfiniteLight(LightFlag type) {
 }
 
 struct LightSampleRecord {
-    const SurfaceInteraction &si;
+    const IntersectionRecord &si;
     Sampler *sampler;
 
     Point3f p;
     Vector3f wi; // light to point
     Float pdf;
 
-    inline LightSampleRecord(const SurfaceInteraction &si)
+    inline LightSampleRecord(const IntersectionRecord &si)
             : LightSampleRecord(si, nullptr) {}
 
-    inline LightSampleRecord(const SurfaceInteraction &si, Sampler *sampler)
+    inline LightSampleRecord(const IntersectionRecord &si, Sampler *sampler)
             : si{si}, sampler{sampler} {}
 };
 
-class Light : public Object {
+class Emitter : public Object {
 public:
-    virtual ~Light() = default;
+    virtual ~Emitter() = default;
 
     // only infinite light has Le
     virtual Color3f Le(const Ray &ray) const {
@@ -51,12 +51,12 @@ public:
 
     // only area light has L
     virtual Color3f
-    L(const SurfaceInteraction &si, const Vector3f &w) const {
-        return {0};
+    L(const IntersectionRecord &si, const Vector3f &w) const {
+        return {0.f};
     }
 
     virtual Color3f
-    SampleLi(const SurfaceInteraction &si, Vector3f &wi, Point2f &sample) const = 0;
+    SampleLi(const IntersectionRecord &si, Vector3f &wi, Point2f &sample) const = 0;
 
     virtual Color3f
     Sample_Li(LightSampleRecord &lRec) const { return {0.f}; }

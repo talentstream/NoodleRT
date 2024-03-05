@@ -35,7 +35,7 @@ public:
 protected:
     class BxDF *pBxDF{nullptr};
 
-    class Light *pLight{nullptr};
+    class Emitter *pLight{nullptr};
 
     Transform mObjectToWorld;
 private:

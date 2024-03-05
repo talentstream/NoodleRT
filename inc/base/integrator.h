@@ -14,7 +14,7 @@ class Camera;
 
 class Sampler;
 
-class Light;
+class Emitter;
 
 class Integrator : public Object {
 public:
@@ -37,7 +37,7 @@ public:
 protected:
     class aggregate *pAggregate{nullptr};
 
-    std::vector<Light*> mLights;
+    std::vector<Emitter*> mLights;
 
     Camera *pCamera{nullptr};
     Sampler *pSampler{nullptr};

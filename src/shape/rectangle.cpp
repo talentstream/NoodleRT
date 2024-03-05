@@ -12,7 +12,8 @@ NAMESPACE_BEGIN
 
 class Rectangle : public shape {
 public:
-    explicit Rectangle(const PropertyList &propertyList) {
+    explicit
+    Rectangle(const PropertyList &propertyList) {
         mObjectToWorld *= propertyList.GetTransform("scale", {});
         mObjectToWorld *= propertyList.GetTransform("rotate", {});
         mObjectToWorld *= propertyList.GetTransform("translate", {});
@@ -23,27 +24,26 @@ public:
     }
 
     Boolean
-    Intersect(UInt32 idx, const Ray &ray, Float tMax, SurfaceInteraction &si) const override {
+    Intersect(UInt32 idx, const Ray &ray, Float tMax, IntersectionRecord &si) const override {
         Float u, v, t;
         auto tri = mTriangles[idx];
-        Boolean hit = tri.Intersect(ray, tMax, u, v, t);
-        if (!hit) return false;
+        if (!tri.Intersect(ray, tMax, u, v, t)) {
+            return false;
+        }
         Normal3f outNormal;
         if (tri.hasNormal) {
             outNormal = Normalize((1 - u - v) * tri.n0 + u * tri.n1 + v * tri.n2);
         } else {
             outNormal = Normalize(Normal3f{Cross(tri.p1 - tri.p0, tri.p2 - tri.p0)});
         }
-        si = SurfaceInteraction(t, ray(t), outNormal, -ray.d);
+        si = IntersectionRecord(t, ray(t), outNormal);
         if (tri.hasUV) {
-            si.u = (1 - u - v) * tri.uv0.x + u * tri.uv1.x + v * tri.uv2.x;
-            si.v = (1 - u - v) * tri.uv0.y + u * tri.uv1.y + v * tri.uv2.y;
+            si.uv = (1 - u - v) * tri.uv0 + u * tri.uv1 + v * tri.uv2;
         } else {
-            si.u = (1 - u - v) * 0 + u * 1 + v * 1;
-            si.v = (1 - u - v) * 0 + u * 0 + v * 1;
+            si.uv = Point2f{u + v, v};
         }
         si.bxdf = pBxDF;
-        si.areaLight = pLight;
+        si.emitter = pEmitter;
         return true;
     }
 
@@ -89,7 +89,8 @@ public:
     }
 
 private:
-    void LoadRectangle() {
+    void
+    LoadRectangle() {
         std::vector<Point3f> positions = {{-1, -1, 0},
                                           {1,  -1, 0},
                                           {1,  1,  0},
@@ -97,7 +98,7 @@ private:
         std::ranges::transform(positions, positions.begin(), [&](auto &p) {
             return mObjectToWorld(p);
         });
-        Normal3f n{0, 0, 1};
+        Normal3f n = Normalize(Normal3f{mObjectToWorld(Point3f{0, 0, 1})});
         mTriangles.emplace_back(positions[0], positions[1], positions[2]);
         mTriangles[0].SetNormal(n, n, n);
         mTriangles.emplace_back(positions[2], positions[3], positions[0]);

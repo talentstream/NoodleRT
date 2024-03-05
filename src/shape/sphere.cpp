@@ -5,6 +5,7 @@
 #pragma once
 
 #include "base/shape.h"
+#include <print>
 
 NAMESPACE_BEGIN
 
@@ -17,7 +18,7 @@ public:
     }
 
     Boolean
-    Intersect(const Ray &ray, Float tMax, SurfaceInteraction &i) const override {
+    Intersect(const Ray &ray, Float tMax, IntersectionRecord &i) const override {
         Vector3f oc = ray.o - mCenter;
         Float a = LengthSquared(ray.d);
         Float halfB = Dot(oc, ray.d);
@@ -40,13 +41,12 @@ public:
         // 设定Interaction Info
 
         Point3f hitP = ray(root);
-        i = SurfaceInteraction(root, hitP, Normal3f{hitP - mCenter}, -ray.d);
+        i = IntersectionRecord(root, hitP, Normal3f{hitP - mCenter});
 
         // uv
         auto theta = ACos(-i.n.y);
         auto phi = ATan2(-i.n.z, i.n.x) + Pi;
-        i.u = phi / (2 * Pi);
-        i.v = theta / Pi;
+        i.uv = Point2f{phi / (2 * Pi), theta / Pi};
         return true;
     }
 
@@ -112,8 +112,10 @@ public:
     }
 
     Boolean
-    Intersect(UInt32 idx, const Ray &ray, Float tMax, SurfaceInteraction &si) const override {
+    Intersect(UInt32 idx, const Ray &ray, Float tMax, IntersectionRecord &iRec) const override {
+
         Vector3f oc = ray.o - mCenter;
+
         Float a = LengthSquared(ray.d);
         Float halfB = Dot(oc, ray.d);
         Float c = LengthSquared(oc) - mRadius * mRadius;
@@ -125,25 +127,27 @@ public:
         Float sqrtD = Sqrt(discriminant);
         Float root = (-halfB - sqrtD) / a;
         // 判断是否相交
-        if (root < 0.001 || root > tMax) {
+        if (root < 0.001f || root > tMax) {
             root = (-halfB + sqrtD) / a;
-            if (root < 0.001 || root > tMax) {
+            if (root < 0.001f || root > tMax) {
                 return false;
             }
         }
 
         // 设定Interaction Info
-
         Point3f hitP = ray(root);
-        si = SurfaceInteraction(root, hitP, Normal3f{hitP - mCenter}, -ray.d);
-        si.bxdf = pBxDF;
-        si.areaLight = pLight;
+        Normal3f hitN = Normal3f{hitP - mCenter};
+
+        iRec = IntersectionRecord(root, hitP, hitN);
+        iRec.SetFlipNormal(ray.d);
+
+        iRec.bxdf = pBxDF;
+        iRec.emitter = pEmitter;
 
         // uv
-        auto theta = ACos(-si.n.y);
-        auto phi = ATan2(-si.n.z, si.n.x) + Pi;
-        si.u = phi / (2 * Pi);
-        si.v = theta / Pi;
+        auto theta = ACos(-iRec.n.y);
+        auto phi = ATan2(-iRec.n.z, iRec.n.x) + Pi;
+        iRec.uv = Point2f{phi / (2 * Pi), theta / Pi};
         return true;
     }
 

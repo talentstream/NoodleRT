@@ -1,7 +1,7 @@
 <scene>
     <integrator type="whitted">
-        <integer name="spp" value="100"/>
-        <integer name="depth" value="50"/>
+        <integer name="spp" value="64"/>
+        <integer name="depth" value="64"/>
         <aggregate type="naive">
             <!--top-->
             <shape type="rectangle">
@@ -60,12 +60,49 @@
                 <light type="area">
                     <color name="intensity" value="17 12 4"/>
                 </light>
+                <bxdf type="diffuse">
+                    <texture type="solid">
+                        <color name="albedo" value="0 0 0"/>
+                    </texture>
+                </bxdf>
             </shape>
+            <!--tall box-->
+            <shape type="cube">
+                <transform name="toWorld"
+                           value="0.286776 0.098229 -2.29282e-015 -0.335439 -4.36233e-009 1.23382e-008 -0.6 0.6 -0.0997984 0.282266 2.62268e-008 -0.291415 0 0 0 1"/>
+                <bxdf type="conductor">
+                    <texture type="solid">
+                        <color name="albedo" value="0.725, 0.71, 0.68"/>
+                    </texture>
+                </bxdf>
+            </shape>
+            <!--short box-->
+            <shape type="cube">
+                <transform name="toWorld"
+                           value="0.0851643 0.289542 1.31134e-008 0.328631 3.72265e-009 1.26563e-008 -0.3 0.3 -0.284951 0.0865363 5.73206e-016 0.374592 0 0 0 1"/>
+                <bxdf type="conductor">
+                    <texture type="solid">
+                        <color name="albedo" value="0.725, 0.71, 0.68"/>
+                    </texture>
+                </bxdf>
+            </shape>
+<!--            <shape type="sphere1">-->
+<!--                <point name="center" value="0.0 1.0 0.0"/>-->
+<!--                <float name="radius" value="0.5"/>-->
+<!--                <bxdf type="conductor">-->
+<!--                    <texture type="solid">-->
+<!--                        <color name="albedo" value="0.725, 0.71, 0.68"/>-->
+<!--                    </texture>-->
+<!--                </bxdf>-->
+<!--                <light type="area">-->
+<!--                    <color name="intensity" value="1 1 1"/>-->
+<!--                </light>-->
+<!--            </shape>-->
         </aggregate>
         <camera type="perspective">
             <film>
-                <integer name="width" value="1024"/>
-                <integer name="height" value="1024"/>
+                <integer name="width" value="400"/>
+                <integer name="height" value="400"/>
             </film>
             <float name="fov" value="19.5"/>
             <point name="lookFrom" value="0 1 6.8"/>
@@ -75,5 +112,7 @@
         <sampler type="independent">
 
         </sampler>
+        <light type="infinite">
+        </light>
     </integrator>
 </scene>

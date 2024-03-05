@@ -37,6 +37,7 @@ public:
         std::ranges::transform(framebuffer, displayBuffer.begin(), [&](Color3f c) {
             return (c / spp).LinearToGamma();
         });
+
         mCallback(displayBuffer);
     }
 

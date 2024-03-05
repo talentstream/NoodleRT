@@ -29,20 +29,23 @@ public:
         Integer depth{0};
         while (beta != Color3f{0}) {
             // Intersect ray with scene
-            SurfaceInteraction si;
+            IntersectionRecord si;
             // Account for infinite lights if ray has no intersection
             if (!pAggregate->Intersect(ray, si)) {
+
                 for (const auto light: mLights) {
-                    if (!IsInfiniteLight(light->Flag())) {
-                        continue;
+                    if (IsInfiniteLight(light->Flag())) {
+                        L += beta * light->Le(ray);
                     }
-                    L += beta * light->Le(ray);
+
                 }
                 break;
             }
 
             // Add emitted light at intersection
-            L += beta * si.Le(-ray.d);
+            if (si.emitter) {
+                L += beta * si.Le(-ray.d);
+            }
 
             // End path if max depth is reached
             if (depth++ == mMaxDepth) {
@@ -51,38 +54,38 @@ public:
 
             auto bxdf = si.bxdf;
             if (!bxdf) {
-                //
                 break;
             }
 
             // Sample direct illumination
-            {
-                Vector3f wo = -ray.d;
-                for (const auto light: mLights) {
-                    if(IsInfiniteLight(light->Flag())){
-                        continue;
-                    }
-                    LightSampleRecord lRec{si,pSampler};
-                    Color3f li = light->Sample_Li(lRec);
-                    if (li.IsZero() || lRec.pdf == 0) {
-                        continue;
-                    }
-
-                    Ray lr {si.p, lRec.wi, 0};
-                    BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(lRec.wi),si.shading.ToLocal(Normalize(-ray.d))};
-                    if(!pAggregate->UnOccluded(lr)) {
-                        Vector3f LDir = Normalize(lRec.wi);
-                        Float LoN = Max(0.f,Dot(LDir, si.shading.n));
-
-                        L += beta * bxdf->Eval(bRec) * li * LoN / lRec.pdf;
-
-                    }
-                }
-            }
+//            {
+//                Vector3f wo = -ray.d;
+//                for (const auto light: mLights) {
+//                    if(IsInfiniteLight(light->Flag())){
+//                        continue;
+//                    }
+//                    LightSampleRecord lRec{si,pSampler};
+//                    Color3f li = light->Sample_Li(lRec);
+//                    if (li.IsZero() || lRec.pdf == 0) {
+//                        continue;
+//                    }
+//
+//                    Ray lr {si.p, lRec.wi, 0};
+//                    BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(lRec.wi),si.shading.ToLocal(Normalize(-ray.d))};
+//                    if(!pAggregate->UnOccluded(lr)) {
+//                        Vector3f LDir = Normalize(lRec.wi);
+//                        Float LoN = Max(0.f,Dot(LDir, si.shading.n));
+//
+//                        L += beta * bxdf->Eval(bRec) * li * LoN / lRec.pdf;
+//
+//                    }
+//                }
+//            }
             // Sample outgoing direction at intersection to continue path
             {
                 Float bsdfPdf;
-                BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(si.wi)};
+                BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(-ray.d)};
+
                 Color3f bxdfWeight = bxdf->Sample(bRec, bsdfPdf, pSampler->Next2D());
                 if (bxdfWeight.IsZero()) {
                     break;
@@ -95,11 +98,12 @@ public:
                     break;
                 }
 
-                beta *= bxdfWeight / pdf;
-
+//                beta *= f / pdf;
+                beta *= bxdfWeight;
                 ray = si.GenerateRay(bRec.wo);
             }
         }
+
         return L;
     }
 

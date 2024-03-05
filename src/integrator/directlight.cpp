@@ -24,45 +24,46 @@ public:
     }
 
     [[nodiscard]] Color3f Li(const Ray &ray) const override {
-        Color3f L{0.f};
-        // Intersect ray with scene
-        SurfaceInteraction si;
-        // Account for infinite lights if ray has no intersection
-        if (!pAggregate->Intersect(ray, si)) {
-            for (const auto light: mLights) {
-                if (!IsInfiniteLight(light->Flag())) {
-                    continue;
-                }
-                L += light->Le(ray);
-            }
-            return L;
-        }
-
-        auto bxdf = si.bxdf;
-        if (!bxdf) {
-            return L;
-        }
-
-        Vector3f wi = si.wi;
-        for (const auto light: mLights) {
-            if (IsInfiniteLight(light->Flag())) {
-                continue;
-            }
-
-            LightSampleRecord lRec{si, pSampler};
-            Color3f Li = light->Sample_Li(lRec);
-            if (Li.IsZero() || lRec.pdf == 0) {
-                continue;
-            }
-            BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(lRec.wi), si.shading.ToLocal(si.wi)};
-            Float bxdfPdf;
-            Color3f bxdfVal = bxdf->Sample(bRec, bxdfPdf, pSampler->Next2D());
-            if (!pAggregate->UnOccluded(si.GenerateRay(-lRec.wi))) {
-                Float weight = Weight(bxdfPdf, lRec.pdf);
-                L += bxdfVal * Li * weight;
-            }
-        }
-        return L;
+//        Color3f L{0.f};
+//        // Intersect ray with scene
+//        SurfaceInteraction si;
+//        // Account for infinite lights if ray has no intersection
+//        if (!pAggregate->Intersect(ray, si)) {
+//            for (const auto light: mLights) {
+//                if (!IsInfiniteLight(light->Flag())) {
+//                    continue;
+//                }
+//                L += light->Le(ray);
+//            }
+//            return L;
+//        }
+//
+//        auto bxdf = si.bxdf;
+//        if (!bxdf) {
+//            return L;
+//        }
+//
+//        Vector3f wi = si.wi;
+//        for (const auto light: mLights) {
+//            if (IsInfiniteLight(light->Flag())) {
+//                continue;
+//            }
+//
+//            LightSampleRecord lRec{si, pSampler};
+//            Color3f Li = light->Sample_Li(lRec);
+//            if (Li.IsZero() || lRec.pdf == 0) {
+//                continue;
+//            }
+//            BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(lRec.wi), si.shading.ToLocal(si.wi)};
+//            Float bxdfPdf;
+//            Color3f bxdfVal = bxdf->Sample(bRec, bxdfPdf, pSampler->Next2D());
+//            if (!pAggregate->UnOccluded(si.GenerateRay(-lRec.wi))) {
+//                Float weight = Weight(bxdfPdf, lRec.pdf);
+//                L += bxdfVal * Li * weight;
+//            }
+//        }
+//        return L;
+        return {};
     }
 
     inline Float Weight(Float pdfA, Float pdfB) const {

@@ -217,6 +217,7 @@ Object *LoadSceneXML(const string_view &filename) {
 
             for (auto child: children) {
                 result->AddChild(child);
+                child->SetParent(result);
             }
             result->Initialize();
         } else {

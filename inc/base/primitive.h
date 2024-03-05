@@ -10,7 +10,7 @@ public:
     virtual ~Primitive() = default;
 
     virtual Boolean
-    Intersect(const Ray &ray, SurfaceInteraction &interaction) const = 0;
+    Intersect(const Ray &ray, IntersectionRecord &interaction) const = 0;
 
     virtual Boolean
     IntersectP(const Ray &ray) const = 0;

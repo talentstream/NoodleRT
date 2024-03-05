@@ -28,7 +28,7 @@ public:
         return {scale * wi.x, scale * wi.y, cosThetaT};
     }
 
-    Color3f F(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
+    Color3f F(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
         return {.5f};
     }
 
@@ -71,7 +71,7 @@ public:
         }
     }
 
-    Float Pdf(const SurfaceInteraction &si, const Vector3f wo, const Vector3f wi) const override {
+    Float Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
         return 1.0f;
     }
 
@@ -92,7 +92,7 @@ public:
     }
 
     std::optional<Color3f>
-    SampleF(const SurfaceInteraction &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
+    SampleF(const IntersectionRecord &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
         Float cosThetaI = Min(Frame::CosTheta(wo), 1);
         Float ratio = mEta;
         if (FrDielectric(cosThetaI, ratio) > RandomFloat()) {

@@ -27,9 +27,9 @@ public:
     }
 
     Boolean
-    Intersect(const Ray &ray, SurfaceInteraction &si) const override {
+    Intersect(const Ray &ray, IntersectionRecord &si) const override {
         Boolean hitAnything{false};
-        SurfaceInteraction tempSi;
+        IntersectionRecord tempSi;
         for (auto i{0}; i < mShapeIndices.size(); i++) {
             auto idx = mShapeIndices[i];
             const auto s = mShapes[FindShape(idx)];

@@ -8,7 +8,7 @@ NAMESPACE_BEGIN
 
 // Environment light
 // this assume to an infinite parallel light
-class InfiniteLight : public Light {
+class InfiniteLight : public Emitter {
 public:
     explicit InfiniteLight(const PropertyList &propList) {
         mDirection = propList.GetVector("direction", {-1, -1, -1});
@@ -21,7 +21,7 @@ public:
     }
 
     Color3f
-    SampleLi(const SurfaceInteraction &si, Vector3f &wi, Point2f &sample) const override {
+    SampleLi(const IntersectionRecord &si, Vector3f &wi, Point2f &sample) const override {
         wi = Normalize(mDirection);
         return mIntensity;
     }

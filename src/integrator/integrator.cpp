@@ -26,7 +26,7 @@ void Integrator::AddChild(Object *child) {
             pSampler = dynamic_cast<Sampler *>(child);
             break;
         case EClassType::ELight:
-            mLights.emplace_back(dynamic_cast<Light *>(child));
+            mLights.emplace_back(dynamic_cast<Emitter *>(child));
             break;
         default:
             throw std::runtime_error("Integrator Add Error Child:" +

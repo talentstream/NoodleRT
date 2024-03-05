@@ -29,52 +29,54 @@ public:
 private:
     Color3f Trace(const Ray &ray, Integer depth) const {
         // find nearest intersection
-        SurfaceInteraction si;
-        Color3f backgroundColor{0};
-
-        if (depth == mMaxDepth) {
-            return backgroundColor;
-        }
+        IntersectionRecord si;
+        Color3f L{0};
         if (!pAggregate->Intersect(ray, si)) {
-
             for (const auto light: mLights) {
-                backgroundColor += light->Le(ray);
+                if (IsInfiniteLight(light->Flag())) {
+                    L += light->Le(ray);
+                }
+
             }
-            return backgroundColor;
+            return L;
         }
 
         // shading
         auto bxdf = si.bxdf;
         if (!bxdf) return {0};
-        Vector3f wo = si.shading.ToLocal(-ray.d), wi;
+        Vector3f wi = -ray.d;
 
-        Color3f emitted = si.Le(-ray.d);
+        // emitted color
+        Color3f emitted;// = si.Le(wi);
 
-        auto Le = bxdf->SampleF(si, wo, wi, pSampler->Next2D());
-        if (!Le.has_value()) return emitted;
-        auto le = Le.value();
+        BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(wi)};
+        Float pdf;
+        auto bxdfValue = bxdf->Sample(bRec, pdf, pSampler->Next2D());
+
+        auto le = bxdfValue;
 
         // calculate direct illumination
 
-        for (const auto light: mLights) {
-            Point2f lightSample{0.5f, 0.5f};
-            Vector3f w;// direction to light
-            Color3f li = light->SampleLi(si, w, lightSample);
-            Ray lightRay{si.p, w, si.t};
-            SurfaceInteraction lightSi;
-            if (!pAggregate->Intersect(lightRay, lightSi)) {
-                emitted = li * le * Abs(Dot(w, si.n));
-            }
-        }
+//        for (const auto light: mLights) {
+//            Point2f lightSample{0.5f, 0.5f};
+//            Vector3f w;// direction to light
+//            Color3f li = light->SampleLi(si, w, lightSample);
+//            Ray lightRay{si.p, w, si.t};
+//            SurfaceInteraction lightSi;
+//            if (!pAggregate->Intersect(lightRay, lightSi)) {
+//                emitted = li * le * Abs(Dot(w, si.n));
+//            }
+//        }
 
         // calculate indirect illumination
-        auto flag = bxdf->Flag();
-        if (IsDiffuse(flag)) {
-            return emitted + le;
-        } else {
-            return emitted + le * Trace(si.GenerateRay(wi), depth + 1);
+        if (depth + 1 < mMaxDepth) {
+            if (IsDiffuse(bxdf->Flag())) {
+                return emitted + le;
+            } else {
+                return emitted + le * Trace(si.GenerateRay(si.shading.ToWorld(bRec.wo)), depth + 1);
+            }
         }
-
+        return L;
     }
 
 private:

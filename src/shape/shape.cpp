@@ -15,7 +15,7 @@ shape::AddChild(Object *child) {
             pBxDF = dynamic_cast<BxDF *>(child);
             break;
         case EClassType::ELight:
-            pLight = dynamic_cast<Light *>(child);
+            pEmitter = dynamic_cast<Emitter *>(child);
             break;
         default:
             // throw exception

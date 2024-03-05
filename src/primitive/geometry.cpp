@@ -22,13 +22,13 @@ public:
     }
 
     Boolean
-    Intersect(const Ray &ray, SurfaceInteraction &si) const override {
+    Intersect(const Ray &ray, IntersectionRecord &si) const override {
         if (!pShape->Intersect(ray, si.t, si)) {
             return false;
         }
 
         si.bxdf = pBxDF;
-        si.areaLight = pLight;
+        si.emitter = pLight;
         return true;
     }
 
@@ -52,7 +52,7 @@ public:
                 pBxDF = dynamic_cast<BxDF *>(child);
                 break;
             case EClassType::ELight:
-                pLight = dynamic_cast<Light *>(child);
+                pLight = dynamic_cast<Emitter *>(child);
                 break;
         }
     }
@@ -66,7 +66,7 @@ public:
 private:
     Shape *pShape;
     BxDF *pBxDF{nullptr};
-    Light *pLight{nullptr};
+    Emitter *pLight{nullptr};
 };
 
 REGISTER_CLASS(GeometryPrimitive, "geometry")
