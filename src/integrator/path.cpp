@@ -29,33 +29,25 @@ public:
         Integer depth{0};
         while (beta != Color3f{0}) {
             // Intersect ray with scene
-            IntersectionRecord si;
+            IntersectionRecord iRec;
             // Account for infinite lights if ray has no intersection
-            if (!pAggregate->Intersect(ray, si)) {
-
+            if (!pAggregate->Intersect(ray, iRec)) {
                 for (const auto light: mLights) {
                     if (IsInfiniteLight(light->Flag())) {
                         L += beta * light->Le(ray);
                     }
-
                 }
                 break;
             }
 
             // Add emitted light at intersection
-            if (si.emitter) {
-                L += beta * si.Le(-ray.d);
-            }
+            L += beta * iRec.Le(-ray.d);
 
             // End path if max depth is reached
-            if (depth++ == mMaxDepth) {
-                break;
-            }
+            if (depth++ == mMaxDepth) break;
 
-            auto bxdf = si.bxdf;
-            if (!bxdf) {
-                break;
-            }
+            auto bxdf = iRec.bxdf;
+            if (!bxdf) break;
 
             // Sample direct illumination
 //            {
@@ -83,11 +75,12 @@ public:
 //            }
             // Sample outgoing direction at intersection to continue path
             {
+
+                BxDFRecord bRec{iRec.ToLocal(-ray.d)};
+                bRec.uv = iRec.uv;
                 Float bsdfPdf;
-                BxDFRecord bRec{si.shading.ToLocal(-ray.d)};
-                bRec.uv = si.uv;
-                Color3f bxdfWeight = bxdf->Sample(bRec, bsdfPdf, pSampler->Next2D());
-                if (bxdfWeight.IsZero()) {
+                Color3f bxdfValue = bxdf->Sample(bRec, bsdfPdf, pSampler->Next2D());
+                if (bxdfValue.IsZero()) {
                     break;
                 }
 
@@ -99,8 +92,8 @@ public:
                 }
 
 //                beta *= f / pdf;
-                beta *= bxdfWeight;
-                ray = si.GenerateRay(bRec.wo);
+                beta *= bxdfValue;
+                ray = iRec.GenerateRay(iRec.ToWorld(bRec.wo));
             }
         }
 
