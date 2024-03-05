@@ -3,7 +3,7 @@
         <integer name="spp" value="1000"/>
         <integer name="depth" value="50"/>
         <aggregate type="naive">
-            <shape type="mesh1">
+            <shape type="mesh">
                 <string name="filename" value="../bunny.obj"/>
                 <transform name="translate" value=""/>
                 <transform name="rotate" value="0 -60 0"/>

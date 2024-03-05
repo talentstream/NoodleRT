@@ -4,7 +4,6 @@
 
 #include "base/aggregate.h"
 #include "base/primitive.h"
-#include "base/mesh.h"
 #include <print>
 #include <vector>
 #include <algorithm>
@@ -62,9 +61,9 @@ public:
                 mPrimitives.emplace_back(dynamic_cast<Primitive *>(child));
                 break;
             case EClassType::EMesh: {
-                auto mesh = dynamic_cast<Mesh *>(child);
-                mPrimitives.insert(mPrimitives.end(), mesh->primitives.begin(), mesh->primitives.end());
-                break;
+//                auto mesh = dynamic_cast<Mesh *>(child);
+//                mPrimitives.insert(mPrimitives.end(), mesh->primitives.begin(), mesh->primitives.end());
+//                break;
             }
             default:
                 /*throw*/

@@ -4,7 +4,7 @@
         <integer name="depth" value="100"/>
         <aggregate type="naive">
             <!--top-->
-            <shape type="mesh1">
+            <shape type="mesh">
                 <string name="filename" value="../top.obj"/>
                 <bxdf type="diffuse">
                     <texture type="solid">
@@ -13,7 +13,7 @@
                 </bxdf>
             </shape>
             <!--back-->
-            <shape type="mesh1">
+            <shape type="mesh">
                 <string name="filename" value="../back.obj"/>
                 <bxdf type="diffuse">
                     <texture type="solid">
@@ -23,7 +23,7 @@
             </shape>
 
             <!--floor-->
-            <shape type="mesh1">
+            <shape type="mesh">
                 <string name="filename" value="../floor.obj"/>
                   <bxdf type="diffuse">
                     <texture type="solid">
@@ -32,14 +32,14 @@
                 </bxdf>
             </shape>
 <!--            light-->
-            <shape type="mesh1">
+            <shape type="mesh">
                 <string name="filename" value="../light.obj"/>
                 <light type="area">
                     <color name="intensity" value="23.948 19.283 15.541"/>
                 </light>
             </shape>
             <!--left-->
-            <shape type="mesh1">
+            <shape type="mesh">
                 <string name="filename" value="../left.obj"/>
                 <bxdf type="diffuse">
                     <color name="reflectance" value="0.63 0.065 0.05"/>
@@ -49,7 +49,7 @@
                 </bxdf>
             </shape>
             <!--right-->
-            <shape type="mesh1">
+            <shape type="mesh">
                 <string name="filename" value="../right.obj"/>
                 <bxdf type="diffuse">
                     <texture type="solid">
@@ -58,7 +58,7 @@
                 </bxdf>
             </shape>
 <!--            shortbox-->
-            <shape type="mesh1">
+            <shape type="mesh">
                 <string name="filename" value="../shortbox.obj"/>
                 <bxdf type="dielectric">
                     <texture type="solid">
@@ -67,7 +67,7 @@
                 </bxdf>
             </shape>
 <!--            tallbox-->
-            <shape type="mesh1">
+            <shape type="mesh">
                 <string name="filename" value="../tallbox.obj"/>
                 <bxdf type="conductor">
                     <texture type="solid">

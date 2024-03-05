@@ -6,36 +6,8 @@
 
 #include "core/object.h"
 #include "core/record.h"
-#include "core/record.h"
 
 NAMESPACE_BEGIN
-
-class Shape : public Object {
-public:
-    virtual ~Shape() = default;
-
-    virtual Boolean
-    Intersect(const Ray &ray, Float tMax, IntersectionRecord &) const = 0;
-
-    virtual Boolean
-    IntersectP(const Ray &ray, Float tMax) const = 0;
-
-    virtual Bound3f
-    BoundingBox() const = 0;
-
-    virtual void
-    Sample(ShapeRecord &sRec, const Point2f &sample) const = 0;
-
-    virtual Float
-    Pdf(const ShapeRecord &sRec) const { return 1 / Area(); };
-
-    virtual Float
-    Area() const = 0;
-
-    [[nodiscard]] EClassType GetClassType() const override {
-        return EClassType::EShape;
-    }
-};
 
 class shape : public Object {
 public:

@@ -2,7 +2,7 @@
 // Created by talentstream on 2024/3/4.
 //
 
-#include "base/mesh.h"
+#include "base/shape.h"
 #include "base/bxdf.h"
 #include "base/light.h"
 #include "triangle.h"

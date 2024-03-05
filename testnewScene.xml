@@ -1,10 +1,10 @@
 <scene>
-    <integrator type="whitted">
+    <integrator type="path">
         <integer name="spp" value="100"/>
         <integer name="depth" value="100"/>
         <aggregate type="naive">
             <!--sphere center-->
-            <shape type="sphere1">
+            <shape type="sphere">
                 <float name="radius" value="0.5"/>
                 <point name="center" value="0.0 0.0 -1.0"/>
                 <bxdf type="diffuse">
@@ -21,7 +21,7 @@
             </shape>
 
             <!--sphere left bigger-->
-            <shape type="sphere1">
+            <shape type="sphere">
                 <float name="radius" value="0.5"/>
                 <point name="center" value="-1.0 0.0 -1.0"/>
                 <bxdf type="dielectric">
@@ -29,7 +29,7 @@
             </shape>
 
             <!--sphere right-->
-            <shape type="sphere1">
+            <shape type="sphere">
                 <float name="radius" value="0.5"/>
                 <point name="center" value="1.0 0.0 -1.0"/>
                 <bxdf type="conductor">
@@ -38,7 +38,7 @@
             </shape>
 
             <!--sphere ground-->
-            <shape type="sphere1">
+            <shape type="sphere">
                 <float name="radius" value="100.0"/>
                 <point name="center" value="0.0 -100.5 -1.0"/>
                 <bxdf type="diffuse">

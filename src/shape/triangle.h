@@ -8,31 +8,6 @@
 
 NAMESPACE_BEGIN
 
-class Triangle : public Shape {
-public:
-    explicit Triangle(class Mesh *mesh, Integer index);
-
-    Boolean
-    Intersect(const Ray &ray, Float tMax, IntersectionRecord &si) const override;
-
-    Boolean
-    IntersectP(const Ray &ray, Float tMax) const override;
-
-    Bound3f
-    BoundingBox() const override;
-
-    void
-    Sample(ShapeRecord &sRec, const Point2f &sample) const override;
-
-    Float
-    Area() const override;
-
-
-private:
-    Mesh *pMesh{nullptr};
-    Integer mIndices[3];
-};
-
 struct triangle {
     Point3f p0, p1, p2;
     Normal3f n0, n1, n2;
@@ -42,7 +17,6 @@ struct triangle {
 
     triangle(Point3f p0, Point3f p1, Point3f p2)
             : p0{p0}, p1{p1}, p2{p2} {
-
     }
 
     void

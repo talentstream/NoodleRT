@@ -9,99 +9,6 @@
 
 NAMESPACE_BEGIN
 
-class Sphere : public Shape {
-public:
-    explicit Sphere(const PropertyList &propertyList) {
-        mRadius = propertyList.GetFloat("radius", 1.0f);
-        mCenter = propertyList.GetPoint("center", {});
-        PRINT_DEBUG_INFO("Shape", "sphere")
-    }
-
-    Boolean
-    Intersect(const Ray &ray, Float tMax, IntersectionRecord &i) const override {
-        Vector3f oc = ray.o - mCenter;
-        Float a = LengthSquared(ray.d);
-        Float halfB = Dot(oc, ray.d);
-        Float c = LengthSquared(oc) - mRadius * mRadius;
-        Float discriminant = halfB * halfB - a * c;
-        if (discriminant < 0) {
-            return false;
-        }
-
-        Float sqrtD = Sqrt(discriminant);
-        Float root = (-halfB - sqrtD) / a;
-        // 判断是否相交
-        if (root < 0.001 || root > tMax) {
-            root = (-halfB + sqrtD) / a;
-            if (root < 0.001 || root > tMax) {
-                return false;
-            }
-        }
-
-        // 设定Interaction Info
-
-        Point3f hitP = ray(root);
-        i = IntersectionRecord(root, hitP, Normal3f{hitP - mCenter});
-
-        // uv
-        auto theta = ACos(-i.n.y);
-        auto phi = ATan2(-i.n.z, i.n.x) + Pi;
-        i.uv = Point2f{phi / (2 * Pi), theta / Pi};
-        return true;
-    }
-
-    Boolean
-    IntersectP(const Ray &ray, Float tMax) const override {
-        Vector3f oc = ray.o - mCenter;
-        Float a = LengthSquared(ray.d);
-        Float halfB = Dot(oc, ray.d);
-        Float c = LengthSquared(oc) - mRadius * mRadius;
-        Float discriminant = halfB * halfB - a * c;
-        if (discriminant < 0) {
-            return false;
-        }
-
-        Float sqrtD = Sqrt(discriminant);
-        Float root = (-halfB - sqrtD) / a;
-        // 判断是否相交
-        if (root < 0.001 || root > tMax) {
-            root = (-halfB + sqrtD) / a;
-            if (root < 0.001 || root > tMax) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    Bound3f
-    BoundingBox() const override {
-        Vector3f radiusVec{mRadius};
-        return Bound3f{mCenter - radiusVec, mCenter + radiusVec};
-    }
-
-    void
-    Sample(ShapeRecord &sRec, const Point2f &sample) const override {
-
-    }
-
-    Float
-    Pdf(const ShapeRecord &sRec) const override {
-        return 0.f;
-    }
-
-    Float
-    Area() const override {
-        return 0.f;
-    }
-
-
-private:
-    Float mRadius;
-    Point3f mCenter;
-};
-
-REGISTER_CLASS(Sphere, "sphere")
-
 class sphere : public shape {
 public:
     explicit sphere(const PropertyList &propertyList) {
@@ -210,6 +117,6 @@ private:
     Point3f mCenter;
 };
 
-REGISTER_CLASS(sphere,"sphere1")
+REGISTER_CLASS(sphere, "sphere")
 
 NAMESPACE_END

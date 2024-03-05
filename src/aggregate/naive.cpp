@@ -4,7 +4,6 @@
 
 #include "base/aggregate.h"
 #include "base/primitive.h"
-#include "base/mesh.h"
 #include <vector>
 
 NAMESPACE_BEGIN

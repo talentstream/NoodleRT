@@ -147,6 +147,6 @@ private:
     }
 };
 
-REGISTER_CLASS(mesh, "mesh1")
+REGISTER_CLASS(mesh, "mesh")
 
 NAMESPACE_END

@@ -10,6 +10,8 @@
 
 NAMESPACE_BEGIN
 
+class Shape;
+
 class GeometryPrimitive : public Primitive {
 public:
     explicit GeometryPrimitive(const PropertyList &propertyList) {
@@ -23,9 +25,9 @@ public:
 
     Boolean
     Intersect(const Ray &ray, IntersectionRecord &si) const override {
-        if (!pShape->Intersect(ray, si.t, si)) {
-            return false;
-        }
+//        if (!pShape->Intersect(ray, si.t, si)) {
+//            return false;
+//        }
 
         si.bxdf = pBxDF;
         si.emitter = pLight;
@@ -34,20 +36,22 @@ public:
 
     Boolean
     IntersectP(const Ray &ray) const override {
-        return pShape->IntersectP(ray, Infinity);
+//        return pShape->IntersectP(ray, Infinity);
+        return  true;
     }
 
     Bound3f
     BoundingBox() const override {
-        return pShape->BoundingBox();
+        return {};
+//        return pShape->BoundingBox();
     }
 
     void AddChild(Object *child) override {
 
         switch (child->GetClassType()) {
-            case EClassType::EShape:
-                pShape = dynamic_cast<Shape *>(child);
-                break;
+//            case EClassType::EShape:
+//                pShape = dynamic_cast<Shape *>(child);
+//                break;
             case EClassType::EBxDF:
                 pBxDF = dynamic_cast<BxDF *>(child);
                 break;
