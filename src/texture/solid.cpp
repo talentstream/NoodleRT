@@ -9,7 +9,7 @@ NAMESPACE_BEGIN
 class SolidTexture : public Texture {
 public:
     explicit SolidTexture(const PropertyList &propertyList) {
-        mAlbedo = propertyList.GetColor("albedo", {});
+        mAlbedo = propertyList.GetColor("albedo", {1.f});
     }
 
     Color3f

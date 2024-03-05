@@ -89,7 +89,7 @@ public:
 
     void Initialize() override {
         if (pAlbedo == nullptr) {
-            pAlbedo = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("checker", {}, true));
+            pAlbedo = dynamic_cast<Texture *>(ObjectFactory::CreateInstance("solid", {}, true));
         }
     }
 

@@ -12,10 +12,11 @@ class AreaLight : public Emitter {
 public:
     explicit AreaLight(const PropertyList &propList) {
         mIntensity = propList.GetColor("intensity", {1});
+        mTwoSided = propList.GetBoolean("twosided", true);
     }
 
     Color3f L(const IntersectionRecord &si, const Vector3f &w) const override {
-        return Dot(si.n, w) > 0 ? mIntensity : Color3f{};
+        return (mTwoSided || Dot(si.n, w) > 0) ? mIntensity : Color3f{};
     }
 
     Color3f SampleLi(const IntersectionRecord &si, Vector3f &wi, Point2f &sample) const override {
@@ -56,6 +57,7 @@ public:
 private:
     shape *pShape{nullptr};
     Color3f mIntensity;
+    Boolean mTwoSided;
 };
 
 REGISTER_CLASS(AreaLight, "area")
