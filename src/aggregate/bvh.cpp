@@ -1,14 +1,141 @@
-////
-//// Created by 44772 on 2024/2/3.
-////
 //
-//#include "base/Aggregate.h"
-//#include "base/primitive.h"
-//#include <print>
-//#include <vector>
-//#include <algorithm>
+// Created by 44772 on 2024/2/3.
 //
-//NAMESPACE_BEGIN
+
+#include "base/aggregate.h"
+
+#include <stack>
+#include <vector>
+#include <algorithm>
+
+NAMESPACE_BEGIN
+
+class BVH : public Aggregate {
+public:
+    explicit BVH(const PropertyList &propertyList) {
+        mShapeOffset.push_back(0u);
+        PRINT_DEBUG_INFO("aggregate", "bvh")
+    }
+
+    void
+    Build() override {
+        auto size = GetPrimitiveCount();
+        if (size == 0) return;
+        mNodes.resize(2 * size);
+        mNodes[0].bbox = mBbox;
+        mShapeIndices.resize(size);
+        for (auto i{0}; i < size; i++) {
+            mShapeIndices[i] = i;
+        }
+        std::vector<UInt32> ordered;
+        ordered.reserve(size);
+        RecursiveBuild(0, 0, size, ordered);
+        mShapeIndices.swap(ordered);
+    }
+
+    Boolean
+    Intersect(const Ray &ray, IntersectionRecord &si) const override {
+        Boolean hitAnything{false};
+
+        UInt32 nodeIdx = 0;
+        std::stack<UInt32> nodeIdxStack;
+
+        if (mNodes.empty()) {
+            return false;
+        }
+        IntersectionRecord tempIRec;
+        while (true) {
+            const auto &node = mNodes[nodeIdx];
+            if (!node.bbox.IntersectP(ray, si.t)) {
+                if (nodeIdxStack.empty()) break;
+                nodeIdx = nodeIdxStack.top();
+                nodeIdxStack.pop();
+                continue;
+            }
+
+            if (node.IsInner()) {
+                nodeIdxStack.push(node.rightChild);
+            } else {
+                for (auto i{node.Start()}, end{node.End()}; i < end; i++) {
+                    auto idx = mShapeIndices[i];
+                    const auto s = mShapes[FindShape(idx)];
+                    if (s->Intersect(idx, ray, si.t, tempIRec)) {
+                        hitAnything = true;
+                        if (tempIRec.t < si.t) {
+                            si = tempIRec;
+                        }
+                    }
+                }
+            }
+            if (nodeIdxStack.empty()) break;
+            nodeIdx = nodeIdxStack.top();
+            nodeIdxStack.pop();
+        }
+
+        return hitAnything;
+    }
+
+    Boolean
+    UnOccluded(const Ray &ray) const override {
+        return true;
+    }
+
+private:
+    void RecursiveBuild(UInt32 nodeIdx, UInt32 start, UInt32 end, std::vector<UInt32> &ordered) {
+
+    }
+
+private:
+    struct BVHNode {
+        Bound3f bbox;
+
+        // leaf
+        UInt32 beginIdx;// shape begin idx
+        UInt32 size;// shape size
+
+        // inner
+        UInt32 rightChild;
+
+        enum class NodeType {
+            Leaf,
+            Inner
+        } type;
+
+        void InitLeaf(UInt32 idx, UInt32 n) {
+            beginIdx = idx;
+            size = n;
+            type = NodeType::Leaf;
+        }
+
+        void InitInner(UInt32 right) {
+            rightChild = right;
+            type = NodeType::Inner;
+        }
+
+        Boolean IsLeaf() const {
+            return type == NodeType::Leaf;
+        }
+
+        Boolean IsInner() const {
+            return type == NodeType::Inner;
+        }
+
+        UInt32 Start() const {
+            return beginIdx;
+        }
+
+        UInt32 End() const {
+            return beginIdx + size;
+        }
+
+    };
+
+    std::vector<BVHNode> mNodes;
+};
+
+REGISTER_CLASS(BVH, "bvh")
+
+NAMESPACE_END
 //
 //struct PrimitiveInfo {
 //    PrimitiveInfo() = default;
