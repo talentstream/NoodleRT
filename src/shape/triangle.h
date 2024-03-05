@@ -36,7 +36,7 @@ private:
 struct triangle {
     Point3f p0, p1, p2;
     Normal3f n0, n1, n2;
-    Boolean hasNormal;
+    Boolean hasNormal{false};
     Point2f uv0, uv1, uv2;
     Boolean hasUV{false};
 

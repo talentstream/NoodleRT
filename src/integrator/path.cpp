@@ -78,22 +78,23 @@ public:
 
                 BxDFRecord bRec{iRec.ToLocal(-ray.d)};
                 bRec.uv = iRec.uv;
-                Float bsdfPdf;
-                Color3f bxdfValue = bxdf->Sample(bRec, bsdfPdf, pSampler->Next2D());
-                if (bxdfValue.IsZero()) {
+                Float bxdfPdf;
+                Color3f bxdfValue = bxdf->Sample(bRec, bxdfPdf, pSampler->Next2D());
+                if (bxdfValue.IsZero() || bxdfPdf < Epsilon) {
                     break;
                 }
 
-                auto f = bxdf->Eval(bRec);
-                auto pdf = bxdf->pdf(bRec);
-
-                if (!pdf) {
-                    break;
-                }
-
-//                beta *= f / pdf;
                 beta *= bxdfValue;
                 ray = iRec.GenerateRay(iRec.ToWorld(bRec.wo));
+            }
+
+            // RR
+            if (depth > 3) {
+                Float q = Max(0.f, 1 - MaxValue(beta));
+                if (pSampler->Next1D() < q) {
+                    break;
+                }
+                beta /= (1 - q);
             }
         }
 

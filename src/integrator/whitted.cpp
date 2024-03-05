@@ -68,6 +68,7 @@ private:
         // calculate indirect illumination
         if (depth + 1 < mMaxDepth) {
             if (IsDiffuse(bxdf->Flag())) {
+
                 L += bxdfValue;
             } else {
                 L += bxdfValue * Trace(iRec.GenerateRay(iRec.ToWorld(bRec.wo)), depth + 1);

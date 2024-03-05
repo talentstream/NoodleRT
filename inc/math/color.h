@@ -141,4 +141,8 @@ inline Color3f operator*(Float s, Color3f c) {
     return c * s;
 }
 
+inline Float MaxValue(Color3f c){
+    return std::max(c.r, std::max(c.g, c.b));
+}
+
 NAMESPACE_END

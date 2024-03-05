@@ -1,6 +1,6 @@
 <scene>
-    <integrator type="whitted">
-        <integer name="spp" value="512"/>
+    <integrator type="path">
+        <integer name="spp" value="64"/>
         <integer name="depth" value="64"/>
         <aggregate type="naive">
             <shape type="sphere1">

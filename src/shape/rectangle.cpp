@@ -37,6 +37,7 @@ public:
             outNormal = Normalize(Normal3f{Cross(tri.p1 - tri.p0, tri.p2 - tri.p0)});
         }
         si = IntersectionRecord(t, ray(t), outNormal);
+        si.SetFlipNormal(ray.d);
         if (tri.hasUV) {
             si.uv = (1 - u - v) * tri.uv0 + u * tri.uv1 + v * tri.uv2;
         } else {
@@ -98,17 +99,18 @@ private:
         std::ranges::transform(positions, positions.begin(), [&](auto &p) {
             return mObjectToWorld(p);
         });
-        Normal3f n = Normalize(Normal3f{mObjectToWorld(Point3f{0, 0, 1})});
+//        Normal3f n = Normalize(Normal3f{mObjectToWorld(Point3f{0, 0, 1})});
         mTriangles.emplace_back(positions[0], positions[1], positions[2]);
-        mTriangles[0].SetNormal(n, n, n);
+//        mTriangles[0].SetNormal(n, n, n);
         mTriangles.emplace_back(positions[2], positions[3], positions[0]);
-        mTriangles[1].SetNormal(n, n, n);
-        std::vector<Point2f> uvs = {{0, 0},
-                                    {1, 0},
-                                    {1, 1},
-                                    {0, 1}};
-        mTriangles[0].SetUV(uvs[0], uvs[1], uvs[2]);
-        mTriangles[1].SetUV(uvs[2], uvs[3], uvs[0]);
+//        mTriangles[1].SetNormal(n, n, n);
+//        std::vector<Point2f> uvs = {{0, 0},
+//                                    {1, 0},
+//                                    {1, 1},
+//                                    {0, 1}};
+//        mTriangles[0].SetUV(uvs[0], uvs[1], uvs[2]);
+//        mTriangles[1].SetUV(uvs[2], uvs[3], uvs[0]);
+
     }
 
     std::vector<triangle> mTriangles;

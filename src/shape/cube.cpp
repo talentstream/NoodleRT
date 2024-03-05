@@ -35,6 +35,7 @@ public:
             outNormal = Normalize(Normal3f{Cross(tri.p1 - tri.p0, tri.p2 - tri.p0)});
         }
         si = IntersectionRecord(t, ray(t), outNormal);
+        si.SetFlipNormal(ray.d);
         if (tri.hasUV) {
             si.uv = (1 - u - v) * tri.uv0 + u * tri.uv1 + v * tri.uv2;
         } else {
@@ -118,61 +119,61 @@ private:
         std::ranges::transform(positions, positions.begin(), [&](auto &p) {
             return mObjectToWorld(p);
         });
-        std::vector<Normal3f> normals = {
-                {0,  -1, 0},
-                {0,  -1, 0},
-                {0,  -1, 0},
-                {0,  -1, 0},
-                {0,  1,  0},
-                {0,  1,  0},
-                {0,  1,  0},
-                {0,  1,  0},
-                {1,  0,  0},
-                {1,  0,  0},
-                {1,  0,  0},
-                {1,  0,  0},
-                {0,  0,  1},
-                {0,  0,  1},
-                {0,  0,  1},
-                {0,  0,  1},
-                {-1, 0,  0},
-                {-1, 0,  0},
-                {-1, 0,  0},
-                {-1, 0,  0},
-                {0,  0,  -1},
-                {0,  0,  -1},
-                {0,  0,  -1},
-                {0,  0,  -1}
-        };
-        std::ranges::transform(normals, normals.begin(), [&](auto &n) {
-            return Normalize(Normal3f{mObjectToWorld(Point3f{n.x, n.y, n.z})});
-        });
-        std::vector<Point2f> uvs = {
-                {0, 1},
-                {1, 1},
-                {1, 0},
-                {0, 0},
-                {0, 1},
-                {1, 1},
-                {1, 0},
-                {0, 0},
-                {0, 1},
-                {1, 1},
-                {1, 0},
-                {0, 0},
-                {0, 1},
-                {1, 1},
-                {1, 0},
-                {0, 0},
-                {0, 1},
-                {1, 1},
-                {1, 0},
-                {0, 0},
-                {0, 1},
-                {1, 1},
-                {1, 0},
-                {0, 0}
-        };
+//        std::vector<Normal3f> normals = {
+//                {0,  -1, 0},
+//                {0,  -1, 0},
+//                {0,  -1, 0},
+//                {0,  -1, 0},
+//                {0,  1,  0},
+//                {0,  1,  0},
+//                {0,  1,  0},
+//                {0,  1,  0},
+//                {1,  0,  0},
+//                {1,  0,  0},
+//                {1,  0,  0},
+//                {1,  0,  0},
+//                {0,  0,  1},
+//                {0,  0,  1},
+//                {0,  0,  1},
+//                {0,  0,  1},
+//                {-1, 0,  0},
+//                {-1, 0,  0},
+//                {-1, 0,  0},
+//                {-1, 0,  0},
+//                {0,  0,  -1},
+//                {0,  0,  -1},
+//                {0,  0,  -1},
+//                {0,  0,  -1}
+//        };
+//        std::ranges::transform(normals, normals.begin(), [&](auto &n) {
+//            return Normalize(Normal3f{mObjectToWorld(Point3f{n.x, n.y, n.z})});
+//        });
+//        std::vector<Point2f> uvs = {
+//                {0, 1},
+//                {1, 1},
+//                {1, 0},
+//                {0, 0},
+//                {0, 1},
+//                {1, 1},
+//                {1, 0},
+//                {0, 0},
+//                {0, 1},
+//                {1, 1},
+//                {1, 0},
+//                {0, 0},
+//                {0, 1},
+//                {1, 1},
+//                {1, 0},
+//                {0, 0},
+//                {0, 1},
+//                {1, 1},
+//                {1, 0},
+//                {0, 0},
+//                {0, 1},
+//                {1, 1},
+//                {1, 0},
+//                {0, 0}
+//        };
 
         std::vector<Point3i> indices = {
                 {0,  1,  2},
@@ -192,8 +193,8 @@ private:
         for (const auto idx: indices) {
             auto idx0 = idx[0], idx1 = idx[1], idx2 = idx[2];
             mTriangles.emplace_back(positions[idx0], positions[idx1], positions[idx2]);
-            mTriangles.back().SetNormal(normals[idx0], normals[idx1], normals[idx2]);
-            mTriangles.back().SetUV(uvs[idx0], uvs[idx1], uvs[idx2]);
+//            mTriangles.back().SetNormal(normals[idx0], normals[idx1], normals[idx2]);
+//            mTriangles.back().SetUV(uvs[idx0], uvs[idx1], uvs[idx2]);
         }
     }
 

@@ -40,6 +40,7 @@ public:
         }
 
         si = IntersectionRecord(t, ray(t), outNormal);
+        si.SetFlipNormal(ray.d);
         if (tri.hasUV) {
             si.uv = (1 - u - v) * tri.uv0 + u * tri.uv1 + v * tri.uv2;
         } else {
@@ -124,9 +125,9 @@ private:
 
                 if (idx0.normal_index > 0) {
                     auto LoadNormal = [&](const auto &idx) -> Normal3f {
-                        return {attrib.normals[3 * idx.normal_index + 0],
+                        return Normalize(Normal3f{mObjectToWorld(Point3f{attrib.normals[3 * idx.normal_index + 0],
                                 attrib.normals[3 * idx.normal_index + 1],
-                                attrib.normals[3 * idx.normal_index + 2]};
+                                attrib.normals[3 * idx.normal_index + 2]})});
                     };
                     tri.SetNormal(LoadNormal(idx0), LoadNormal(idx1), LoadNormal(idx2));
                 }
@@ -142,6 +143,7 @@ private:
                 mTriangles.emplace_back(tri);
             }
         }
+
     }
 };
 
