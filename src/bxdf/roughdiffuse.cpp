@@ -54,7 +54,7 @@ public:
     }
 
     Color3f
-    Eval(const BxDFSampleRecord &bRec) const override {
+    Eval(const BxDFRecord &bRec) const override {
         if (Frame::CosTheta(bRec.wo) <= 0 ||
             Frame::CosTheta(bRec.wi) <= 0) {
             return {0.f};
@@ -96,7 +96,7 @@ public:
     }
 
     Float
-    pdf(const BxDFSampleRecord &bRec) const override {
+    pdf(const BxDFRecord &bRec) const override {
         if (Frame::CosTheta(bRec.wo) <= 0 ||
             Frame::CosTheta(bRec.wi) <= 0) {
             return 0.f;
@@ -114,7 +114,7 @@ public:
     }
 
     Color3f
-    Sample(BxDFSampleRecord &bRec, Float &pdf, const Point2f &sample) const override {
+    Sample(BxDFRecord &bRec, Float &pdf, const Point2f &sample) const override {
         if (Frame::CosTheta(bRec.wi) <= 0) return {0.f};
 
         bRec.wo = Warp::SquareToCosineHemisphere(sample);

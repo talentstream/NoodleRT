@@ -54,7 +54,7 @@ public:
     }
 
     Color3f
-    Eval(const BxDFSampleRecord &bRec) const override {
+    Eval(const BxDFRecord &bRec) const override {
         Float cosThetaT;
         Float f = fresnelDielectric(Frame::CosTheta(bRec.wi), cosThetaT, mEta);
         if (Frame::CosTheta(bRec.wi) * Frame::CosTheta(bRec.wo) >= 0) {
@@ -75,7 +75,7 @@ public:
         return 1.0f;
     }
 
-    Float pdf(const BxDFSampleRecord &bRec) const override {
+    Float pdf(const BxDFRecord &bRec) const override {
         Float cosThetaT;
         Float f = fresnelDielectric(Frame::CosTheta(bRec.wi), cosThetaT, mEta);
         if (Frame::CosTheta(bRec.wi) * Frame::CosTheta(bRec.wo) >= 0) {
@@ -105,7 +105,7 @@ public:
     }
 
     Color3f
-    Sample(BxDFSampleRecord &bRec, Float &pdf, const Point2f &sample) const override {
+    Sample(BxDFRecord &bRec, Float &pdf, const Point2f &sample) const override {
         Float cosThetaT;
         Float f = fresnelDielectric(Frame::CosTheta(bRec.wi), cosThetaT, mEta);
         if(sample.x <= f) {

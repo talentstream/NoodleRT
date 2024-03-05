@@ -24,10 +24,10 @@ public:
     BoundingBox() const = 0;
 
     virtual void
-    Sample(ShapeSampleRecord &sRec, const Point2f &sample) const = 0;
+    Sample(ShapeRecord &sRec, const Point2f &sample) const = 0;
 
     virtual Float
-    Pdf(const ShapeSampleRecord &sRec) const { return 1 / Area(); };
+    Pdf(const ShapeRecord &sRec) const { return 1 / Area(); };
 
     virtual Float
     Area() const = 0;
@@ -49,10 +49,10 @@ public:
     IntersectP(UInt32 idx, const Ray &ray, Float tMax = Infinity) const = 0;
 
     virtual void
-    Sample(ShapeSampleRecord &sRec, const Point2f &sample) const = 0;
+    Sample(ShapeRecord &sRec, const Point2f &sample) const = 0;
 
     virtual Float
-    Pdf(const ShapeSampleRecord &sRec) const = 0;
+    Pdf(const ShapeRecord &sRec) const = 0;
 
     virtual Float
     Area() const = 0;

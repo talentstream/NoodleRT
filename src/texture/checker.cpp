@@ -10,7 +10,7 @@ NAMESPACE_BEGIN
 class CheckerTexture : public Texture {
 public:
     explicit CheckerTexture(const PropertyList &propertyList) {
-        mInvScale = 1 / propertyList.GetFloat("scale", {0.32f});
+        mInvScale = 1 / propertyList.GetFloat("scale", {0.01f});
         PRINT_DEBUG_INFO("Texture", "checker")
     }
 
@@ -42,15 +42,13 @@ public:
         }
     }
 
-    [[nodiscard]] Color3f Evaluate(const IntersectionRecord &si) const override {
-        auto p = si.p;
-        auto x = Floor(mInvScale * p.x);
-        auto y = Floor(mInvScale * p.y);
-        auto z = Floor(mInvScale * p.z);
-        if ((x + y + z) % 2 == 0) {
-            return pEven->Evaluate(si);
+    [[nodiscard]] Color3f Evaluate(const Point2f &uv) const override {
+        int x = static_cast<int>(uv.x * mInvScale);
+        int y = static_cast<int>(uv.y * mInvScale);
+        if ((x + y) % 2 == 1) {
+            return pEven->Evaluate(uv);
         } else {
-            return pOdd->Evaluate(si);
+            return pOdd->Evaluate(uv);
         }
     }
 

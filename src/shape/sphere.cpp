@@ -80,12 +80,12 @@ public:
     }
 
     void
-    Sample(ShapeSampleRecord &sRec, const Point2f &sample) const override {
+    Sample(ShapeRecord &sRec, const Point2f &sample) const override {
 
     }
 
     Float
-    Pdf(const ShapeSampleRecord &sRec) const override {
+    Pdf(const ShapeRecord &sRec) const override {
         return 0.f;
     }
 
@@ -176,12 +176,12 @@ public:
     }
 
     void
-    Sample(ShapeSampleRecord &sRec, const Point2f &sample) const override {
+    Sample(ShapeRecord &sRec, const Point2f &sample) const override {
 
     }
 
     Float
-    Pdf(const ShapeSampleRecord &sRec) const override {
+    Pdf(const ShapeRecord &sRec) const override {
         return 0.f;
     }
 

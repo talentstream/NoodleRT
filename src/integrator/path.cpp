@@ -84,8 +84,8 @@ public:
             // Sample outgoing direction at intersection to continue path
             {
                 Float bsdfPdf;
-                BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(-ray.d)};
-
+                BxDFRecord bRec{si.shading.ToLocal(-ray.d)};
+                bRec.uv = si.uv;
                 Color3f bxdfWeight = bxdf->Sample(bRec, bsdfPdf, pSampler->Next2D());
                 if (bxdfWeight.IsZero()) {
                     break;

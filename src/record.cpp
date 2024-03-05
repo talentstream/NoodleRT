@@ -2,7 +2,7 @@
 // Created by talentstream on 2024/2/29.
 //
 
-#include "core/interaction.h"
+#include "core/record.h"
 #include "base/light.h"
 
 NAMESPACE_BEGIN

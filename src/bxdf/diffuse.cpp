@@ -24,11 +24,11 @@ public:
             Frame::CosTheta(wi) <= 0) {
             return {0.f};
         }
-        return pAlbedo->Evaluate(si) * Frame::CosTheta(wo) * InvPi;
+        return pAlbedo->Evaluate(si.uv) * Frame::CosTheta(wo) * InvPi;
     }
 
     Color3f
-    Eval(const BxDFSampleRecord &bRec) const override {
+    Eval(const BxDFRecord &bRec) const override {
         if (Frame::CosTheta(bRec.wo) <= 0 ||
             Frame::CosTheta(bRec.wi) <= 0) {
             return {0.f};
@@ -47,7 +47,7 @@ public:
         return Warp::SquareToCosineHemispherePdf(wo);
     }
 
-    Float pdf(const BxDFSampleRecord &bRec) const override {
+    Float pdf(const BxDFRecord &bRec) const override {
         if (Frame::CosTheta(bRec.wo) <= 0 ||
             Frame::CosTheta(bRec.wi) <= 0) {
             return 0.f;
@@ -61,18 +61,18 @@ public:
 
         wi = Warp::SquareToCosineHemisphere(sample2);
         // (brdf / pdf) * cos = [(albedo / pi) / (cos / pi)] * cos
-        return pAlbedo->Evaluate(si);
+        return pAlbedo->Evaluate(si.uv);
     }
 
     Color3f
-    Sample(BxDFSampleRecord &bRec, Float &pdf, const Point2f &sample) const override {
+    Sample(BxDFRecord &bRec, Float &pdf, const Point2f &sample) const override {
         if (Frame::CosTheta(bRec.wi) <= 0) return {0.f};
 
         bRec.wo = Warp::SquareToCosineHemisphere(sample);
 
         pdf = Warp::SquareToCosineHemispherePdf(bRec.wo);
 
-        return pAlbedo->Evaluate(bRec.si);
+        return pAlbedo->Evaluate(bRec.uv);
     }
 
     void AddChild(Object *object) override {

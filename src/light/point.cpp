@@ -22,11 +22,11 @@ public:
     }
 
     Color3f
-    Sample_Li(LightSampleRecord &lRec) const override {
-        lRec.wi = Normalize(mPosition - lRec.si.p);
+    Sample_Li(EmitterRecord &lRec) const override {
+        lRec.wi = Normalize(mPosition - lRec.ref);
 
         lRec.pdf = 1.f;
-        return mIntensity / LengthSquared(mPosition - lRec.si.p);
+        return mIntensity / LengthSquared(mPosition - lRec.ref);
     }
 
     LightFlag Flag() const override {

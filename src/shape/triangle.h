@@ -22,7 +22,7 @@ public:
     BoundingBox() const override;
 
     void
-    Sample(ShapeSampleRecord &sRec, const Point2f &sample) const override;
+    Sample(ShapeRecord &sRec, const Point2f &sample) const override;
 
     Float
     Area() const override;

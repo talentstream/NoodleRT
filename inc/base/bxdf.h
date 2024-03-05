@@ -34,27 +34,6 @@ inline Boolean IsTransmission(BxDFFlag type) {
     return (type & ETransmission);
 }
 
-struct BxDFSampleRecord {
-    const IntersectionRecord &si;
-    Sampler *sampler;
-
-    // shading local coordinate
-    Vector3f wi;
-    Vector3f wo;
-
-    inline BxDFSampleRecord(const IntersectionRecord &si, Sampler *sampler, const Vector3f &wi, const Vector3f &wo)
-            : si{si}, sampler{sampler}, wi{wi}, wo{wo} {}
-
-    inline BxDFSampleRecord(const IntersectionRecord &si, const Vector3f &wi, const Vector3f &wo)
-            : BxDFSampleRecord(si, nullptr, wi, wo) {}
-
-    inline BxDFSampleRecord(const IntersectionRecord &si, Sampler *sampler, const Vector3f &wi)
-            : BxDFSampleRecord(si, sampler, wi, {}) {}
-
-    inline BxDFSampleRecord(const IntersectionRecord &si, const Vector3f &wi)
-            : BxDFSampleRecord(si, nullptr, wi, {}) {}
-};
-
 class BxDF : public Object {
 public:
     virtual
@@ -65,20 +44,20 @@ public:
     F(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const { return {0.f}; }
 
     virtual Color3f
-    Eval(const BxDFSampleRecord &bRec) const { return {0.f}; }
+    Eval(const BxDFRecord &bRec) const { return {0.f}; }
 
     virtual Float
     Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const { return 0.f; };
 
     virtual Float
-    pdf(const BxDFSampleRecord &bRec) const { return 0.f; };
+    pdf(const BxDFRecord &bRec) const { return 0.f; };
 
     virtual std::optional<Color3f>
     SampleF(const IntersectionRecord &si, const Vector3f wo, Vector3f &wi, Point2f sample) const = 0;
 
     // Sample bxdf & return pdf
     virtual Color3f
-    Sample(BxDFSampleRecord &bRec, Float &pdf, const Point2f &sample) const { return {0.f}; };
+    Sample(BxDFRecord &bRec, Float &pdf, const Point2f &sample) const { return {0.f}; };
 
     virtual BxDFFlag
     Flag() const = 0;

@@ -80,7 +80,7 @@ public:
     }
 
     Color3f
-    Sample(BxDFSampleRecord &bRec, Float &pdf, const Point2f &sample) const override {
+    Sample(BxDFRecord &bRec, Float &pdf, const Point2f &sample) const override {
         if (Frame::CosTheta(bRec.wi) <= 0) {
             return {0.f};
         }

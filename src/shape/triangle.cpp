@@ -117,7 +117,7 @@ Bound3f Triangle::BoundingBox() const {
 }
 
 void
-Triangle::Sample(ShapeSampleRecord &sRec, const Point2f &sample) const {
+Triangle::Sample(ShapeRecord &sRec, const Point2f &sample) const {
     auto UniformSampleTriangle = [](const Point2f &u) -> Point2f {
         Float su0 = Sqrt(u[0]);
         return {1 - su0, u[1] * su0};

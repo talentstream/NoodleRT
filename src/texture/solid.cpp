@@ -12,7 +12,8 @@ public:
         mAlbedo = propertyList.GetColor("albedo", {});
     }
 
-    [[nodiscard]] Color3f Evaluate(const IntersectionRecord &) const override {
+    Color3f
+    Evaluate(const Point2f& uv) const override {
         return mAlbedo;
     }
 

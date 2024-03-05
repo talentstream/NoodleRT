@@ -49,7 +49,8 @@ private:
         // emitted color
         Color3f emitted;// = si.Le(wi);
 
-        BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(wi)};
+        BxDFRecord bRec{si.ToLocal(wi)};
+        bRec.uv = si.uv;
         Float pdf;
         auto bxdfValue = bxdf->Sample(bRec, pdf, pSampler->Next2D());
 

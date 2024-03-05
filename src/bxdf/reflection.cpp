@@ -26,7 +26,7 @@ public:
     }
 
     Color3f
-    Eval(const BxDFSampleRecord &bRec) const override {
+    Eval(const BxDFRecord &bRec) const override {
         if(Frame::CosTheta(bRec.wo) <= 0 ||
            Frame::CosTheta(bRec.wi) <= 0 ||
            Abs(Dot(ReflectLocal(bRec.wi),bRec.wo)) > Epsilon) {

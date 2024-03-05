@@ -7,6 +7,7 @@
 #include "core/object.h"
 #include "core/interaction.h"
 #include "base/sampler.h"
+#include "core/record.h"
 
 NAMESPACE_BEGIN
 
@@ -25,20 +26,6 @@ inline Boolean IsInfiniteLight(LightFlag type) {
     return (type == LightFlag::EInfinite);
 }
 
-struct LightSampleRecord {
-    const IntersectionRecord &si;
-    Sampler *sampler;
-
-    Point3f p;
-    Vector3f wi; // light to point
-    Float pdf;
-
-    inline LightSampleRecord(const IntersectionRecord &si)
-            : LightSampleRecord(si, nullptr) {}
-
-    inline LightSampleRecord(const IntersectionRecord &si, Sampler *sampler)
-            : si{si}, sampler{sampler} {}
-};
 
 class Emitter : public Object {
 public:
@@ -59,7 +46,7 @@ public:
     SampleLi(const IntersectionRecord &si, Vector3f &wi, Point2f &sample) const = 0;
 
     virtual Color3f
-    Sample_Li(LightSampleRecord &lRec) const { return {0.f}; }
+    Sample_Li(EmitterRecord &lRec) const { return {0.f}; }
 
     virtual LightFlag
     Flag() const = 0;
