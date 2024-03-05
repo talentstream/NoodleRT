@@ -7,7 +7,6 @@
 #include "core/object.h"
 #include <vector>
 #include <ranges>
-#include <print>
 
 NAMESPACE_BEGIN
 

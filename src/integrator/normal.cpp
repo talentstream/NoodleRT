@@ -3,7 +3,7 @@
 //
 
 #include "base/integrator.h"
-#include "base/aggregate.h"
+#include "base/Aggregate.h"
 #include "base/camera.h"
 #include <print>
 

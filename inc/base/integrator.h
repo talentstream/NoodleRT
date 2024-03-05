@@ -8,7 +8,7 @@
 
 NAMESPACE_BEGIN
 
-class Aggregate;
+class aggregate1;
 
 class Camera;
 
@@ -35,7 +35,7 @@ public:
     }
 
 protected:
-    class aggregate *pAggregate{nullptr};
+    class Aggregate *pAggregate{nullptr};
 
     std::vector<Emitter*> mLights;
 

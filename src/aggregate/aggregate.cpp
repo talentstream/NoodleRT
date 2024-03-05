@@ -2,12 +2,12 @@
 // Created by talentstream on 2024/3/4.
 //
 
-#include "base/aggregate.h"
+#include "base/Aggregate.h"
 
 NAMESPACE_BEGIN
 
 void
-aggregate::AddChild(Object *child) {
+Aggregate::AddChild(Object *child) {
 
     switch (child->GetClassType()) {
         case EClassType::EShape:
@@ -20,37 +20,37 @@ aggregate::AddChild(Object *child) {
 }
 
 void
-aggregate::Initialize() {
+Aggregate::Initialize() {
     Build();
 }
 
 UInt32
-aggregate::GetPrimitiveCount() const {
+Aggregate::GetPrimitiveCount() const {
     return mShapeOffset.back();
 }
 
 void
-aggregate::AddShape(shape *pShape) {
+Aggregate::AddShape(shape *pShape) {
     mShapes.push_back(pShape);
     mShapeOffset.push_back(mShapeOffset.back() + pShape->GetPrimitiveCount());
     mBbox.Expand(pShape->GetBoundingBox());
 }
 
 UInt32
-aggregate::FindShape(UInt32 &idx) const {
+Aggregate::FindShape(UInt32 &idx) const {
     auto it = std::lower_bound(mShapeOffset.begin(), mShapeOffset.end(), idx + 1) - 1;
     idx -= *it;
     return it - mShapeOffset.begin();
 }
 
 Bound3f
-aggregate::FindShapeBoundingBox(UInt32 idx) const {
+Aggregate::FindShapeBoundingBox(UInt32 idx) const {
     auto shapeIdx = FindShape(idx);
     return mShapes[shapeIdx]->GetBoundingBox(idx);
 }
 
 Point3f
-aggregate::FindShapeCentroid(UInt32 idx) const {
+Aggregate::FindShapeCentroid(UInt32 idx) const {
     auto shapeIdx = FindShape(idx);
     return mShapes[shapeIdx]->GetCentroid(idx);
 }

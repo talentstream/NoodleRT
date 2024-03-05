@@ -3,12 +3,11 @@
 //
 
 #include "base/aggregate.h"
-#include "base/primitive.h"
 #include <vector>
 
 NAMESPACE_BEGIN
 
-class Naive : public aggregate {
+class Naive : public Aggregate {
 public:
     explicit Naive(const PropertyList &propertyList) {
         mShapeOffset.push_back(0u);

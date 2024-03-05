@@ -16,23 +16,6 @@ public:
     ~Aggregate() = default;
 
     virtual Boolean
-    Intersect(const Ray &ray, IntersectionRecord &interaction) const = 0;
-
-    virtual Boolean
-    UnOccluded(const Ray &ray) const = 0;
-
-    EClassType
-    GetClassType() const override {
-        return EClassType::EAggregate;
-    }
-};
-
-class aggregate : public Object {
-public:
-    virtual
-    ~aggregate() = default;
-
-    virtual Boolean
     Intersect(const Ray &ray, IntersectionRecord &si) const = 0;
 
     virtual Boolean

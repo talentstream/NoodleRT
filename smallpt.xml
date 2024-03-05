@@ -1,9 +1,9 @@
 <scene>
-    <integrator type="whitted">
+    <integrator type="normal">
         <integer name="spp" value="100"/>
-        <integer name="depth" value="100"/>
+        <integer name="depth" value="64"/>
         <aggregate type="naive">
-            <!--            left-->
+            <!--left-->
             <shape type="sphere1">
                 <point name="center" value="100001 40.8 81.6"/>
                 <float name="radius" value="1e5"/>
@@ -11,7 +11,7 @@
                     <color name="albedo" value="0.75 0.25 0.25"/>
                 </bxdf>
             </shape>
-            <!--            right-->
+            <!--right-->
             <shape type="sphere1">
                 <point name="center" value="-99901 40.8 81.6"/>
                 <float name="radius" value="1e5"/>
@@ -19,7 +19,7 @@
                     <color name="albedo" value="0.25 0.25 0.75"/>
                 </bxdf>
             </shape>
-            <!--            back-->
+            <!--back-->
             <shape type="sphere1">
                 <point name="center" value="50 40.8 1e5"/>
                 <float name="radius" value="1e5"/>
@@ -81,7 +81,7 @@
                 <integer name="width" value="512"/>
                 <integer name="height" value="384"/>
             </film>
-            <float name="fov" value="29"/>
+            <float name="fov" value="80"/>
             <point name="lookFrom" value="50 52 295.6"/>
             <point name="lookAt" value="50 50 0"/>
             <vector name="up" value="0 1 0"/>

@@ -3,7 +3,7 @@
 //
 
 #include "base/integrator.h"
-#include "base/aggregate.h"
+#include "base/Aggregate.h"
 #include "base/camera.h"
 #include "base/film.h"
 #include "base/sampler.h"
@@ -17,7 +17,7 @@ NAMESPACE_BEGIN
 void Integrator::AddChild(Object *child) {
     switch (child->GetClassType()) {
         case EClassType::EAggregate:
-            pAggregate = dynamic_cast<aggregate *>(child);
+            pAggregate = dynamic_cast<Aggregate *>(child);
             break;
         case EClassType::ECamera:
             pCamera = dynamic_cast<Camera *>(child);
