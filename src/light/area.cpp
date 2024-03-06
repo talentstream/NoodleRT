@@ -12,7 +12,7 @@ class AreaLight : public Emitter {
 public:
     explicit AreaLight(const PropertyList &propList) {
         mIntensity = propList.GetColor("intensity", {1});
-        mTwoSided = propList.GetBoolean("twosided", true);
+        mTwoSided = propList.GetBoolean("twosided", false);
     }
 
     Color3f L(const IntersectionRecord &si, const Vector3f &w) const override {
@@ -23,12 +23,16 @@ public:
         return {1.f};
     }
 
-    Color3f Sample_Li(EmitterRecord &lRec) const override {
+    Color3f Sample_Li(EmitterRecord &lRec, const Point2f &u) const override {
         ShapeRecord sRec{lRec.ref};
-        pShape->Sample(sRec,{});
-        lRec.wi = Normalize(sRec.p - lRec.ref);// light -> point
+        pShape->Sample(sRec, u);
+
+        lRec.p = sRec.p;
+        lRec.n = sRec.n;
+        lRec.wi = Normalize(lRec.p - lRec.ref);// light -> point
         lRec.pdf = sRec.pdf;
-        return Dot(sRec.n, -lRec.wi) > 0 ? mIntensity : Color3f{};
+
+        return mIntensity / lRec.pdf;
     }
 
     LightFlag
@@ -49,7 +53,7 @@ public:
     }
 
     void Initialize() {
-        if(pShape == nullptr){
+        if (pShape == nullptr) {
             /* throw exception */
         }
     }

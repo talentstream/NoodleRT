@@ -6,6 +6,7 @@
 
 #include "core/common.h"
 #include "math/vec.h"
+#include "math/constant.h"
 #include <cassert>
 
 NAMESPACE_BEGIN
@@ -132,7 +133,7 @@ public:
     }
 
     Boolean IsZero() const {
-        return r == 0 && g == 0 && b == 0;
+        return r < Epsilon  && g < Epsilon && b < Epsilon;
     }
 
 };

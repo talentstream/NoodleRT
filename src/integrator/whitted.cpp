@@ -42,39 +42,39 @@ private:
         }
 
         // emitter
-        L += iRec.Le(-ray.d);
+        if (iRec.emitter) {
+            L += iRec.Le(-ray.d);
+        }
 
         auto bxdf = iRec.bxdf;
-        if (!bxdf) return {0};
+        if (!bxdf) return L;
 
-        BxDFRecord bRec{iRec.ToLocal(-ray.d)};
-        bRec.uv = iRec.uv;
-        Float pdf;
-        auto bxdfValue = bxdf->Sample(bRec, pdf, pSampler->Next2D());
+        // if diffuse calculate direct illumination
+        if (IsDiffuse(bxdf->Flag())) {
+            for (const auto light: mLights) {
 
-        // calculate direct illumination
+                EmitterRecord eRec{iRec.p};
+                Color3f li = light->Sample_Li(eRec, pSampler->Next2D());
+                if (!pAggregate->UnOccluded(iRec.GenerateRay(-eRec.wi))) continue;
+                if (li.IsZero() || eRec.pdf < Epsilon) continue;
 
-//        for (const auto light: mLights) {
-//            Point2f lightSample{0.5f, 0.5f};
-//            Vector3f w;// direction to light
-//            Color3f li = light->SampleLi(si, w, lightSample);
-//            Ray lightRay{si.p, w, si.t};
-//            SurfaceInteraction lightSi;
-//            if (!pAggregate->Intersect(lightRay, lightSi)) {
-//                emitted = li * le * Abs(Dot(w, si.n));
-//            }
-//        }
+                BxDFRecord bRec{iRec.ToLocal(-eRec.wi), iRec.ToLocal(-ray.d)};
+                bRec.uv = iRec.uv;
+                Color3f bxdfVal = bxdf->Eval(bRec);
 
-        // calculate indirect illumination
-        if (depth + 1 < mMaxDepth) {
-            if (IsDiffuse(bxdf->Flag())) {
-
-                L += bxdfValue;
-            } else {
-                L += bxdfValue * Trace(iRec.GenerateRay(iRec.ToWorld(bRec.wo)), depth + 1);
+                L += bxdfVal * li;
             }
+            return L;
+        } else {
+            // if not diffuse, indirect
+            BxDFRecord bRec{iRec.ToLocal(-ray.d)};
+            bRec.uv = iRec.uv;
+            Float pdf;
+            auto bxdfValue = bxdf->Sample(bRec, pdf, pSampler->Next2D());
+            if (depth + 1 < mMaxDepth) {
+                return bxdfValue * Trace(iRec.GenerateRay(iRec.ToWorld(bRec.wo)), depth + 1);
+            } else return {0.f};
         }
-        return L;
     }
 
 private:

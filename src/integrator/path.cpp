@@ -23,7 +23,6 @@ public:
     }
 
     [[nodiscard]] Color3f Li(const Ray &r) const override {
-        // Todo: has bug
         Ray ray = r;
         Color3f L{0}, beta(1.0f);
         Integer depth{0};

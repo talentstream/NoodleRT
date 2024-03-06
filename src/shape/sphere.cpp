@@ -5,6 +5,7 @@
 #pragma once
 
 #include "base/shape.h"
+#include "util/sampling.h"
 #include <print>
 
 NAMESPACE_BEGIN
@@ -84,7 +85,10 @@ public:
 
     void
     Sample(ShapeRecord &sRec, const Point2f &sample) const override {
-
+        Vector3f dir = Warp::UniformSampleSphere(sample);
+        sRec.p = mCenter + mRadius * dir;
+        sRec.n = Normal3f{Normalize(dir)};
+        sRec.pdf = 1.f / (4 * Pi * mRadius * mRadius);
     }
 
     Float

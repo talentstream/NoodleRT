@@ -55,7 +55,7 @@ struct IntersectionRecord {
     // Generate ray from world coordinate
     // Before using this function, you should transform the direction to world coordinate
     Ray GenerateRay(const Vector3f &d) {
-        return Ray{p, d};
+        return Ray{p + Epsilon * d, d};
     }
 
     // Before use, should guarantee w is on world coordinate
@@ -101,10 +101,10 @@ struct ShapeRecord {
 
 struct EmitterRecord {
 // members
-    Point3f ref; // origin emitter point
+    Point3f ref; // origin shadow point
     Point3f p; // Sampled point on emitter
     Normal3f n; // Sampled normal on emitter in world coordinate
-    Vector3f wi; // emitter to intersect point direction in world coordinate
+    Vector3f wi; //light to intersect point in world coordinate
     Float pdf; // Probability of the sample
 
 // functions

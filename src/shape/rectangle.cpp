@@ -55,7 +55,8 @@ public:
 
     void
     Sample(ShapeRecord &sRec, const Point2f &sample) const override {
-
+        auto idx = static_cast<UInt32>(sample.x * mTriangles.size());
+        mTriangles[idx].Sample(sRec, sample);
     }
 
     Float

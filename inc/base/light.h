@@ -46,7 +46,7 @@ public:
     SampleLi(const IntersectionRecord &si, Vector3f &wi, Point2f &sample) const = 0;
 
     virtual Color3f
-    Sample_Li(EmitterRecord &lRec) const { return {0.f}; }
+    Sample_Li(EmitterRecord &lRec, const Point2f & sample) const { return {1.f}; }
 
     virtual LightFlag
     Flag() const = 0;

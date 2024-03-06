@@ -16,7 +16,7 @@ public:
     ~Aggregate() = default;
 
     virtual Boolean
-    Intersect(const Ray &ray, IntersectionRecord &si) const = 0;
+    Intersect(const Ray &ray, IntersectionRecord &iRec) const = 0;
 
     virtual Boolean
     UnOccluded(const Ray &ray) const = 0;

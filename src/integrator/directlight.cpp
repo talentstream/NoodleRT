@@ -16,54 +16,57 @@
 NAMESPACE_BEGIN
 
 // just direct light for debug
-class DirectLightIntegrator : public ImageTileIntegrator {
+class Direct : public ImageTileIntegrator {
 public:
-    explicit DirectLightIntegrator(const PropertyList &propertyList)
+    explicit Direct(const PropertyList &propertyList)
             : ImageTileIntegrator(propertyList) {
         PRINT_DEBUG_INFO("Integrator", "directlight")
     }
 
-    [[nodiscard]] Color3f Li(const Ray &ray) const override {
-//        Color3f L{0.f};
-//        // Intersect ray with scene
-//        SurfaceInteraction si;
-//        // Account for infinite lights if ray has no intersection
-//        if (!pAggregate->Intersect(ray, si)) {
-//            for (const auto light: mLights) {
-//                if (!IsInfiniteLight(light->Flag())) {
-//                    continue;
-//                }
-//                L += light->Le(ray);
-//            }
-//            return L;
-//        }
-//
-//        auto bxdf = si.bxdf;
-//        if (!bxdf) {
-//            return L;
-//        }
-//
-//        Vector3f wi = si.wi;
-//        for (const auto light: mLights) {
-//            if (IsInfiniteLight(light->Flag())) {
-//                continue;
-//            }
-//
-//            LightSampleRecord lRec{si, pSampler};
-//            Color3f Li = light->Sample_Li(lRec);
-//            if (Li.IsZero() || lRec.pdf == 0) {
-//                continue;
-//            }
-//            BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(lRec.wi), si.shading.ToLocal(si.wi)};
-//            Float bxdfPdf;
-//            Color3f bxdfVal = bxdf->Sample(bRec, bxdfPdf, pSampler->Next2D());
-//            if (!pAggregate->UnOccluded(si.GenerateRay(-lRec.wi))) {
-//                Float weight = Weight(bxdfPdf, lRec.pdf);
-//                L += bxdfVal * Li * weight;
-//            }
-//        }
-//        return L;
-        return {};
+    Color3f
+    Li(const Ray &ray) const override {
+        Color3f L{0};
+
+        IntersectionRecord iRec;
+        // if no intersection, add infinite light
+        if (!pAggregate->Intersect(ray, iRec)) {
+            for (const auto light: mLights) {
+                if (IsInfiniteLight(light->Flag())) {
+                    L += light->Le(ray);
+                }
+            }
+            return L;
+        }
+
+        auto bxdf = iRec.bxdf;
+        if (!bxdf) return L;
+
+        // Add emitted light at intersection
+        L += iRec.Le(-ray.d);
+
+        for (const auto light: mLights) {
+            if (IsInfiniteLight(light->Flag())) {
+                continue;
+            }
+
+            EmitterRecord eRec{iRec.p};
+
+            Color3f li = light->Sample_Li(eRec,pSampler->Next2D());
+            if (li.IsZero() || eRec.pdf < Epsilon) continue;
+
+            BxDFRecord bRec{iRec.ToLocal(eRec.wi), iRec.ToLocal(-ray.d)};
+            Color3f bxdfVal = bxdf->Eval(bRec);
+            Float bxdfPdf = bxdf->pdf(bRec);
+            if (bxdfPdf == 0.f || eRec.pdf == 0.f) continue;
+
+            if(pAggregate->UnOccluded(iRec.GenerateRay(eRec.wi))) {
+                Float weight = Weight(bxdfPdf, eRec.pdf);
+
+                L += bxdfVal * li * weight;
+            }
+        }
+
+        return L;
     }
 
     inline Float Weight(Float pdfA, Float pdfB) const {
@@ -75,6 +78,6 @@ public:
 private:
 };
 
-REGISTER_CLASS(DirectLightIntegrator, "directlight")
+REGISTER_CLASS(Direct, "direct")
 
 NAMESPACE_END

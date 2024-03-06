@@ -22,8 +22,11 @@ public:
     }
 
     Color3f
-    Sample_Li(EmitterRecord &lRec) const override {
-        lRec.wi = Normalize(mPosition - lRec.ref);
+    Sample_Li(EmitterRecord &lRec, const Point2f &sample) const override {
+
+        lRec.p = mPosition;
+        lRec.n = Normal3f{lRec.wi};
+        lRec.wi = Normalize(lRec.p - lRec.ref);
 
         lRec.pdf = 1.f;
         return mIntensity / LengthSquared(mPosition - lRec.ref);

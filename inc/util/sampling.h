@@ -10,11 +10,16 @@ NAMESPACE_BEGIN
 
 class Warp {
 public:
-    static Vector3f SampleUniformSphere(Point2f sample2) {
-        Float z = 1 - 2 * sample2[0];
+    static Vector3f UniformSampleSphere(const Point2f& sample) {
+        Float z = 1 - 2 * sample[0];
         Float r = Sqrt(1 - Sqr(z));
-        Float phi = 2 * Pi * sample2[1];
+        Float phi = 2 * Pi * sample[1];
         return {r * Cos(phi), r * Sin(phi), z};
+    }
+
+    static Point2f UniformSampleTriangle(const Point2f& sample) {
+        Float su0 = Sqrt(sample[0]);
+        return {1 - su0, sample[1] * su0};
     }
 
     static Point2f ConcentricSampleDisk(Point2f sample) {

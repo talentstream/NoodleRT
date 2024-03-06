@@ -44,10 +44,12 @@ public:
         for (auto i{0}; i < mShapeIndices.size(); i++) {
             auto idx = mShapeIndices[i];
             const auto s = mShapes[FindShape(idx)];
+            if (s->IsEmitter()) return true;
             if (s->IntersectP(idx, ray)) {
                 return false;
             }
         }
+
         return true;
     }
 };

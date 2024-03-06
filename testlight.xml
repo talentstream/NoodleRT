@@ -1,12 +1,21 @@
 <scene>
-    <integrator type="path">
+    <integrator type="whitted">
         <integer name="spp" value="64"/>
         <integer name="depth" value="64"/>
-        <string name="aggregate" value="bvh"/>
+        <string name="aggregate" value="naive"/>
         <shape type="sphere">
             <float name="radius" value="1000.0"/>
             <point name="center" value="0.0 -1000.0 0.0"/>
             <bxdf type="diffuse">
+                <texture type="checker">
+                    <texture type="solid">
+                        <color name="albedo" value="0.2 0.3 0.1"/>
+                    </texture>
+                    <texture type="solid">
+                        <color name="albedo" value="0.9 0.9 0.9"/>
+                    </texture>
+                    <float name="scale" value="0.32"/>
+                </texture>
             </bxdf>
         </shape>
 
@@ -33,22 +42,22 @@
             </bxdf>
         </shape>
 
-        <shape type="rectangle">
-            <transform name="scale" value="2 1 2"/>
-            <transform name="translate" value="3 1 -2"/>
-            <transform name="rotate" value="0 0 90"/>
-            <light type="area">
-                <color name="intensity" value="4 4 4"/>
-            </light>
-        </shape>
+<!--        <shape type="rectangle">-->
+<!--            <transform name="scale" value="2 1 2"/>-->
+<!--            <transform name="translate" value="3 1 -2"/>-->
+<!--            <transform name="rotate" value="0 0 90"/>-->
+<!--            <light type="area">-->
+<!--                <color name="intensity" value="4 4 4"/>-->
+<!--            </light>-->
+<!--        </shape>-->
 
-        <shape type="sphere">
-            <point name="center" value="0.0 7.0 0.0"/>
-            <float name="radius" value="2"/>
-            <light type="area">
-                <color name="intensity" value="4 4 4"/>
-            </light>
-        </shape>
+<!--        <shape type="sphere">-->
+<!--            <point name="center" value="0.0 7.0 0.0"/>-->
+<!--            <float name="radius" value="2"/>-->
+<!--            <light type="area">-->
+<!--                <color name="intensity" value="4 4 4"/>-->
+<!--            </light>-->
+<!--        </shape>-->
         <camera type="perspective">
             <film>
                 <integer name="width" value="800"/>
@@ -62,5 +71,9 @@
         <sampler type="independent">
 
         </sampler>
+        <light type="point">
+            <point name="position" value="0.0 7.0 0.0"/>
+            <color name="intensity" value="4 4 4"/>
+        </light>
     </integrator>
 </scene>

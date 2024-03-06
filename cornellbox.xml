@@ -1,14 +1,14 @@
 <scene>
-    <integrator type="path">
-        <integer name="spp" value="2048"/>
+    <integrator type="whitted">
+        <integer name="spp" value="64"/>
         <integer name="depth" value="100"/>
-        <string name="aggregate" value="bvh"/>
+        <string name="aggregate" value="naive"/>
         <!--top-->
         <shape type="mesh">
             <string name="filename" value="../top.obj"/>
             <bxdf type="diffuse">
                 <texture type="solid">
-                    <color name="albedo" value="0.05 0.05 0.05"/>
+                    <color name="albedo" value="0.725, 0.71, 0.68"/>
                 </texture>
             </bxdf>
         </shape>
@@ -27,17 +27,24 @@
             <string name="filename" value="../floor.obj"/>
             <bxdf type="diffuse">
                 <texture type="solid">
-                    <color name="albedo" value="0.525 0.51 0.48"/>
+                    <color name="albedo" value="0.725, 0.71, 0.68"/>
                 </texture>
             </bxdf>
         </shape>
-        <!--            light-->
+        <!--light-->
         <shape type="mesh">
             <string name="filename" value="../light.obj"/>
             <light type="area">
-                <color name="intensity" value="23.948 19.283 15.541"/>
+                <color name="intensity" value="17 12 4"/>
             </light>
         </shape>
+<!--        <shape type="sphere">-->
+<!--            <point name="center" value="278 473 279"/>-->
+<!--            <float name="radius" value="1"/>-->
+<!--            <light type="area">-->
+<!--                <color name="intensity" value="17 12 4"/>-->
+<!--            </light>-->
+<!--        </shape>-->
         <!--left-->
         <shape type="mesh">
             <string name="filename" value="../left.obj"/>
@@ -57,19 +64,19 @@
                 </texture>
             </bxdf>
         </shape>
-        <!--            shortbox-->
+        <!--shortbox-->
         <shape type="mesh">
             <string name="filename" value="../shortbox.obj"/>
-            <bxdf type="dielectric">
+            <bxdf type="diffuse">
                 <texture type="solid">
                     <color name="albedo" value="0.73 0.73 0.73"/>
                 </texture>
             </bxdf>
         </shape>
-        <!--            tallbox-->
+        <!--tallbox-->
         <shape type="mesh">
             <string name="filename" value="../tallbox.obj"/>
-            <bxdf type="conductor">
+            <bxdf type="diffuse">
                 <texture type="solid">
                     <color name="albedo" value="0.73 0.73 0.73"/>
                 </texture>
