@@ -2,15 +2,14 @@
     <integrator type="path">
         <integer name="spp" value="1000"/>
         <integer name="depth" value="50"/>
-        <aggregate type="bvh">
-            <shape type="mesh">
-                <string name="filename" value="../bunny.obj"/>
-                <transform name="translate" value=""/>
-                <transform name="rotate" value="0 -60 0"/>
-                <transform name="scale" value=""/>
-                <bxdf type ="dielectric"></bxdf>
-            </shape>
-        </aggregate>
+        <string name="aggregate" value="bvh"/>
+        <shape type="mesh">
+            <string name="filename" value="../bunny.obj"/>
+            <transform name="translate" value=""/>
+            <transform name="rotate" value="0 -60 0"/>
+            <transform name="scale" value=""/>
+            <bxdf type="dielectric"></bxdf>
+        </shape>
         <camera type="perspective">
             <film>
                 <integer name="width" value="400"/>

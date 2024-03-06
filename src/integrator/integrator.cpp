@@ -3,7 +3,7 @@
 //
 
 #include "base/integrator.h"
-#include "base/Aggregate.h"
+#include "base/aggregate.h"
 #include "base/camera.h"
 #include "base/film.h"
 #include "base/sampler.h"
@@ -14,11 +14,25 @@
 
 NAMESPACE_BEGIN
 
+Integrator::Integrator(const PropertyList &propertyList) {
+    mSpp = propertyList.GetInteger("spp", 1);
+    auto aggregateType = propertyList.GetString("aggregate", "bvh");
+    pAggregate = dynamic_cast<Aggregate *>(ObjectFactory::CreateInstance(aggregateType, {}));
+}
+
 void Integrator::AddChild(Object *child) {
     switch (child->GetClassType()) {
-        case EClassType::EAggregate:
-            pAggregate = dynamic_cast<Aggregate *>(child);
+//        case EClassType::EAggregate:
+//            pAggregate = dynamic_cast<Aggregate *>(child);
+//            break;
+        case EClassType::EShape: {
+            const auto pShape = dynamic_cast<Shape *>(child);
+            pAggregate->AddShape(pShape);
+            if(pShape->IsEmitter()) {
+                mLights.push_back(pShape->GetEmitter());
+            }
             break;
+        }
         case EClassType::ECamera:
             pCamera = dynamic_cast<Camera *>(child);
             break;
@@ -44,6 +58,7 @@ void Integrator::Initialize() {
     if (pSampler == nullptr) {
         throw std::runtime_error("Integrator Need Sampler!");
     }
+    pAggregate->Initialize();
 }
 
 static Integer currentSpp{0};

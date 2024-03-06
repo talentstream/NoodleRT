@@ -2,22 +2,9 @@
 // Created by talentstream on 2024/3/4.
 //
 
-#include "base/Aggregate.h"
+#include "base/aggregate.h"
 
 NAMESPACE_BEGIN
-
-void
-Aggregate::AddChild(Object *child) {
-
-    switch (child->GetClassType()) {
-        case EClassType::EShape:
-            AddShape(dynamic_cast<shape *>(child));
-            break;
-        default:
-            // throw exception
-            break;
-    }
-}
 
 void
 Aggregate::Initialize() {
@@ -30,7 +17,7 @@ Aggregate::GetPrimitiveCount() const {
 }
 
 void
-Aggregate::AddShape(shape *pShape) {
+Aggregate::AddShape(Shape *pShape) {
     mShapes.push_back(pShape);
     mShapeOffset.push_back(mShapeOffset.back() + pShape->GetPrimitiveCount());
 

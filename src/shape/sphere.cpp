@@ -9,9 +9,9 @@
 
 NAMESPACE_BEGIN
 
-class sphere : public shape {
+class Sphere : public Shape {
 public:
-    explicit sphere(const PropertyList &propertyList) {
+    explicit Sphere(const PropertyList &propertyList) {
         mRadius = propertyList.GetFloat("radius", 1.0f);
         mCenter = propertyList.GetPoint("center", {});
         mBbox = Bound3f{mCenter - Vector3f{mRadius}, mCenter + Vector3f{mRadius}};
@@ -117,6 +117,6 @@ private:
     Point3f mCenter;
 };
 
-REGISTER_CLASS(sphere, "sphere")
+REGISTER_CLASS(Sphere, "sphere")
 
 NAMESPACE_END

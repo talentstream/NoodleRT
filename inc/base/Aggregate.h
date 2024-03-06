@@ -22,7 +22,7 @@ public:
     UnOccluded(const Ray &ray) const = 0;
 
     void
-    AddChild(Object *child) override;
+    AddShape(Shape *shape);
 
     void
     Initialize() override;
@@ -36,9 +36,6 @@ protected:
     virtual
     void Build() = 0;
 
-    void
-    AddShape(shape *shape);
-
     UInt32
     GetPrimitiveCount() const;
 
@@ -46,13 +43,15 @@ protected:
     virtual UInt32
     FindShape(UInt32 &idx) const;
 
+    // just idx is ok, not shape idx
     virtual Bound3f
     FindShapeBoundingBox(UInt32 idx) const;
 
+    // just idx is ok, not shape idx
     virtual Point3f
     FindShapeCentroid(UInt32 idx) const;
 
-    std::vector<shape *> mShapes;
+    std::vector<Shape *> mShapes;
     std::vector<UInt32> mShapeOffset;
     std::vector<UInt32> mShapeIndices;
     Bound3f mBbox;

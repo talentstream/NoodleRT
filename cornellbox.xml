@@ -2,80 +2,79 @@
     <integrator type="path">
         <integer name="spp" value="2048"/>
         <integer name="depth" value="100"/>
-        <aggregate type="bvh">
-            <!--top-->
-            <shape type="mesh">
-                <string name="filename" value="../top.obj"/>
-                <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.05 0.05 0.05"/>
-                    </texture>
-                </bxdf>
-            </shape>
-            <!--back-->
-            <shape type="mesh">
-                <string name="filename" value="../back.obj"/>
-                <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.725 0.71 0.68"/>
-                    </texture>
-                </bxdf>
-            </shape>
+        <string name="aggregate" value="bvh"/>
+        <!--top-->
+        <shape type="mesh">
+            <string name="filename" value="../top.obj"/>
+            <bxdf type="diffuse">
+                <texture type="solid">
+                    <color name="albedo" value="0.05 0.05 0.05"/>
+                </texture>
+            </bxdf>
+        </shape>
+        <!--back-->
+        <shape type="mesh">
+            <string name="filename" value="../back.obj"/>
+            <bxdf type="diffuse">
+                <texture type="solid">
+                    <color name="albedo" value="0.725 0.71 0.68"/>
+                </texture>
+            </bxdf>
+        </shape>
 
-            <!--floor-->
-            <shape type="mesh">
-                <string name="filename" value="../floor.obj"/>
-                  <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.525 0.51 0.48"/>
-                    </texture>
-                </bxdf>
-            </shape>
-<!--            light-->
-            <shape type="mesh">
-                <string name="filename" value="../light.obj"/>
-                <light type="area">
-                    <color name="intensity" value="23.948 19.283 15.541"/>
-                </light>
-            </shape>
-            <!--left-->
-            <shape type="mesh">
-                <string name="filename" value="../left.obj"/>
-                <bxdf type="diffuse">
-                    <color name="reflectance" value="0.63 0.065 0.05"/>
-                    <texture type="solid">
-                        <color name="albedo" value="0.63 0.065 0.05"/>
-                    </texture>
-                </bxdf>
-            </shape>
-            <!--right-->
-            <shape type="mesh">
-                <string name="filename" value="../right.obj"/>
-                <bxdf type="diffuse">
-                    <texture type="solid">
-                        <color name="albedo" value="0.14 0.45 0.091"/>
-                    </texture>
-                </bxdf>
-            </shape>
-<!--            shortbox-->
-            <shape type="mesh">
-                <string name="filename" value="../shortbox.obj"/>
-                <bxdf type="dielectric">
-                    <texture type="solid">
-                        <color name="albedo" value="0.73 0.73 0.73"/>
-                    </texture>
-                </bxdf>
-            </shape>
-<!--            tallbox-->
-            <shape type="mesh">
-                <string name="filename" value="../tallbox.obj"/>
-                <bxdf type="conductor">
-                    <texture type="solid">
-                        <color name="albedo" value="0.73 0.73 0.73"/>
-                    </texture>
-                </bxdf>
-            </shape>
-        </aggregate>
+        <!--floor-->
+        <shape type="mesh">
+            <string name="filename" value="../floor.obj"/>
+            <bxdf type="diffuse">
+                <texture type="solid">
+                    <color name="albedo" value="0.525 0.51 0.48"/>
+                </texture>
+            </bxdf>
+        </shape>
+        <!--            light-->
+        <shape type="mesh">
+            <string name="filename" value="../light.obj"/>
+            <light type="area">
+                <color name="intensity" value="23.948 19.283 15.541"/>
+            </light>
+        </shape>
+        <!--left-->
+        <shape type="mesh">
+            <string name="filename" value="../left.obj"/>
+            <bxdf type="diffuse">
+                <color name="reflectance" value="0.63 0.065 0.05"/>
+                <texture type="solid">
+                    <color name="albedo" value="0.63 0.065 0.05"/>
+                </texture>
+            </bxdf>
+        </shape>
+        <!--right-->
+        <shape type="mesh">
+            <string name="filename" value="../right.obj"/>
+            <bxdf type="diffuse">
+                <texture type="solid">
+                    <color name="albedo" value="0.14 0.45 0.091"/>
+                </texture>
+            </bxdf>
+        </shape>
+        <!--            shortbox-->
+        <shape type="mesh">
+            <string name="filename" value="../shortbox.obj"/>
+            <bxdf type="dielectric">
+                <texture type="solid">
+                    <color name="albedo" value="0.73 0.73 0.73"/>
+                </texture>
+            </bxdf>
+        </shape>
+        <!--            tallbox-->
+        <shape type="mesh">
+            <string name="filename" value="../tallbox.obj"/>
+            <bxdf type="conductor">
+                <texture type="solid">
+                    <color name="albedo" value="0.73 0.73 0.73"/>
+                </texture>
+            </bxdf>
+        </shape>
         <camera type="perspective">
             <film>
                 <integer name="width" value="512"/>
@@ -89,9 +88,5 @@
         <sampler type="independent">
 
         </sampler>
-        <light type="point">
-            <point name="position" value="278 500 278"/>
-            <color name="intensity" value="239480 192830 155410"/>
-        </light>
     </integrator>
 </scene>

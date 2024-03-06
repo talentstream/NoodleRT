@@ -10,7 +10,7 @@
 
 NAMESPACE_BEGIN
 
-class Rectangle : public shape {
+class Rectangle : public Shape {
 public:
     explicit
     Rectangle(const PropertyList &propertyList) {
@@ -85,7 +85,7 @@ public:
 
     void
     Initialize() override {
-        shape::Initialize();
+        Shape::Initialize();
         LoadRectangle();
     }
 
@@ -113,7 +113,7 @@ private:
 
     }
 
-    std::vector<triangle> mTriangles;
+    std::vector<Triangle> mTriangles;
     Transform mObjectToWorld;
 };
 

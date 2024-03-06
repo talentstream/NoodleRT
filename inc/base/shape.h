@@ -9,10 +9,10 @@
 
 NAMESPACE_BEGIN
 
-class shape : public Object {
+class Shape : public Object {
 public:
     virtual
-    ~shape() = default;
+    ~Shape() = default;
 
     virtual Boolean
     Intersect(UInt32 idx, const Ray &ray, IntersectionRecord &si) const = 0;
@@ -53,6 +53,11 @@ public:
         return pBxDF;
     }
 
+    Emitter
+    *GetEmitter() const {
+        return pEmitter;
+    }
+
     void
     AddChild(Object *child) override;
 
@@ -63,7 +68,6 @@ public:
     GetClassType() const override {
         return EClassType::EShape;
     }
-
 
 protected:
     BxDF *pBxDF{nullptr};

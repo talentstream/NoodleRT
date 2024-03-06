@@ -18,26 +18,34 @@ class Emitter;
 
 class Integrator : public Object {
 public:
-    virtual ~Integrator() = default;
+    Integrator(const PropertyList &propertyList);
 
-    virtual void Render() const = 0;
+    virtual
+    ~Integrator() = default;
 
-    void AddChild(Object *child) override;
+    virtual
+    void Render() const = 0;
 
-    void Initialize() override;
+    void
+    AddChild(Object *child) override;
 
-    [[nodiscard]] EClassType GetClassType() const override {
+    void
+    Initialize() override;
+
+    EClassType
+    GetClassType() const override {
         return EClassType::EIntegrator;
     }
 
-    const Camera *GetCamera() const {
+    const Camera
+    *GetCamera() const {
         return pCamera;
     }
 
 protected:
     class Aggregate *pAggregate{nullptr};
 
-    std::vector<Emitter*> mLights;
+    std::vector<Emitter *> mLights;
 
     Camera *pCamera{nullptr};
     Sampler *pSampler{nullptr};
@@ -46,6 +54,9 @@ protected:
 
 class ImageTileIntegrator : public Integrator {
 public:
+    ImageTileIntegrator(const PropertyList &propertyList)
+            : Integrator(propertyList) {};
+
     ~ImageTileIntegrator() = default;
 
     void Render() const final;

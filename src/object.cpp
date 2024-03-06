@@ -19,7 +19,7 @@ void ObjectFactory::RegisterClass(std::string_view name, const ObjectFactory::Cr
 
 Object *ObjectFactory::CreateInstance(std::string_view name, const PropertyList &propertyList, Boolean manualInit) {
     if (pCreators == nullptr || !pCreators->contains(name)) {
-        throw std::runtime_error("ObjectFactory::CreateInstance: class name not found");
+        throw std::runtime_error(std::format("ObjectFactory::CreateInstance: class name {} not found", name));
     }
     auto object = (*pCreators)[name](propertyList);
     if (manualInit) {

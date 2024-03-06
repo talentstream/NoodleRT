@@ -3,7 +3,7 @@
 //
 
 #include "base/integrator.h"
-#include "base/Aggregate.h"
+#include "base/aggregate.h"
 #include "base/camera.h"
 #include "base/bxdf.h"
 #include "base/light.h"
@@ -16,9 +16,9 @@ NAMESPACE_BEGIN
 
 class WhittedIntegrator : public ImageTileIntegrator {
 public:
-    explicit WhittedIntegrator(const PropertyList &propertyList) {
+    explicit WhittedIntegrator(const PropertyList &propertyList)
+            : ImageTileIntegrator(propertyList) {
         mMaxDepth = propertyList.GetInteger("depth", 1);
-        mSpp = propertyList.GetInteger("spp", 1);
         PRINT_DEBUG_INFO("Integrator", "whitted")
     }
 

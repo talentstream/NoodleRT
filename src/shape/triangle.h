@@ -8,14 +8,14 @@
 
 NAMESPACE_BEGIN
 
-struct triangle {
+struct Triangle {
     Point3f p0, p1, p2;
     Normal3f n0, n1, n2;
     Boolean hasNormal{false};
     Point2f uv0, uv1, uv2;
     Boolean hasUV{false};
 
-    triangle(Point3f p0, Point3f p1, Point3f p2)
+    Triangle(Point3f p0, Point3f p1, Point3f p2)
             : p0{p0}, p1{p1}, p2{p2} {
     }
 

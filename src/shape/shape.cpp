@@ -9,7 +9,7 @@
 NAMESPACE_BEGIN
 
 void
-shape::AddChild(Object *child) {
+Shape::AddChild(Object *child) {
     switch (child->GetClassType()) {
         case EClassType::EBxDF:
             pBxDF = dynamic_cast<BxDF *>(child);
@@ -24,7 +24,7 @@ shape::AddChild(Object *child) {
 }
 
 void
-shape::Initialize() {
+Shape::Initialize() {
     if(pBxDF == nullptr) {
         pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList(), true));
     }

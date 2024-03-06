@@ -40,7 +40,7 @@ public:
     SetParent(Object *parent) override {
         switch (parent->GetClassType()) {
             case EClassType::EShape:
-                pShape = dynamic_cast<shape *>(parent);
+                pShape = dynamic_cast<Shape *>(parent);
                 break;
             default:
                 /* throw exception*/
@@ -55,7 +55,7 @@ public:
     }
 
 private:
-    shape *pShape{nullptr};
+    Shape *pShape{nullptr};
     Color3f mIntensity;
     Boolean mTwoSided;
 };

@@ -3,7 +3,7 @@
 //
 
 #include "base/integrator.h"
-#include "base/Aggregate.h"
+#include "base/aggregate.h"
 #include "base/camera.h"
 #include "base/bxdf.h"
 #include "base/light.h"
@@ -16,8 +16,8 @@ NAMESPACE_BEGIN
 
 class PathIntegrator : public ImageTileIntegrator {
 public:
-    explicit PathIntegrator(const PropertyList &propertyList) {
-        mSpp = propertyList.GetInteger("spp", 1);
+    explicit PathIntegrator(const PropertyList &propertyList)
+            : ImageTileIntegrator(propertyList) {
         mMaxDepth = propertyList.GetInteger("depth", 1);
         PRINT_DEBUG_INFO("Integrator", "path")
     }

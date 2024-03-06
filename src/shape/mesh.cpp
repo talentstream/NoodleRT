@@ -14,9 +14,9 @@
 
 NAMESPACE_BEGIN
 
-class mesh : public shape {
+class Mesh : public Shape {
 public:
-    explicit mesh(const PropertyList &propertyList) {
+    explicit Mesh(const PropertyList &propertyList) {
         mFilename = propertyList.GetString("filename", {});
         mObjectToWorld *= propertyList.GetTransform("rotate", {});
         mObjectToWorld *= propertyList.GetTransform("scale", {});
@@ -88,12 +88,12 @@ public:
 
     void
     Initialize() override {
-        shape::Initialize();
+        Shape::Initialize();
         LoadMesh();
     }
 
 private:
-    std::vector<triangle> mTriangles;
+    std::vector<Triangle> mTriangles;
 
     Transform mObjectToWorld;
     std::string_view mFilename;
@@ -121,7 +121,7 @@ private:
                     });
                 };
 
-                triangle tri(LoadPosition(idx0), LoadPosition(idx1), LoadPosition(idx2));
+                Triangle tri(LoadPosition(idx0), LoadPosition(idx1), LoadPosition(idx2));
 
                 if (idx0.normal_index > 0) {
                     auto LoadNormal = [&](const auto &idx) -> Normal3f {
@@ -147,6 +147,6 @@ private:
     }
 };
 
-REGISTER_CLASS(mesh, "mesh")
+REGISTER_CLASS(Mesh, "mesh")
 
 NAMESPACE_END

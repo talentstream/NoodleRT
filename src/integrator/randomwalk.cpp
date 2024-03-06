@@ -3,7 +3,7 @@
 //
 
 #include "base/integrator.h"
-#include "base/Aggregate.h"
+#include "base/aggregate.h"
 #include "base/camera.h"
 #include "base/bxdf.h"
 #include "base/light.h"
@@ -19,9 +19,9 @@ NAMESPACE_BEGIN
 // only support diffuse surface
 class RandomWalkIntegrator : public ImageTileIntegrator {
 public:
-    explicit RandomWalkIntegrator(const PropertyList &propertyList) {
+    explicit RandomWalkIntegrator(const PropertyList &propertyList)
+    : ImageTileIntegrator(propertyList){
         mMaxDepth = propertyList.GetInteger("depth", 1);
-        mSpp = propertyList.GetInteger("spp", 1);
         PRINT_DEBUG_INFO("Integrator", "randomwalk")
     }
 

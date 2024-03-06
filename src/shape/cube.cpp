@@ -9,7 +9,7 @@
 
 NAMESPACE_BEGIN
 
-class Cube : public shape {
+class Cube : public Shape {
 public:
     explicit
     Cube(const PropertyList &propertyList) {
@@ -84,7 +84,7 @@ public:
 
     void
     Initialize() override {
-        shape::Initialize();
+        Shape::Initialize();
         LoadCube();
     }
 
@@ -199,7 +199,7 @@ private:
         }
     }
 
-    std::vector<triangle> mTriangles;
+    std::vector<Triangle> mTriangles;
     Transform mObjectToWorld;
 };
 

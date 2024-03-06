@@ -3,7 +3,7 @@
 //
 
 #include "base/integrator.h"
-#include "base/Aggregate.h"
+#include "base/aggregate.h"
 #include "base/camera.h"
 #include "base/bxdf.h"
 #include "base/light.h"
@@ -18,8 +18,8 @@ NAMESPACE_BEGIN
 // just direct light for debug
 class DirectLightIntegrator : public ImageTileIntegrator {
 public:
-    explicit DirectLightIntegrator(const PropertyList &propertyList) {
-        mSpp = propertyList.GetInteger("spp", 1);
+    explicit DirectLightIntegrator(const PropertyList &propertyList)
+            : ImageTileIntegrator(propertyList) {
         PRINT_DEBUG_INFO("Integrator", "directlight")
     }
 
