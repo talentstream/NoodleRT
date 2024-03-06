@@ -19,11 +19,7 @@ public:
         return (mTwoSided || Dot(si.n, w) > 0) ? mIntensity : Color3f{};
     }
 
-    Color3f SampleLi(const IntersectionRecord &si, Vector3f &wi, Point2f &sample) const override {
-        return {1.f};
-    }
-
-    Color3f Sample_Li(EmitterRecord &lRec, const Point2f &u) const override {
+    Color3f SampleLi(EmitterRecord &lRec, const Point2f &u) const override {
         ShapeRecord sRec{lRec.ref};
         pShape->Sample(sRec, u);
 

@@ -51,7 +51,7 @@ public:
 
             EmitterRecord eRec{iRec.p};
 
-            Color3f li = light->Sample_Li(eRec,pSampler->Next2D());
+            Color3f li = light->SampleLi(eRec, pSampler->Next2D());
             if (li.IsZero() || eRec.pdf < Epsilon) continue;
 
             BxDFRecord bRec{iRec.ToLocal(eRec.wi), iRec.ToLocal(-ray.d)};

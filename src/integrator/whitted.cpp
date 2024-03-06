@@ -54,7 +54,7 @@ private:
             for (const auto light: mLights) {
 
                 EmitterRecord eRec{iRec.p};
-                Color3f li = light->Sample_Li(eRec, pSampler->Next2D());
+                Color3f li = light->SampleLi(eRec, pSampler->Next2D());
                 if (!pAggregate->UnOccluded(iRec.GenerateRay(-eRec.wi))) continue;
                 if (li.IsZero() || eRec.pdf < Epsilon) continue;
 

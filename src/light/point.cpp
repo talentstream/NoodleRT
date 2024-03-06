@@ -14,15 +14,7 @@ public:
     }
 
     Color3f
-    SampleLi(const IntersectionRecord &si, Vector3f &wi, Point2f &sample) const override {
-        wi = Normalize(mPosition - si.p);
-        auto d = LengthSquared(mPosition - si.p);
-        if (mIntensity.r / d > mIntensity.r) return mIntensity;
-        return mIntensity / d;
-    }
-
-    Color3f
-    Sample_Li(EmitterRecord &lRec, const Point2f &sample) const override {
+    SampleLi(EmitterRecord &lRec, const Point2f &sample) const override {
 
         lRec.p = mPosition;
         lRec.n = Normal3f{lRec.wi};

@@ -21,8 +21,8 @@ public:
     }
 
     Color3f
-    SampleLi(const IntersectionRecord &si, Vector3f &wi, Point2f &sample) const override {
-        wi = Normalize(mDirection);
+    SampleLi(EmitterRecord &lRec, const Point2f & sample) const override {
+        lRec.wi = Normalize(mDirection);
         return mIntensity;
     }
 
