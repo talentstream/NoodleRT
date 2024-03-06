@@ -33,7 +33,9 @@ void
 Aggregate::AddShape(shape *pShape) {
     mShapes.push_back(pShape);
     mShapeOffset.push_back(mShapeOffset.back() + pShape->GetPrimitiveCount());
+
     mBbox.Expand(pShape->GetBoundingBox());
+
 }
 
 UInt32

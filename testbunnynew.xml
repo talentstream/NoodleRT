@@ -2,7 +2,7 @@
     <integrator type="path">
         <integer name="spp" value="1000"/>
         <integer name="depth" value="50"/>
-        <aggregate type="naive">
+        <aggregate type="bvh">
             <shape type="mesh">
                 <string name="filename" value="../bunny.obj"/>
                 <transform name="translate" value=""/>

@@ -2,7 +2,7 @@
     <integrator type="path">
         <integer name="spp" value="2048"/>
         <integer name="depth" value="100"/>
-        <aggregate type="naive">
+        <aggregate type="bvh">
             <!--top-->
             <shape type="mesh">
                 <string name="filename" value="../top.obj"/>

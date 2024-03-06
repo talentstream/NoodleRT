@@ -63,7 +63,7 @@ public:
         return Bound3<T>{pMin + p, pMax + p};
     }
 
-    [[nodiscard]] Boolean IntersectP(const Ray &ray, Float tMax) const {
+    [[nodiscard]] Boolean IntersectP(const Ray &ray, Float tMax = INFINITY) const {
         Float t0{0.001}, t1{tMax};
         for (const Integer axis: {0, 1, 2}) {
             auto invD = 1 / ray.d[axis];
@@ -80,14 +80,16 @@ public:
         return true;
     }
 
-    Bound3<T>
-    Expand(Point3<T> p) {
-        return Bound3<T>{Min(pMin, p), Max(pMax, p)};
+    void
+    Expand(const Point3<T> &p) {
+        pMin = Min(pMin, p);
+        pMax = Max(pMax, p);
     }
 
-    Bound3<T>
-    Expand(Bound3<T> b) {
-        return Bound3<T>{Min(pMin, b.pMin), Max(pMax, b.pMax)};
+    void
+    Expand(const Bound3<T> &b) {
+        pMin = Min(pMin, b.pMin);
+        pMax = Max(pMax, b.pMax);
     }
 };
 

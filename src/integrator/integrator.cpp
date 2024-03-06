@@ -47,7 +47,9 @@ void Integrator::Initialize() {
 }
 
 static Integer currentSpp{0};
-static Timer timer;
+static Integer waveLength{1};
+static Timer renderingTimer;
+static Timer sppTimer;
 
 void ImageTileIntegrator::Render() const {
     const auto film = pCamera->GetFilm();
@@ -77,13 +79,22 @@ void ImageTileIntegrator::Render() const {
     if (currentSpp < mSpp) {
         if (currentSpp == 0) {
             std::print("RENDERING BEGIN============================================\n");
+            renderingTimer.Reset();
         }
-        timer.Reset();
-        Parallel::For2D(0, tileSizeX, 0, tileSizeY, RenderBlock);
-        currentSpp++;
-        std::print("SPP: {} - ", currentSpp);
-        timer.PrintElapsedMillSec();
+        sppTimer.Reset();
+        Integer startSpp = currentSpp;
+        Integer endSpp = std::min(currentSpp + waveLength, mSpp);
+        waveLength *= 2;
+        for (Integer spp = startSpp; spp < endSpp; spp++) {
+            Parallel::For2D(0, tileSizeX, 0, tileSizeY, RenderBlock);
+
+        }
+        currentSpp = endSpp;
+        std::print("SPP: from {} to {} - ", startSpp, currentSpp);
+        sppTimer.PrintElapsedMillSec();
         if (currentSpp == mSpp) {
+            std::print("Total Rendering Time - ");
+            renderingTimer.PrintElapsedMillSec();
             std::print("RENDERING END============================================\n");
         }
     }
