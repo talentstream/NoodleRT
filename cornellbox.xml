@@ -2,7 +2,7 @@
     <integrator type="whitted">
         <integer name="spp" value="64"/>
         <integer name="depth" value="100"/>
-        <string name="aggregate" value="naive"/>
+        <string name="aggregate" value="bvh"/>
         <!--top-->
         <shape type="mesh">
             <string name="filename" value="../top.obj"/>
@@ -64,10 +64,10 @@
                 </texture>
             </bxdf>
         </shape>
-        <!--shortbox-->
+<!--        shortbox-->
         <shape type="mesh">
             <string name="filename" value="../shortbox.obj"/>
-            <bxdf type="diffuse">
+            <bxdf type="dielectric">
                 <texture type="solid">
                     <color name="albedo" value="0.73 0.73 0.73"/>
                 </texture>
@@ -76,7 +76,7 @@
         <!--tallbox-->
         <shape type="mesh">
             <string name="filename" value="../tallbox.obj"/>
-            <bxdf type="diffuse">
+            <bxdf type="conductor">
                 <texture type="solid">
                     <color name="albedo" value="0.73 0.73 0.73"/>
                 </texture>

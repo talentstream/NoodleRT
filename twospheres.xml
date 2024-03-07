@@ -2,7 +2,7 @@
     <integrator type="whitted">
         <integer name="spp" value="100"/>
         <integer name="depth" value="50"/>
-        <string name="aggregate" value="bvh"/>
+        <string name="aggregate" value="naive"/>
         <shape type="sphere">
             <float name="radius" value="10.0"/>
             <point name="center" value="0.0 -10.0 0.0"/>
@@ -47,6 +47,9 @@
 
         </sampler>
         <light type="infinite">
+        </light>
+        <light type="infinite">
+            <vector name="direction" value="1 1 1"/>
         </light>
     </integrator>
 </scene>

@@ -12,7 +12,7 @@ class Warp {
 public:
     static Vector3f UniformSampleSphere(const Point2f& sample) {
         Float z = 1 - 2 * sample[0];
-        Float r = Sqrt(1 - Sqr(z));
+        Float r = SafeSqrt(1 - Sqr(z));
         Float phi = 2 * Pi * sample[1];
         return {r * Cos(phi), r * Sin(phi), z};
     }

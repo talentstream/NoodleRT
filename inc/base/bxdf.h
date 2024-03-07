@@ -44,7 +44,7 @@ public:
     F(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const { return {0.f}; }
 
     virtual Color3f
-    Eval(const BxDFRecord &bRec) const { return {0.f}; }
+    Eval(const BxDFRecord &bRec) const = 0;
 
     virtual Float
     Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const { return 0.f; };

@@ -88,7 +88,7 @@ public:
         Vector3f dir = Warp::UniformSampleSphere(sample);
         sRec.p = mCenter + mRadius * dir;
         sRec.n = Normal3f{Normalize(dir)};
-        sRec.pdf = 1.f / (4 * Pi * mRadius * mRadius);
+        sRec.pdf = 1.f / Area();
     }
 
     Float
@@ -98,7 +98,7 @@ public:
 
     Float
     Area() const override {
-        return 0.f;
+        return 4 * Pi * mRadius * mRadius;
     }
 
     UInt32

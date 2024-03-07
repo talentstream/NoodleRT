@@ -21,7 +21,12 @@ public:
         return mAlbedo;
     }
 
-    Float Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override{
+    Color3f
+    Eval(const BxDFRecord &bRec) const override {
+        return {0.f};
+    }
+
+    Float Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
         return 1.f;
     }
 

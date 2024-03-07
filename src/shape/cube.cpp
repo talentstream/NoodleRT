@@ -48,7 +48,7 @@ public:
     }
 
     Boolean
-    IntersectP(UInt32 idx, const Ray &ray, Float tMax = Infinity) const override {
+    IntersectP(UInt32 idx, const Ray &ray, Float tMax) const override {
         return mTriangles[idx].IntersectP(ray, tMax);
     }
 

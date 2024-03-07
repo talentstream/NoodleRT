@@ -21,8 +21,10 @@ public:
     }
 
     Color3f
-    SampleLi(EmitterRecord &lRec, const Point2f & sample) const override {
+    SampleLi(EmitterRecord &lRec, const Point2f &sample) const override {
+        lRec.p = Point3f{mDirection} * Infinity;
         lRec.wi = Normalize(mDirection);
+        lRec.pdf = 1.f;
         return mIntensity;
     }
 

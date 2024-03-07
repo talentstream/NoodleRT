@@ -108,7 +108,7 @@ public:
     }
 
     Boolean
-    UnOccluded(const Ray &ray) const override {
+    UnOccluded(const Ray &ray, Float tMax) const override {
         UInt32 nodeIdx = 0;
         std::stack<UInt32> nodeIdxStack;
         while (true) {
@@ -130,8 +130,9 @@ public:
                 for (auto i{node.startIdx}; i < node.startIdx + node.size; i++) {
                     auto idx = mShapeIndices[i];
                     const auto s = mShapes[FindShape(idx)];
-                    if (s->IntersectP(idx, ray)) {
-                        return false;
+                    if (s->IntersectP(idx, ray, tMax)) {
+                        if (s->IsEmitter()) return true;
+                        else return false;
                     }
                 }
 

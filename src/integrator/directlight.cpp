@@ -45,23 +45,21 @@ public:
         L += iRec.Le(-ray.d);
 
         for (const auto light: mLights) {
-            if (IsInfiniteLight(light->Flag())) {
-                continue;
-            }
-
+            if (iRec.emitter) break;
             EmitterRecord eRec{iRec.p};
 
             Color3f li = light->SampleLi(eRec, pSampler->Next2D());
-            if (li.IsZero() || eRec.pdf < Epsilon) continue;
+            if (li.IsZero() || eRec.pdf == 0.f) continue;
 
             BxDFRecord bRec{iRec.ToLocal(eRec.wi), iRec.ToLocal(-ray.d)};
+            bRec.uv = iRec.uv;
             Color3f bxdfVal = bxdf->Eval(bRec);
             Float bxdfPdf = bxdf->pdf(bRec);
-            if (bxdfPdf == 0.f || eRec.pdf == 0.f) continue;
+            if (bxdfPdf == 0.f) continue;
 
-            if(pAggregate->UnOccluded(iRec.GenerateRay(eRec.wi))) {
+            Float tMax = Length(eRec.p - iRec.p);
+            if (pAggregate->UnOccluded(iRec.GenerateRay(eRec.wi), tMax)) {
                 Float weight = Weight(bxdfPdf, eRec.pdf);
-
                 L += bxdfVal * li * weight;
             }
         }

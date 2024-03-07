@@ -19,7 +19,7 @@ public:
     Intersect(const Ray &ray, IntersectionRecord &iRec) const = 0;
 
     virtual Boolean
-    UnOccluded(const Ray &ray) const = 0;
+    UnOccluded(const Ray &ray, Float tMax) const = 0;
 
     void
     AddShape(Shape *shape);

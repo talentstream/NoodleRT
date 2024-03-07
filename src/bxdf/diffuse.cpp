@@ -34,7 +34,7 @@ public:
             return {0.f};
         }
 
-        return pAlbedo->Evaluate({}) * Frame::CosTheta(bRec.wo) * InvPi;
+        return pAlbedo->Evaluate(bRec.uv) * Frame::CosTheta(bRec.wo) * InvPi;
 
     }
 

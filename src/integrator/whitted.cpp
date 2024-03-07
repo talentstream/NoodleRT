@@ -38,6 +38,7 @@ private:
                     L += light->Le(ray);
                 }
             }
+
             return L;
         }
 
@@ -52,13 +53,18 @@ private:
         // if diffuse calculate direct illumination
         if (IsDiffuse(bxdf->Flag())) {
             for (const auto light: mLights) {
-
+                if (iRec.emitter) break;
                 EmitterRecord eRec{iRec.p};
-                Color3f li = light->SampleLi(eRec, pSampler->Next2D());
-                if (!pAggregate->UnOccluded(iRec.GenerateRay(-eRec.wi))) continue;
-                if (li.IsZero() || eRec.pdf < Epsilon) continue;
 
-                BxDFRecord bRec{iRec.ToLocal(-eRec.wi), iRec.ToLocal(-ray.d)};
+                Color3f li = light->SampleLi(eRec, pSampler->Next2D());
+
+                Float tMax = Length(eRec.p - eRec.ref) - Epsilon;
+                if (!pAggregate->UnOccluded(iRec.GenerateRay(eRec.wi), tMax)) {
+                    return 0.f;
+                };
+                if (li.IsZero() || eRec.pdf == 0.f) continue;
+
+                BxDFRecord bRec{iRec.ToLocal(eRec.wi), iRec.ToLocal(-ray.d)};
                 bRec.uv = iRec.uv;
                 Color3f bxdfVal = bxdf->Eval(bRec);
 
@@ -72,7 +78,7 @@ private:
             Float pdf;
             auto bxdfValue = bxdf->Sample(bRec, pdf, pSampler->Next2D());
             if (depth + 1 < mMaxDepth) {
-                return bxdfValue * Trace(iRec.GenerateRay(iRec.ToWorld(bRec.wo)), depth + 1);
+                return L + bxdfValue * Trace(iRec.GenerateRay(iRec.ToWorld(bRec.wo)), depth + 1);
             } else return {0.f};
         }
     }

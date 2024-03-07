@@ -36,7 +36,7 @@ struct IntersectionRecord {
             : t{t},
               p{p},
               n{Normalize(n)} {
-        shading = Frame(n);
+        shading = Frame(this->n);
     }
 
     // set normal direction
@@ -54,12 +54,17 @@ struct IntersectionRecord {
 
     // Generate ray from world coordinate
     // Before using this function, you should transform the direction to world coordinate
-    Ray GenerateRay(const Vector3f &d) {
-        return Ray{p + Epsilon * d, d};
+    Ray GenerateRay(const Vector3f &w) {
+        Vector3f pError = (5 * Epsilon) / (1 - 5 * Epsilon) * Vector3f{p};
+        Float d = Dot(Abs(n), pError);
+        Vector3f offset = d * Vector3f{n};
+        if (Dot(w, n) < 0) offset = -offset;
+        auto po = p + offset;
+        return Ray{po, w, Epsilon};
     }
 
     // Before use, should guarantee w is on world coordinate
-    Color3f Le(const Vector3f& w);
+    Color3f Le(const Vector3f &w);
 };
 
 struct BxDFRecord {
@@ -94,7 +99,7 @@ struct ShapeRecord {
     explicit ShapeRecord(const Point3f &ref)
             : ref{ref} {}
 
-    // for call Shape Pdf function
+    // for call Shape Eval, Pdf function
     explicit ShapeRecord(const Point3f &ref, const Point3f &p)
             : ref{ref}, p{p} {}
 };
@@ -102,10 +107,10 @@ struct ShapeRecord {
 struct EmitterRecord {
 // members
     Point3f ref; // origin shadow point
-    Point3f p; // Sampled point on emitter
+    Point3f p; // shape Sampled point on emitter
     Normal3f n; // Sampled normal on emitter in world coordinate
-    Vector3f wi; //light to intersect point in world coordinate
-    Float pdf; // Probability of the sample
+    Vector3f wi; //ref(intersect point) to light in world coordinate
+    Float pdf{0.f}; // Probability of the sample
 
 // functions
     // for call Emitter Sample Function

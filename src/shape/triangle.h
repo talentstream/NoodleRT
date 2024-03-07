@@ -68,21 +68,22 @@ struct Triangle {
         }
 
         t = Dot(e2, qVec) * invDet;
-        return t >= Epsilon && t <= tMax;
+        return t > Epsilon && t < tMax;
     }
 
     Boolean
     IntersectP(const Ray &ray, Float tMax) const {
         Float u, v, t;
+
         return Intersect(ray, tMax, u, v, t);
     }
 
     void
     Sample(ShapeRecord &sRec, const Point2f sample) const {
         Point2f b = Warp::UniformSampleTriangle(sample);
-        sRec.p = (1 - b[0] - b[1]) * p0 + b[0] * p1 + b[1] * p2;
+        sRec.p = b[0] * p0 + b[1] * p1 + (1 - b[0] - b[1]) * p2;
         if (hasNormal) {
-            sRec.n = Normalize((1 - b[0] - b[1]) * n0 + b[0] * n1 + b[1] * n2);
+            sRec.n = Normalize((b[0] * n0 + b[1] * n1 + (1 - b[0] - b[1]) * n2));
         } else {
             sRec.n = Normalize(Normal3f{Cross(p1 - p0, p2 - p0)});
         }

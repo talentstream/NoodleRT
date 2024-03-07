@@ -18,7 +18,7 @@ public:
     Intersect(UInt32 idx, const Ray &ray, IntersectionRecord &si) const = 0;
 
     virtual Boolean
-    IntersectP(UInt32 idx, const Ray &ray, Float tMax = Infinity) const = 0;
+    IntersectP(UInt32 idx, const Ray &ray, Float tMax) const = 0;
 
     virtual void
     Sample(ShapeRecord &sRec, const Point2f &sample) const = 0;
