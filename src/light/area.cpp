@@ -26,7 +26,7 @@ public:
         lRec = EmitterRecord(lRec.ref,sRec.p, sRec.n);
         lRec.pdf = sRec.pdf;
 
-        return Dot(lRec.n,lRec.wi) < 0 ? mIntensity : 0.f;
+        return Dot(lRec.n,-lRec.wi) > 0 ? mIntensity : 0.f;
     }
 
     LightFlag

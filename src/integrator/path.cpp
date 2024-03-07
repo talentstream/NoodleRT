@@ -40,7 +40,9 @@ public:
             }
 
             // Add emitted light at intersection
-            L += beta * iRec.Le(-ray.d);
+            if (iRec.emitter) {
+                L += beta * iRec.Le(-ray.d);
+            }
 
             // End path if max depth is reached
             if (depth++ == mMaxDepth) break;
@@ -49,29 +51,26 @@ public:
             if (!bxdf) break;
 
             // Sample direct illumination
-//            {
-//                Vector3f wo = -ray.d;
-//                for (const auto light: mLights) {
-//                    if(IsInfiniteLight(light->Flag())){
-//                        continue;
-//                    }
-//                    LightSampleRecord lRec{si,pSampler};
-//                    Color3f li = light->Sample_Li(lRec);
-//                    if (li.IsZero() || lRec.pdf == 0) {
-//                        continue;
-//                    }
-//
-//                    Ray lr {si.p, lRec.wi, 0};
-//                    BxDFSampleRecord bRec{si, pSampler, si.shading.ToLocal(lRec.wi),si.shading.ToLocal(Normalize(-ray.d))};
-//                    if(!pAggregate->UnOccluded(lr)) {
-//                        Vector3f LDir = Normalize(lRec.wi);
-//                        Float LoN = Max(0.f,Dot(LDir, si.shading.n));
-//
-//                        L += beta * bxdf->Eval(bRec) * li * LoN / lRec.pdf;
-//
-//                    }
-//                }
-//            }
+            {
+                for (const auto light: mLights) {
+                    if (iRec.emitter) break;
+                    EmitterRecord eRec{iRec.p};
+
+                    Color3f li = light->SampleLi(eRec, pSampler->Next2D());
+                    if (li.IsZero() || eRec.pdf == 0) continue;
+                    Float tMax = Length(eRec.p - eRec.ref) - Epsilon;
+                    if (!pAggregate->UnOccluded(iRec.GenerateRay(eRec.wi), tMax)) continue;
+
+                    BxDFRecord bRec{iRec.ToLocal(eRec.wi), iRec.ToLocal(-ray.d)};
+                    bRec.uv = iRec.uv;
+                    Color3f bxdfVal = bxdf->Eval(bRec);
+                    Float bxdfPdf = bxdf->pdf(bRec);
+                    if (bxdfPdf == 0) continue;
+                    Float weight = Weight(1, eRec.pdf, 1, bxdfPdf);
+                    L += beta * bxdfVal * li * weight / eRec.pdf;
+                }
+            }
+
             // Sample outgoing direction at intersection to continue path
             {
 
@@ -98,6 +97,12 @@ public:
         }
 
         return L;
+    }
+
+    inline Float Weight(Integer nA, Float pdfA, Integer nB, Float pdfB) const {
+        Float A = nA * pdfA;
+        Float B = nB * pdfB;
+        return (A * A) / (A * A + B * B);
     }
 
 private:

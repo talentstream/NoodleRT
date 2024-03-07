@@ -59,18 +59,18 @@ public:
 
             Float tMax = Length(eRec.p - iRec.p);
             if (pAggregate->UnOccluded(iRec.GenerateRay(eRec.wi), tMax)) {
-                Float weight = Weight(bxdfPdf, eRec.pdf);
-                L += bxdfVal * li * weight;
+                Float weight = Weight(1, eRec.pdf, 1, bxdfPdf);
+                L += bxdfVal * li * weight / eRec.pdf;
             }
         }
 
         return L;
     }
 
-    inline Float Weight(Float pdfA, Float pdfB) const {
-        pdfA *= pdfA;
-        pdfB *= pdfB;
-        return pdfA / (pdfA + pdfB);
+    inline Float Weight(Integer nA, Float pdfA, Integer nB, Float pdfB) const {
+        Float A = nA * pdfA;
+        Float B = nB * pdfB;
+        return (A * A) / (A * A + B * B);
     }
 
 private:

@@ -67,8 +67,10 @@ private:
                 BxDFRecord bRec{iRec.ToLocal(eRec.wi), iRec.ToLocal(-ray.d)};
                 bRec.uv = iRec.uv;
                 Color3f bxdfVal = bxdf->Eval(bRec);
-
-                L += bxdfVal * li;
+                Float bxdfPdf = bxdf->pdf(bRec);
+                if (bxdfPdf == 0.f) continue;
+                Float weight = Weight(1, eRec.pdf, 1, bxdfPdf);
+                L += bxdfVal * li * weight / eRec.pdf * Pi;
             }
             return L;
         } else {
@@ -81,6 +83,12 @@ private:
                 return L + bxdfValue * Trace(iRec.GenerateRay(iRec.ToWorld(bRec.wo)), depth + 1);
             } else return {0.f};
         }
+    }
+
+    inline Float Weight(Integer nA, Float pdfA, Integer nB, Float pdfB) const {
+        Float A = nA * pdfA;
+        Float B = nB * pdfB;
+        return (A * A) / (A * A + B * B);
     }
 
 private:
