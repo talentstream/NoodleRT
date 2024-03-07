@@ -1,5 +1,5 @@
 <scene>
-    <integrator type="whitted">
+    <integrator type="path">
         <integer name="spp" value="64"/>
         <integer name="depth" value="64"/>
         <string name="aggregate" value="naive"/>
@@ -50,7 +50,6 @@
             <transform name="rotate" value="0 0 90"/>
             <light type="area">
                 <color name="intensity" value="1 1 1"/>
-                <boolean name="twosided" value="true"/>
             </light>
         </shape>
 

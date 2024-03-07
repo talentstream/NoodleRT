@@ -23,6 +23,7 @@ public:
     }
 
     [[nodiscard]] Color3f Li(const Ray &r) const override {
+        // has bug
         Ray ray = r;
         Color3f L{0}, beta(1.0f);
         Integer depth{0};
@@ -60,15 +61,23 @@ public:
                     if (li.IsZero() || eRec.pdf == 0) continue;
                     Float tMax = Length(eRec.p - eRec.ref) - Epsilon;
                     if (!pAggregate->UnOccluded(iRec.GenerateRay(eRec.wi), tMax)) continue;
-
-                    BxDFRecord bRec{iRec.ToLocal(eRec.wi), iRec.ToLocal(-ray.d)};
+                    BxDFRecord bRec{iRec.ToLocal(-ray.d), iRec.ToLocal(eRec.wi)};
                     bRec.uv = iRec.uv;
                     Color3f bxdfVal = bxdf->Eval(bRec);
                     Float bxdfPdf = bxdf->pdf(bRec);
-                    if (bxdfPdf == 0) continue;
+                    if (bxdfPdf == 0.f || bxdfPdf == 1.f) continue;
                     Float weight = Weight(1, eRec.pdf, 1, bxdfPdf);
                     L += beta * bxdfVal * li * weight / eRec.pdf;
                 }
+            }
+
+            // RR
+            if (depth > 3) {
+                Float q = Max(0.f, 1 - MaxValue(beta));
+                if (pSampler->Next1D() < q) {
+                    break;
+                }
+                beta /= (1 - q);
             }
 
             // Sample outgoing direction at intersection to continue path
@@ -81,19 +90,16 @@ public:
                 if (bxdfValue.IsZero() || bxdfPdf < Epsilon) {
                     break;
                 }
+                if(iRec.emitter) {
 
-                beta *= bxdfValue;
+                }
+                else {
+                    beta *= bxdfValue;
+                }
                 ray = iRec.GenerateRay(iRec.ToWorld(bRec.wo));
             }
 
-            // RR
-            if (depth > 3) {
-                Float q = Max(0.f, 1 - MaxValue(beta));
-                if (pSampler->Next1D() < q) {
-                    break;
-                }
-                beta /= (1 - q);
-            }
+
         }
 
         return L;

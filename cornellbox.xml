@@ -1,8 +1,8 @@
 <scene>
     <integrator type="path">
-        <integer name="spp" value="256"/>
+        <integer name="spp" value="1024"/>
         <integer name="depth" value="50"/>
-        <string name="aggregate" value="bvh"/>
+        <string name="aggregate" value="naive"/>
         <!--top-->
         <shape type="mesh">
             <string name="filename" value="../top.obj"/>
@@ -57,24 +57,24 @@
                 </texture>
             </bxdf>
         </shape>
-        <!--shortbox-->
-        <shape type="mesh">
-            <string name="filename" value="../shortbox.obj"/>
-            <bxdf type="diffuse">
-                <texture type="solid">
-                    <color name="albedo" value="0.73 0.73 0.73"/>
-                </texture>
-            </bxdf>
-        </shape>
-        <!--tallbox-->
-        <shape type="mesh">
-            <string name="filename" value="../tallbox.obj"/>
-            <bxdf type="diffuse">
-                <texture type="solid">
-                    <color name="albedo" value="0.73 0.73 0.73"/>
-                </texture>
-            </bxdf>
-        </shape>
+<!--        shortbox-->
+<!--        <shape type="mesh">-->
+<!--            <string name="filename" value="../shortbox.obj"/>-->
+<!--            <bxdf type="conductor">-->
+<!--                <texture type="solid">-->
+<!--                    <color name="albedo" value="0.73 0.73 0.73"/>-->
+<!--                </texture>-->
+<!--            </bxdf>-->
+<!--        </shape>-->
+<!--        &lt;!&ndash;tallbox&ndash;&gt;-->
+<!--        <shape type="mesh">-->
+<!--            <string name="filename" value="../tallbox.obj"/>-->
+<!--            <bxdf type="conductor">-->
+<!--                <texture type="solid">-->
+<!--                    <color name="albedo" value="0.73 0.73 0.73"/>-->
+<!--                </texture>-->
+<!--            </bxdf>-->
+<!--        </shape>-->
         <camera type="perspective">
             <film>
                 <integer name="width" value="512"/>
@@ -86,7 +86,6 @@
             <vector name="up" value="0.0 1.0 0.0"/>
         </camera>
         <sampler type="independent">
-
         </sampler>
     </integrator>
 </scene>
