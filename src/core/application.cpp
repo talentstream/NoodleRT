@@ -9,8 +9,8 @@
 #include "base/film.h"
 
 #include "util/parser.h"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 #include <print>
 
 NAMESPACE_BEGIN
