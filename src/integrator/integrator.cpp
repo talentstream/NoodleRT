@@ -7,7 +7,7 @@
 #include "base/camera.h"
 #include "base/film.h"
 #include "base/sampler.h"
-#include "base/light.h"
+#include "base/emitter.h"
 #include "util/parallel.h"
 #include "util/timer.h"
 #include <ranges>

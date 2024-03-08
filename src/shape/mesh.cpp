@@ -4,7 +4,7 @@
 
 #include "base/shape.h"
 #include "base/bxdf.h"
-#include "base/light.h"
+#include "base/emitter.h"
 #include "triangle.h"
 #include <print>
 
@@ -18,9 +18,10 @@ class Mesh : public Shape {
 public:
     explicit Mesh(const PropertyList &propertyList) {
         mFilename = propertyList.GetString("filename", {});
-        mObjectToWorld *= propertyList.GetTransform("rotate", {});
         mObjectToWorld *= propertyList.GetTransform("scale", {});
+        mObjectToWorld *= propertyList.GetTransform("rotate", {});
         mObjectToWorld *= propertyList.GetTransform("translate", {});
+        mObjectToWorld = propertyList.GetTransform("toWorld", mObjectToWorld);
         PRINT_DEBUG_INFO("Mesh", "mesh")
     }
 

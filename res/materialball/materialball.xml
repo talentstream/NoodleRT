@@ -1,0 +1,68 @@
+<scene>
+    <integrator type="path">
+        <integer name="spp" value="100"/>
+        <integer name="depth" value="64"/>
+        <string name="aggregate" value="bvh"/>
+
+        <!--stand-->
+        <shape type="mesh">
+            <string name="filename" value="../res/materialball/Mesh000.obj"/>
+            <transform name="toWorld"
+                       value="0.482906 0 0 0.110507 0 0.482906 0 0.494301 0 0 0.482906 0.126194 0 0 0 1"/>
+            <texture type="solid">
+                <color name="albedo" value="0.2, 0.2, 0.2"/>
+            </texture>
+        </shape>
+
+        <!--material-->
+        <shape type="mesh">
+            <string name="filename" value="../res/materialball/Mesh001.obj"/>
+            <transform name="toWorld"
+                       value="0.482906 0 0 0.0571719 0 0.482906 0 0.213656 0 0 0.482906 0.0682078 0 0 0 1"/>
+            <bxdf type="dielectric">
+            </bxdf>
+        </shape>
+
+        <!--material-->
+        <shape type="mesh">
+            <string name="filename" value="../res/materialball/Mesh002.obj"/>
+            <transform name="toWorld"
+                       value="0.482906 0 0 0.156382 0 0.482906 0 0.777229 0 0 0.482906 0.161698 0 0 0 1"/>
+            <bxdf type="dielectric">
+            </bxdf>
+        </shape>
+
+        <!--floor-->
+        <shape type="rectangle">
+            <transform name="toWorld"
+                       value="-1.88298 1.9602 2.50299e-007 -0.708772 -2.37623e-007 1.18811e-007 -2.71809 0 -1.9602 -1.88298 8.90586e-008 -0.732108 0 0 0 1"/>
+            <bxdf type="diffuse">
+                <texture type="checker">
+                    <texture type="solid">
+                        <color name="albedo" value="0.325, 0.31, 0.25"/>
+                    </texture>
+                    <texture type="solid">
+                        <color name="albedo" value="0.725, 0.71, 0.68"/>
+                    </texture>
+                    <float name="scale" value="10"/>
+
+                </texture>
+            </bxdf>
+        </shape>
+
+        <camera type="perspective">
+            <film>
+                <integer name="width" value="400"/>
+                <integer name="height" value="300"/>
+            </film>
+            <float name="fov" value="28.0"/>
+            <point name="lookFrom" value="3.04068 3.17153 3.20454"/>
+            <point name="lookAt" value="0.0 0.0 0.0"/>
+            <vector name="up" value="0.0 1.0 0.0"/>
+        </camera>
+        <sampler type="independent">
+        </sampler>
+        <light type="infinite">
+        </light>
+    </integrator>
+</scene>

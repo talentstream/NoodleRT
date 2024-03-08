@@ -3,7 +3,7 @@
 //
 
 #include "core/record.h"
-#include "base/light.h"
+#include "base/emitter.h"
 
 NAMESPACE_BEGIN
 

@@ -60,16 +60,20 @@
         <!--shortbox-->
         <shape type="mesh">
             <string name="filename" value="../res/cornellbox/shortbox.obj"/>
+            <bxdf type="roughdiffuse">
+            </bxdf>
+        </shape>
+        <!--sphere-->
+        <shape type="sphere">
+            <float name="radius" value="100.0"/>
+            <point name="center" value="278 273 273"/>
             <bxdf type="conductor">
-                <texture type="solid">
-                    <color name="albedo" value="0.73 0.73 0.73"/>
-                </texture>
             </bxdf>
         </shape>
         <!--tallbox-->
         <shape type="mesh">
             <string name="filename" value="../res/cornellbox/tallbox.obj"/>
-            <bxdf type="conductor">
+            <bxdf type="dielectric">
                 <texture type="solid">
                     <color name="albedo" value="0.73 0.73 0.73"/>
                 </texture>
@@ -77,8 +81,8 @@
         </shape>
         <camera type="perspective">
             <film>
-                <integer name="width" value="512"/>
-                <integer name="height" value="512"/>
+                <integer name="width" value="400"/>
+                <integer name="height" value="400"/>
             </film>
             <float name="fov" value="38.0"/>
             <point name="lookFrom" value="278 273 -790"/>

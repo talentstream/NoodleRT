@@ -20,7 +20,7 @@ Integer windowWidth{};
 Integer windowHeight{};
 
 Application::Application() {
-    Object *obj = LoadSceneXML("../res/test/light.xml");
+    Object *obj = LoadSceneXML("../res/materialball/materialball.xml");
     pScene = std::unique_ptr<Scene>(dynamic_cast<Scene *>(obj));
     windowWidth = pScene->GetIntegrator()->GetCamera()->GetFilm()->width;
     windowHeight = pScene->GetIntegrator()->GetCamera()->GetFilm()->height;

@@ -6,7 +6,7 @@
 #include "base/aggregate.h"
 #include "base/camera.h"
 #include "base/bxdf.h"
-#include "base/light.h"
+#include "base/emitter.h"
 #include "base/sampler.h"
 #include "core/record.h"
 #include "util/sampling.h"
@@ -57,7 +57,7 @@ public:
                     if (iRec.emitter) break;
                     EmitterRecord eRec{iRec.p};
 
-                    Color3f li = light->SampleLi(eRec, pSampler->Next2D());
+                    Color3f li = light->Sample(eRec, pSampler->Next2D());
                     if (li.IsZero() || eRec.pdf == 0) continue;
                     Float tMax = Length(eRec.p - eRec.ref) - Epsilon;
                     if (!pAggregate->UnOccluded(iRec.GenerateRay(eRec.wi), tMax)) continue;

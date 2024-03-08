@@ -4,7 +4,7 @@
 
 #include "base/shape.h"
 #include "base/bxdf.h"
-#include "base/light.h"
+#include "base/emitter.h"
 #include "triangle.h"
 #include <print>
 

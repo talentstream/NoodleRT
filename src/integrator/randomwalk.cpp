@@ -6,7 +6,7 @@
 #include "base/aggregate.h"
 #include "base/camera.h"
 #include "base/bxdf.h"
-#include "base/light.h"
+#include "base/emitter.h"
 #include "base/sampler.h"
 #include "core/record.h"
 #include "util/sampling.h"

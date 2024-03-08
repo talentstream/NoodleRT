@@ -18,6 +18,8 @@ constexpr Float TwoPi = 2 * Pi;
 constexpr Float PiOver2 = Pi / 2;
 constexpr Float PiOver4 = Pi / 4;
 constexpr Float InvPi = std::numbers::inv_pi_v<Float>;
+constexpr Float Inv2Pi = InvPi / 2;
+constexpr Float Inv4Pi = InvPi / 4;
 constexpr Float Sqrt2 = std::numbers::sqrt2_v<Float>;
 
 template<typename T>
