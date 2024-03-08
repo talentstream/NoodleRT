@@ -23,6 +23,7 @@ public:
     Color3f
     Sample(EmitterRecord &lRec, const Point2f &sample) const override {
         lRec.wi = Warp::UniformSampleSphere(sample);
+        lRec.p = Point3f{lRec.wi} * Infinity;
         lRec.pdf = Warp::UniformSampleSpherePdf();
         return mRadiance;
     }

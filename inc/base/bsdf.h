@@ -34,30 +34,20 @@ inline Boolean IsTransmission(BxDFFlag type) {
     return (type & ETransmission);
 }
 
-class BxDF : public Object {
+class BSDF : public Object {
 public:
     virtual
-    ~BxDF() = default;
-
-    // f bxdf model
-    virtual Color3f
-    F(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const { return {0.f}; }
+    ~BSDF() = default;
 
     virtual Color3f
     Eval(const BxDFRecord &bRec) const = 0;
 
     virtual Float
-    Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const { return 0.f; };
-
-    virtual Float
-    pdf(const BxDFRecord &bRec) const { return 0.f; };
-
-    virtual std::optional<Color3f>
-    SampleF(const IntersectionRecord &si, const Vector3f wo, Vector3f &wi, Point2f sample) const = 0;
+    Pdf(const BxDFRecord &bRec) const = 0;
 
     // Sample bxdf & return pdf
     virtual Color3f
-    Sample(BxDFRecord &bRec, Float &pdf, const Point2f &sample) const { return {0.f}; };
+    Sample(BxDFRecord &bRec, Float &pdf, const Point2f &sample) const = 0;
 
     virtual BxDFFlag
     Flag() const = 0;

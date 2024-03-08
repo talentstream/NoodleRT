@@ -5,7 +5,7 @@
 #include "base/integrator.h"
 #include "base/aggregate.h"
 #include "base/camera.h"
-#include "base/bxdf.h"
+#include "base/bsdf.h"
 #include "base/emitter.h"
 #include "base/sampler.h"
 #include "core/record.h"
@@ -54,7 +54,7 @@ public:
             BxDFRecord bRec{iRec.ToLocal(eRec.wi), iRec.ToLocal(-ray.d)};
             bRec.uv = iRec.uv;
             Color3f bxdfVal = bxdf->Eval(bRec);
-            Float bxdfPdf = bxdf->pdf(bRec);
+            Float bxdfPdf = bxdf->Pdf(bRec);
             if (bxdfPdf == 0.f) continue;
 
             Float tMax = Length(eRec.p - iRec.p);

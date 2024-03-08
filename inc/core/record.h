@@ -12,7 +12,7 @@ NAMESPACE_BEGIN
 
 class Sampler;
 
-class BxDF;
+class BSDF;
 
 class Emitter;
 
@@ -24,7 +24,7 @@ struct IntersectionRecord {
     Float t{Infinity};// intersect time
     Frame shading;// Transform from world to shading coordinate
 
-    BxDF *bxdf{nullptr}; // intersect shape bxdf
+    BSDF *bxdf{nullptr}; // intersect shape bxdf
     Emitter *emitter{nullptr}; // intersect shape emitter
 
 // functions

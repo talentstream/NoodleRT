@@ -3,7 +3,7 @@
 //
 
 #include "base/shape.h"
-#include "base/bxdf.h"
+#include "base/bsdf.h"
 #include "base/emitter.h"
 #include "triangle.h"
 

@@ -50,7 +50,7 @@
 
 - [Ray Tracing in One Weekend](https://raytracing.github.io/)
 
-- [BRDF参考](https://digibug.ugr.es/bitstream/handle/10481/19751/rmontes_LSI-2012-001TR.pdf)
+- [BRDF参考](https://digibug.ugr.es/bitstream/handle/10481/19751/rmontes_LSI-2012-001TR.Pdf)
 
 - [mitsuba3](https://mitsuba.readthedocs.io/en/latest/)
 

@@ -48,7 +48,7 @@ public:
     virtual Point3f
     GetCentroid(UInt32 idx) const = 0;
 
-    const BxDF
+    const BSDF
     *GetBxDF() const {
         return pBxDF;
     }
@@ -70,7 +70,7 @@ public:
     }
 
 protected:
-    BxDF *pBxDF{nullptr};
+    BSDF *pBxDF{nullptr};
     Emitter *pEmitter{nullptr};
     Bound3f mBbox;
 };

@@ -4,28 +4,19 @@
 
 #pragma once
 
-#include "base/bxdf.h"
+#include "base/bsdf.h"
 #include <print>
 
 NAMESPACE_BEGIN
 
 // Smooth Conductor, Perfect Specular reflection
-class Conductor : public BxDF {
+class Conductor : public BSDF {
 public:
     explicit Conductor(const PropertyList &propertyList) {
         mReflectance = propertyList.GetColor("reflectance", {1.f});
         mEta = propertyList.GetFloat("eta", 0.f);
         mK = propertyList.GetFloat("k", 1.f);
         PRINT_DEBUG_INFO("BxDF", "conductor")
-    }
-
-    Color3f F(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
-        if (Frame::CosTheta(wo) <= 0 ||
-            Frame::CosTheta(wi) <= 0) {
-            return {0.f};
-        }
-
-        return mReflectance;
     }
 
     inline Vector3f reflect(const Vector3f &wi) const {
@@ -63,35 +54,14 @@ public:
         return mReflectance * fresnelConductor(Frame::CosTheta(bRec.wi), mEta, mK);
     }
 
-    Float Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
-        if (Frame::CosTheta(wo) <= 0 ||
-            Frame::CosTheta(wi) <= 0) {
-            return 0.f;
-        }
-
-        return 1.f;
-    }
-
     Float
-    pdf(const BxDFRecord &bRec) const override {
+    Pdf(const BxDFRecord &bRec) const override {
         if (Frame::CosTheta(bRec.wo) <= 0 ||
             Frame::CosTheta(bRec.wi) <= 0 ||
             Abs(Dot(reflect(bRec.wi), bRec.wo) - 1) > Epsilon) {
             return 0.f;
         }
         return 1.f;
-    }
-
-    std::optional<Color3f>
-    SampleF(const IntersectionRecord &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
-        wi = reflect(wo);
-
-        if (Frame::CosTheta(wo) < 0 ||
-            Frame::CosTheta(wi) < 0) {
-            return std::nullopt;
-        }
-
-        return mReflectance;
     }
 
     Color3f

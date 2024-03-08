@@ -3,7 +3,7 @@
 //
 
 #include "base/shape.h"
-#include "base/bxdf.h"
+#include "base/bsdf.h"
 #include "base/emitter.h"
 
 NAMESPACE_BEGIN
@@ -12,7 +12,7 @@ void
 Shape::AddChild(Object *child) {
     switch (child->GetClassType()) {
         case EClassType::EBxDF:
-            pBxDF = dynamic_cast<BxDF *>(child);
+            pBxDF = dynamic_cast<BSDF *>(child);
             break;
         case EClassType::ELight:
             pEmitter = dynamic_cast<Emitter *>(child);
@@ -26,7 +26,7 @@ Shape::AddChild(Object *child) {
 void
 Shape::Initialize() {
     if(pBxDF == nullptr) {
-        pBxDF = dynamic_cast<BxDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList(), true));
+        pBxDF = dynamic_cast<BSDF *>(ObjectFactory::CreateInstance("diffuse", PropertyList(), true));
     }
 }
 NAMESPACE_END

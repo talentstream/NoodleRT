@@ -2,12 +2,12 @@
 // Created by 44772 on 2024/2/12.
 //
 
-#include "base/bxdf.h"
+#include "base/bsdf.h"
 #include <print>
 
 NAMESPACE_BEGIN
 
-class Dielectric : public BxDF {
+class Dielectric : public BSDF {
 public:
     explicit Dielectric(const PropertyList &propertyList) {
         Float intIOR = propertyList.GetFloat("intIOR", 1.5f);
@@ -26,10 +26,6 @@ public:
     inline Vector3f refract(const Vector3f &wi, Float cosThetaT) const {
         Float scale = -(cosThetaT < 0 ? mInvEta : mEta);
         return {scale * wi.x, scale * wi.y, cosThetaT};
-    }
-
-    Color3f F(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
-        return {.5f};
     }
 
     inline Float fresnelDielectric(Float cosThetaI_, Float &cosThetaT_, Float eta) const {
@@ -74,11 +70,7 @@ public:
         }
     }
 
-    Float Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
-        return 1.0f;
-    }
-
-    Float pdf(const BxDFRecord &bRec) const override {
+    Float Pdf(const BxDFRecord &bRec) const override {
         Float cosThetaT;
         Float f = fresnelDielectric(Frame::CosTheta(bRec.wi), cosThetaT, mEta);
         if (Frame::CosTheta(bRec.wi) * Frame::CosTheta(bRec.wo) >= 0) {
@@ -92,19 +84,6 @@ public:
             }
             return 1 - f;
         }
-    }
-
-    std::optional<Color3f>
-    SampleF(const IntersectionRecord &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
-        Float cosThetaI = Min(Frame::CosTheta(wo), 1);
-        Float ratio = mEta;
-        if (FrDielectric(cosThetaI, ratio) > RandomFloat()) {
-            if (RefractLocal(wo, wi, ratio)) {
-                return Color3f{.5f};
-            }
-        }
-        wi = ReflectLocal(wo);
-        return Color3f{.5f};
     }
 
     Color3f

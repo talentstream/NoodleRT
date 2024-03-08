@@ -2,7 +2,7 @@
 // Created by talentstream on 2024/3/2.
 //
 
-#include "base/bxdf.h"
+#include "base/bsdf.h"
 #include "base/texture.h"
 #include "util/sampling.h"
 #include <print>
@@ -11,7 +11,7 @@ NAMESPACE_BEGIN
 
 // Rough Diffuse, Oren-Nayar
 //
-class RoughDiffuse : public BxDF {
+class RoughDiffuse : public BSDF {
 public:
     explicit RoughDiffuse(const PropertyList &propertyList) {
         mReflectance = propertyList.GetColor("albedo", {1.f});
@@ -20,37 +20,6 @@ public:
         A = 1 - (r2 / (2 * (r2 + 0.33f)));
         B = 0.45f * r2 / (r2 + 0.09f);
         PRINT_DEBUG_INFO("BxDF", "roughdiffuse")
-    }
-
-    Color3f
-    F(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
-        if (Frame::CosTheta(wo) <= 0 ||
-            Frame::CosTheta(wi) <= 0) {
-            return {0.f};
-        }
-
-        Float sinThetaI = Frame::SinTheta(wi);
-        Float sinThetaO = Frame::SinTheta(wo);
-
-        Float maxCos{0};
-        if (sinThetaI > Epsilon && sinThetaO > Epsilon) {
-            Float sinPhiI = Frame::SinPhi(wi),
-                    cosPhiI = Frame::CosPhi(wi),
-                    sinPhiO = Frame::SinPhi(wo),
-                    cosPhiO = Frame::CosPhi(wo);
-            Float dCos = cosPhiI * cosPhiO + sinPhiI * sinPhiO;
-            maxCos = Max(0, dCos);
-        }
-        Float sinAlpha, tanBeta;
-        if (Frame::AbsCosTheta(wi) > Frame::AbsCosTheta(wo)) {
-            sinAlpha = sinThetaO;
-            tanBeta = sinThetaI / Frame::AbsCosTheta(wi);
-        } else {
-            sinAlpha = sinThetaI;
-            tanBeta = sinThetaO / Frame::AbsCosTheta(wo);
-        }
-
-        return mReflectance * InvPi * (A + B * maxCos * sinAlpha * tanBeta);
     }
 
     Color3f
@@ -86,17 +55,7 @@ public:
     }
 
     Float
-    Pdf(const IntersectionRecord &si, const Vector3f wo, const Vector3f wi) const override {
-        if (Frame::CosTheta(wo) <= 0 ||
-            Frame::CosTheta(wi) <= 0) {
-            return 0.f;
-        }
-
-        return Warp::SquareToCosineHemispherePdf(wo);
-    }
-
-    Float
-    pdf(const BxDFRecord &bRec) const override {
+    Pdf(const BxDFRecord &bRec) const override {
         if (Frame::CosTheta(bRec.wo) <= 0 ||
             Frame::CosTheta(bRec.wi) <= 0) {
             return 0.f;
@@ -104,14 +63,6 @@ public:
         return Warp::SquareToCosineHemispherePdf(bRec.wo);
     }
 
-    std::optional<Color3f>
-    SampleF(const IntersectionRecord &si, const Vector3f wo, Vector3f &wi, Point2f sample) const override {
-        if (Frame::CosTheta(wo) < 0) return std::nullopt;
-
-        wi = Warp::SquareToCosineHemisphere(sample);
-        // (brdf / pdf) * cos = [(albedo / pi) / (cos / pi)] * cos
-        return mReflectance;
-    }
 
     Color3f
     Sample(BxDFRecord &bRec, Float &pdf, const Point2f &sample) const override {
@@ -124,7 +75,8 @@ public:
         return Eval(bRec) / pdf;
     }
 
-    BxDFFlag Flag() const override {
+    BxDFFlag
+    Flag() const override {
         return EDiffuseReflection;
     }
 

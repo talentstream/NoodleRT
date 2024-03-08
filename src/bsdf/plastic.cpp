@@ -2,7 +2,7 @@
 // Created by talentstream on 2024/3/2.
 //
 
-#include "base/bxdf.h"
+#include "base/bsdf.h"
 #include "util/sampling.h"
 #include <print>
 
@@ -10,7 +10,7 @@ NAMESPACE_BEGIN
 
 // Smooth Plastic, Internal scattering
 // Fresnel reflection & transmission coefficients to provide direction-dependent specular and diffuse components.
-class Plastic : public BxDF {
+class Plastic : public BSDF {
 public:
     explicit Plastic(const PropertyList &propertyList) {
         mReflectance = propertyList.GetColor("reflectance", {1.f});
