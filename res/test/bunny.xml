@@ -4,7 +4,7 @@
         <integer name="depth" value="50"/>
         <string name="aggregate" value="bvh"/>
         <shape type="mesh">
-            <string name="filename" value="../bunny.obj"/>
+            <string name="filename" value="../res/test/bunny.obj"/>
             <transform name="translate" value=""/>
             <transform name="rotate" value="0 -60 0"/>
             <transform name="scale" value=""/>

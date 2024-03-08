@@ -5,7 +5,7 @@
         <string name="aggregate" value="naive"/>
         <!--top-->
         <shape type="mesh">
-            <string name="filename" value="../top.obj"/>
+            <string name="filename" value="../res/cornellbox/top.obj"/>
             <bxdf type="diffuse">
                 <texture type="solid">
                     <color name="albedo" value="0.725, 0.71, 0.68"/>
@@ -14,7 +14,7 @@
         </shape>
         <!--back-->
         <shape type="mesh">
-            <string name="filename" value="../back.obj"/>
+            <string name="filename" value="../res/cornellbox/back.obj"/>
             <bxdf type="diffuse">
                 <texture type="solid">
                     <color name="albedo" value="0.725 0.71 0.68"/>
@@ -24,7 +24,7 @@
 
         <!--floor-->
         <shape type="mesh">
-            <string name="filename" value="../floor.obj"/>
+            <string name="filename" value="../res/cornellbox/floor.obj"/>
             <bxdf type="diffuse">
                 <texture type="solid">
                     <color name="albedo" value="0.725, 0.71, 0.68"/>
@@ -33,14 +33,14 @@
         </shape>
         <!--light-->
         <shape type="mesh">
-            <string name="filename" value="../light.obj"/>
+            <string name="filename" value="../res/cornellbox/light.obj"/>
             <light type="area">
                 <color name="intensity" value="17 12 4"/>
             </light>
         </shape>
         <!--left-->
         <shape type="mesh">
-            <string name="filename" value="../left.obj"/>
+            <string name="filename" value="../res/cornellbox/left.obj"/>
             <bxdf type="diffuse">
                 <color name="reflectance" value="0.63 0.065 0.05"/>
                 <texture type="solid">
@@ -50,16 +50,16 @@
         </shape>
         <!--right-->
         <shape type="mesh">
-            <string name="filename" value="../right.obj"/>
+            <string name="filename" value="../res/cornellbox/right.obj"/>
             <bxdf type="diffuse">
                 <texture type="solid">
                     <color name="albedo" value="0.14 0.45 0.091"/>
                 </texture>
             </bxdf>
         </shape>
-<!--        shortbox-->
+        <!--shortbox-->
         <shape type="mesh">
-            <string name="filename" value="../shortbox.obj"/>
+            <string name="filename" value="../res/cornellbox/shortbox.obj"/>
             <bxdf type="conductor">
                 <texture type="solid">
                     <color name="albedo" value="0.73 0.73 0.73"/>
@@ -68,7 +68,7 @@
         </shape>
         <!--tallbox-->
         <shape type="mesh">
-            <string name="filename" value="../tallbox.obj"/>
+            <string name="filename" value="../res/cornellbox/tallbox.obj"/>
             <bxdf type="conductor">
                 <texture type="solid">
                     <color name="albedo" value="0.73 0.73 0.73"/>
