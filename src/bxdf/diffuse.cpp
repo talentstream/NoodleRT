@@ -14,7 +14,7 @@ NAMESPACE_BEGIN
 class Diffuse : public BxDF {
 public:
     explicit Diffuse(const PropertyList &propertyList) {
-        mReflectance = propertyList.GetColor("reflectance",{1.f});
+        mReflectance = propertyList.GetColor("reflectance", {1.f});
         PRINT_DEBUG_INFO("BxDF", "diffuse")
     }
 
@@ -48,8 +48,7 @@ public:
     }
 
     Float pdf(const BxDFRecord &bRec) const override {
-        if (Frame::CosTheta(bRec.wo) <= 0 ||
-            Frame::CosTheta(bRec.wi) <= 0) {
+        if (Frame::CosTheta(bRec.wo) * Frame::CosTheta(bRec.wi) < 0) {
             return 0.f;
         }
         return Warp::SquareToCosineHemispherePdf(bRec.wo);

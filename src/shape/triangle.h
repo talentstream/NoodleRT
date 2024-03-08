@@ -38,7 +38,8 @@ struct Triangle {
 
     Bound3f
     GetBoundingBox() const {
-        return Union(Bound3f{p0, p1}, p2);
+        Bound3f bbox = Union(Bound3f{p0, p1}, p2);
+        return Padding(bbox,Epsilon);
     }
 
     Point3f

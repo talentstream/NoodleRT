@@ -64,7 +64,7 @@ public:
     }
 
     [[nodiscard]] Boolean IntersectP(const Ray &ray, Float tMax = INFINITY) const {
-        Float t0{0.001}, t1{tMax};
+        Float t0{Epsilon}, t1{tMax};
         for (const Integer axis: {0, 1, 2}) {
             auto invD = 1 / ray.d[axis];
             auto o = ray.o[axis];

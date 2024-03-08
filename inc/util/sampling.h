@@ -46,7 +46,7 @@ public:
     }
 
     static Float SquareToCosineHemispherePdf(const Vector3f &v) {
-        return Frame::CosTheta(v) * InvPi;
+        return Frame::AbsCosTheta(v) * InvPi;
     }
 };
 NAMESPACE_END

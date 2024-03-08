@@ -58,23 +58,23 @@
             </bxdf>
         </shape>
 <!--        shortbox-->
-<!--        <shape type="mesh">-->
-<!--            <string name="filename" value="../shortbox.obj"/>-->
-<!--            <bxdf type="conductor">-->
-<!--                <texture type="solid">-->
-<!--                    <color name="albedo" value="0.73 0.73 0.73"/>-->
-<!--                </texture>-->
-<!--            </bxdf>-->
-<!--        </shape>-->
-<!--        &lt;!&ndash;tallbox&ndash;&gt;-->
-<!--        <shape type="mesh">-->
-<!--            <string name="filename" value="../tallbox.obj"/>-->
-<!--            <bxdf type="conductor">-->
-<!--                <texture type="solid">-->
-<!--                    <color name="albedo" value="0.73 0.73 0.73"/>-->
-<!--                </texture>-->
-<!--            </bxdf>-->
-<!--        </shape>-->
+        <shape type="mesh">
+            <string name="filename" value="../shortbox.obj"/>
+            <bxdf type="conductor">
+                <texture type="solid">
+                    <color name="albedo" value="0.73 0.73 0.73"/>
+                </texture>
+            </bxdf>
+        </shape>
+        <!--tallbox-->
+        <shape type="mesh">
+            <string name="filename" value="../tallbox.obj"/>
+            <bxdf type="conductor">
+                <texture type="solid">
+                    <color name="albedo" value="0.73 0.73 0.73"/>
+                </texture>
+            </bxdf>
+        </shape>
         <camera type="perspective">
             <film>
                 <integer name="width" value="512"/>

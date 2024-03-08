@@ -70,7 +70,8 @@ private:
                 Float bxdfPdf = bxdf->pdf(bRec);
                 if (bxdfPdf == 0.f) continue;
                 Float weight = Weight(1, eRec.pdf, 1, bxdfPdf);
-                L += bxdfVal * li * weight / eRec.pdf * Pi;
+
+                L += bxdfVal * li * weight;
             }
             return L;
         } else {

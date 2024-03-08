@@ -67,12 +67,12 @@ public:
                     Float bxdfPdf = bxdf->pdf(bRec);
                     if (bxdfPdf == 0.f || bxdfPdf == 1.f) continue;
                     Float weight = Weight(1, eRec.pdf, 1, bxdfPdf);
-                    L += beta * bxdfVal * li * weight / eRec.pdf;
+                    L += beta * bxdfVal * li * weight;
                 }
             }
 
             // RR
-            if (depth > 3) {
+            if (depth > 3 && !iRec.emitter) {
                 Float q = Max(0.f, 1 - MaxValue(beta));
                 if (pSampler->Next1D() < q) {
                     break;
@@ -87,15 +87,11 @@ public:
                 bRec.uv = iRec.uv;
                 Float bxdfPdf;
                 Color3f bxdfValue = bxdf->Sample(bRec, bxdfPdf, pSampler->Next2D());
-                if (bxdfValue.IsZero() || bxdfPdf < Epsilon) {
+                if (bxdfValue.IsZero() || bxdfPdf == 0.f) {
                     break;
                 }
-                if(iRec.emitter) {
+                beta *= bxdfValue;
 
-                }
-                else {
-                    beta *= bxdfValue;
-                }
                 ray = iRec.GenerateRay(iRec.ToWorld(bRec.wo));
             }
 
