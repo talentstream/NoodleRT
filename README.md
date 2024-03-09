@@ -4,6 +4,7 @@
 
 > Compiled in Windows 11, C++23
 
+> There are still some bugs that need to be fixed, therefore the results are not guaranteed to be correct
 ---
 
 ![image](https://github.com/talentstream/NoodleRT/assets/72556475/edd9ce22-605f-4c55-878c-c624f06776aa)
