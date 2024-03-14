@@ -51,6 +51,7 @@ public:
 
         auto pixelCenter = pixel100Loc + uv.x * deltaU + uv.y * deltaV;
         auto pixelSample = pixelCenter + PixelSampleSquare();
+
         return Ray{mLookFrom, Normalize(pixelSample - mLookFrom)};
     }
 
@@ -68,5 +69,61 @@ private:
 };
 
 REGISTER_CLASS(PerspectiveCamera, "perspective")
+
+class Perspective : public Camera {
+public:
+    explicit
+    Perspective(const PropertyList &propertyList) {
+        mCameraToWorld = propertyList.GetTransform("toworld", {});
+        mFov = propertyList.GetFloat("fov", 30.f);
+        mNearClip = propertyList.GetFloat("near", 1e-2f);
+        mFarClip = propertyList.GetFloat("far", 1000.f);
+
+        PRINT_DEBUG_INFO("Camera", "perspective");
+    }
+
+    void
+    Initialize() override {
+        Camera::Initialize();
+
+        Float width = pFilm->width;
+        Float height = pFilm->height;
+        Float aspect = width / height;
+        mInvResolution = {1.f / width, 1.f / height};
+
+        // https://pbr-book.org/3ed-2018/Camera_Models/Projective_Camera_Models
+        mSampleToCamera = Transform::Scale(5.f, -5.f * aspect, 1.f) *
+                          Transform::Translate(1.f, -1.f / aspect, 0.f) *
+                          Transform::Perspective(mFov, mNearClip, mFarClip);
+
+
+        mSampleToCamera.inverse();
+
+    }
+
+    Ray
+    GenerateRay(Point2f uv, Point2f u) const override {
+        Point3f samplePosition{(uv.x + u.x) * mInvResolution.x, (uv.y + u.y) * mInvResolution.y, 0};
+        Point3f nearP = mSampleToCamera(samplePosition);
+
+        Vector3f d = Normalize(Vector3f{nearP});
+        Float invZ = 1.f / d.z;
+
+        Point3f ro = mCameraToWorld(Point3f{0, 0, 0});
+        Vector3f rd = mCameraToWorld(d);
+
+        return {ro, rd, mNearClip * invZ};
+    }
+
+private:
+    Transform mCameraToWorld;
+    Transform mSampleToCamera;
+    Float mFov;
+    Float mNearClip;
+    Float mFarClip;
+    Vector2f mInvResolution;
+};
+
+REGISTER_CLASS(Perspective, "perspective1")
 
 NAMESPACE_END

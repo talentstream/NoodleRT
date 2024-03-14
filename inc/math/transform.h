@@ -185,7 +185,7 @@ public:
         invMat = Inverse(mat);
     }
 
-    template <typename T>
+    template<typename T>
     Point3<T> operator()(const Point3<T> &p) const {
         T x = p.x, y = p.y, z = p.z;
         T xp = mat[0][0] * x + mat[0][1] * y + mat[0][2] * z + mat[0][3];
@@ -199,19 +199,66 @@ public:
         }
     }
 
+    template<typename T>
+    Vector3<T> operator()(const Vector3<T> &v) const {
+        T x = v.x, y = v.y, z = v.z;
+        T xv = mat[0][0] * x + mat[0][1] * y + mat[0][2] * z + mat[0][3];
+        T yv = mat[1][0] * x + mat[1][1] * y + mat[1][2] * z + mat[1][3];
+        T zv = mat[2][0] * x + mat[2][1] * y + mat[2][2] * z + mat[2][3];
+        T wv = mat[3][0] * x + mat[3][1] * y + mat[3][2] * z + mat[3][3];
+        if (wv == 1) {
+            return {xv, yv, zv};
+        } else {
+            return Vector3<T>{xv, yv, zv} / wv;
+        }
+    }
+
     Transform operator*(const Transform &other) const {
         return Transform(Matrix4x4::Mul(mat, other.mat));
     }
 
-    Transform operator*= (const Transform &other){
+    Transform operator*=(const Transform &other) {
         mat = Matrix4x4::Mul(mat, other.mat);
         invMat = Inverse(mat);
         return *this;
     }
 
-    void Print() const{
-        for(int i = 0; i < 4; ++i){
-            for(int j = 0; j < 4; ++j){
+    static Transform Scale(Float x, Float y, Float z) {
+        return Transform(Matrix4x4(x, 0, 0, 0,
+                                   0, y, 0, 0,
+                                   0, 0, z, 0,
+                                   0, 0, 0, 1));
+    }
+
+    static Transform Translate(Float x, Float y, Float z) {
+        return Transform(Matrix4x4(1, 0, 0, x,
+                                   0, 1, 0, y,
+                                   0, 0, 1, z,
+                                   0, 0, 0, 1));
+    }
+
+    static Transform Orthographic(Float n, Float f) {
+        return Scale(1.f, 1.f, 1.f / (f - n)) *
+               Translate(0.f, 0.f, -n);
+    }
+
+    static Transform Perspective(Float fov, Float n, Float f) {
+        Float recip = 1.f / (f - n);
+        Float cot = 1.f / Tan(DegreeToRadian(fov * .5f));
+        Matrix4x4 perspective(cot, 0, 0, 0,
+                              0, cot, 0, 0,
+                              0, 0, f * recip, -f * n * recip,
+                              0, 0, 1, 0);
+        return Transform(perspective);
+    }
+
+    void inverse() {
+        std::swap(mat, invMat);
+    }
+
+    void Print() const {
+        for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < 4; ++j) {
                 std::cout << mat[i][j] << " ";
             }
         }

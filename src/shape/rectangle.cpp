@@ -18,7 +18,7 @@ public:
         mObjectToWorld *= propertyList.GetTransform("rotate", {});
         mObjectToWorld *= propertyList.GetTransform("translate", {});
 
-        mObjectToWorld = propertyList.GetTransform("toWorld", mObjectToWorld);
+        mObjectToWorld = propertyList.GetTransform("toworld", mObjectToWorld);
 
         PRINT_DEBUG_INFO("Rectangle", "rectangle")
     }

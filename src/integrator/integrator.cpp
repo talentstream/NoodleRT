@@ -22,13 +22,10 @@ Integrator::Integrator(const PropertyList &propertyList) {
 
 void Integrator::AddChild(Object *child) {
     switch (child->GetClassType()) {
-//        case EClassType::EAggregate:
-//            pAggregate = dynamic_cast<Aggregate *>(child);
-//            break;
         case EClassType::EShape: {
             const auto pShape = dynamic_cast<Shape *>(child);
             pAggregate->AddShape(pShape);
-            if(pShape->IsEmitter()) {
+            if (pShape->IsEmitter()) {
                 mLights.push_back(pShape->GetEmitter());
             }
             break;

@@ -45,6 +45,10 @@
   - [x] Area
   - [ ] Environment
  
+#### Todo
+
+- [ ] Perspective Camera Refactor(still has bug), modify transform.
+- [ ] Path Tracing Refactor(still has bug)
 
 #### 参考
 

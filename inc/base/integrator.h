@@ -8,7 +8,6 @@
 
 NAMESPACE_BEGIN
 
-class aggregate1;
 
 class Camera;
 
