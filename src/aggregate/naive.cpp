@@ -25,9 +25,9 @@ public:
         }
     }
 
-    Boolean
+    Bool
     Intersect(const Ray &ray, IntersectionRecord &iRec) const override {
-        Boolean findIntersection{false};
+        Bool findIntersection{false};
         for (auto i{0}; i < mShapeIndices.size(); i++) {
             auto idx = mShapeIndices[i];
             const auto s = mShapes[FindShape(idx)];
@@ -39,7 +39,7 @@ public:
         return findIntersection;
     }
 
-    Boolean
+    Bool
     UnOccluded(const Ray &ray, Float tMax) const override {
         for (auto i{0}; i < mShapeIndices.size(); i++) {
             auto idx = mShapeIndices[i];

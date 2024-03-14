@@ -30,11 +30,11 @@ class Normal3;
 
 using Vector2f = Vector2<Float>;
 using Vector3f = Vector3<Float>;
-using Vector2i = Vector2<Integer>;
+using Vector2i = Vector2<Int>;
 using Point2f = Point2<Float>;
-using Point2i = Point2<Integer>;
+using Point2i = Point2<Int>;
 using Point3f = Point3<Float>;
-using Point3i = Point3<Integer>;
+using Point3i = Point3<Int>;
 using Normal3f = Normal3<Float>;
 
 template<template<typename> class Child, typename T>
@@ -128,7 +128,7 @@ public:
         return static_cast<Child<T> &>(*this);
     }
 
-    T operator[](Integer i) const {
+    T operator[](Int i) const {
         assert(i >= 0 && i < 2);
         if (i == 0) {
             return x;
@@ -136,7 +136,7 @@ public:
         return y;
     }
 
-    T &operator[](Integer i) {
+    T &operator[](Int i) {
         assert(i >= 0 && i < 2);
         if (i == 0) {
             return x;
@@ -144,11 +144,11 @@ public:
         return y;
     }
 
-    Boolean operator==(Child<T> t) const {
+    Bool operator==(Child<T> t) const {
         return x == t.x && y == t.y;
     }
 
-    Boolean operator!=(Child<T> t) const {
+    Bool operator!=(Child<T> t) const {
         return x != t.x || y != t.y;
     }
 };
@@ -271,7 +271,7 @@ public:
         return static_cast<Child<T> &>(*this);
     }
 
-    T operator[](Integer i) const {
+    T operator[](Int i) const {
         assert(i >= 0 && i < 3);
         if (i == 0) {
             return x;
@@ -282,7 +282,7 @@ public:
         return z;
     }
 
-    T &operator[](Integer i) {
+    T &operator[](Int i) {
         assert(i >= 0 && i < 3);
         if (i == 0) {
             return x;
@@ -293,11 +293,11 @@ public:
         return z;
     }
 
-    Boolean operator==(Child<T> t) const {
+    Bool operator==(Child<T> t) const {
         return x == t.x && y == t.y && z == t.z;
     }
 
-    Boolean operator!=(Child<T> t) const {
+    Bool operator!=(Child<T> t) const {
         return x != t.x || y != t.y || z != t.z;
     }
 };

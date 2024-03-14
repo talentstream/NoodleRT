@@ -56,8 +56,8 @@ public:
     }
 
 private:
-    Integer mWidth;
-    Integer mHeight;
+    Int mWidth;
+    Int mHeight;
     Float mFov;
     Point3f mLookFrom;
     Point3f mLookAt;

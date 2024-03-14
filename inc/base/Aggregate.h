@@ -15,10 +15,10 @@ public:
     virtual
     ~Aggregate() = default;
 
-    virtual Boolean
+    virtual Bool
     Intersect(const Ray &ray, IntersectionRecord &iRec) const = 0;
 
-    virtual Boolean
+    virtual Bool
     UnOccluded(const Ray &ray, Float tMax) const = 0;
 
     void

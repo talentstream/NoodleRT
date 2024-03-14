@@ -16,17 +16,17 @@ NAMESPACE_BEGIN
 class PropertyList {
 public:
 
-    void SetInteger(std::string_view name, Integer value);
+    void SetInt(std::string_view name, Int value);
 
-    [[nodiscard]] Integer GetInteger(std::string_view name, Integer defaultValue) const;
+    [[nodiscard]] Int GetInt(std::string_view name, Int defaultValue) const;
 
     void SetFloat(std::string_view name, Float value);
 
     [[nodiscard]] Float GetFloat(std::string_view name, Float defaultValue) const;
 
-    void SetBoolean(std::string_view name, Boolean value);
+    void SetBool(std::string_view name, Bool value);
 
-    [[nodiscard]] Boolean GetBoolean(std::string_view name, Boolean defaultValue) const;
+    [[nodiscard]] Bool GetBool(std::string_view name, Bool defaultValue) const;
 
     void SetString(std::string_view name, std::string_view value);
 
@@ -66,7 +66,7 @@ private:
 
 
 private:
-    using Property = std::variant<Integer, Float, Boolean, std::string_view, Color3f, Point3f, Vector3f, Transform>;
+    using Property = std::variant<Int, Float, Bool, std::string_view, Color3f, Point3f, Vector3f, Transform>;
     std::unordered_map<std::string_view, Property> mProperties;
 };
 

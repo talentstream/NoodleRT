@@ -25,14 +25,14 @@ public:
 private:
     class Integrator *pIntegrator{nullptr};
 
-    Integer mSpp;
+    Int mSpp;
 
 public:
     const Integrator *GetIntegrator() const {
         return pIntegrator;
     }
 
-    const Integer GetSpp() const {
+    const Int GetSpp() const {
         return mSpp;
     }
 

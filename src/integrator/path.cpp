@@ -18,7 +18,7 @@ class PathIntegrator : public ImageTileIntegrator {
 public:
     explicit PathIntegrator(const PropertyList &propertyList)
             : ImageTileIntegrator(propertyList) {
-        mMaxDepth = propertyList.GetInteger("depth", 1);
+        mMaxDepth = propertyList.GetInt("depth", 1);
         PRINT_DEBUG_INFO("Integrator", "path")
     }
 
@@ -26,7 +26,7 @@ public:
         // has bug
         Ray ray = r;
         Color3f L{0}, beta(1.0f);
-        Integer depth{0};
+        Int depth{0};
         while (beta != Color3f{0}) {
             // Intersect ray with scene
             IntersectionRecord iRec;
@@ -101,14 +101,14 @@ public:
         return L;
     }
 
-    inline Float Weight(Integer nA, Float pdfA, Integer nB, Float pdfB) const {
+    inline Float Weight(Int nA, Float pdfA, Int nB, Float pdfB) const {
         Float A = nA * pdfA;
         Float B = nB * pdfB;
         return (A * A) / (A * A + B * B);
     }
 
 private:
-    Integer mMaxDepth;
+    Int mMaxDepth;
 };
 
 REGISTER_CLASS(PathIntegrator, "path")

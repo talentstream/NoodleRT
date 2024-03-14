@@ -12,7 +12,7 @@ class Area : public Emitter {
 public:
     explicit Area(const PropertyList &propList) {
         mRadiance = propList.GetColor("intensity", {1});
-        mTwoSided = propList.GetBoolean("twosided", false);
+        mTwoSided = propList.GetBool("twosided", false);
     }
 
     Color3f L(const IntersectionRecord &si, const Vector3f &w) const override {
@@ -55,7 +55,7 @@ public:
 private:
     Shape *pShape{nullptr};
     Color3f mRadiance;
-    Boolean mTwoSided;
+    Bool mTwoSided;
 };
 
 REGISTER_CLASS(Area, "area")

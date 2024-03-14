@@ -25,7 +25,7 @@ public:
         PRINT_DEBUG_INFO("Mesh", "mesh")
     }
 
-    Boolean
+    Bool
     Intersect(UInt32 idx, const Ray &ray, IntersectionRecord &iRec) const override {
         Float u, v, t;
         auto tri = mTriangles[idx];
@@ -52,7 +52,7 @@ public:
         return true;
     }
 
-    Boolean
+    Bool
     IntersectP(UInt32 idx, const Ray &ray, Float tMax) const override {
         return mTriangles[idx].IntersectP(ray, tMax);
     }

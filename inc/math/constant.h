@@ -48,7 +48,7 @@ inline T Clamp(T v, T low, T high) {
     return v;
 }
 
-template<Integer N>
+template<Int N>
 inline Float Pow(Float v) {
     if constexpr (N < 0)
         return 1 / Pow<-N>(v);
@@ -117,8 +117,8 @@ inline Float Tan(Float v) {
     return std::tan(v);
 }
 
-inline Integer Floor(Float v) {
-    return static_cast<Integer>(std::floor(v));
+inline Int Floor(Float v) {
+    return static_cast<Int>(std::floor(v));
 }
 
 inline Float Cos(Float v) {

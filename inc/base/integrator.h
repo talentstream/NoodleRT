@@ -48,7 +48,7 @@ protected:
 
     Camera *pCamera{nullptr};
     Sampler *pSampler{nullptr};
-    Integer mSpp{};
+    Int mSpp{};
 };
 
 class ImageTileIntegrator : public Integrator {

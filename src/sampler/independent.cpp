@@ -9,7 +9,7 @@ NAMESPACE_BEGIN
 class IndependentSampler : public Sampler {
 public:
     explicit IndependentSampler(const PropertyList &propertyList) {
-        mSampleCount = propertyList.GetInteger("sampleCount", 1);
+        mSampleCount = propertyList.GetInt("sampleCount", 1);
     }
 
     virtual ~IndependentSampler() = default;
@@ -23,7 +23,7 @@ public:
     }
 
 private:
-    Integer mSampleCount;
+    Int mSampleCount;
     RNG rng;
 };
 

@@ -7,22 +7,22 @@
 
 NAMESPACE_BEGIN
 
-void Parallel::For1D(Integer start, Integer end, const std::function<void(Integer)> &func) {
+void Parallel::For1D(Int start, Int end, const std::function<void(Int)> &func) {
     static ThreadPool pool;
 
-    for (Integer i = start; i < end; ++i) {
+    for (Int i = start; i < end; ++i) {
         pool.AddTask(func, i);
     }
 
     pool.FinishAllTask();
 }
 
-void Parallel::For2D(Integer startX, Integer endX, Integer startY, Integer endY,
-                     const std::function<void(Integer, Integer)> &func) {
+void Parallel::For2D(Int startX, Int endX, Int startY, Int endY,
+                     const std::function<void(Int, Int)> &func) {
     static ThreadPool pool;
 
-    for (Integer x = startX; x < endX; ++x) {
-        for (Integer y = startY; y < endY; ++y) {
+    for (Int x = startX; x < endX; ++x) {
+        for (Int y = startY; y < endY; ++y) {
             pool.AddTask(func, x, y);
         }
     }

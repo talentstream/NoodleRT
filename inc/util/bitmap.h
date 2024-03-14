@@ -14,7 +14,7 @@ class BitMap {
 public:
     static void SaveEXR(std::string_view filename);
 
-    static void SavePNG(std::string_view filename, Integer width, Integer height, std::vector<Float> data);
+    static void SavePNG(std::string_view filename, Int width, Int height, std::vector<Float> data);
 };
 
 NAMESPACE_END

@@ -19,7 +19,7 @@ inline Vector3f ReflectLocal(Vector3f w) {
     return {-w.x, -w.y, w.z};
 }
 
-inline Boolean Refract(Vector3f wi, Vector3f &wo, Vector3f n, Float eta) {
+inline Bool Refract(Vector3f wi, Vector3f &wo, Vector3f n, Float eta) {
     Float cosThetaI = Dot(n, wi);
     Float sin2ThetaI = Max(0, 1 - cosThetaI * cosThetaI);
     Float sin2ThetaT = eta * eta * sin2ThetaI;
@@ -32,7 +32,7 @@ inline Boolean Refract(Vector3f wi, Vector3f &wo, Vector3f n, Float eta) {
     return true;
 }
 
-inline Boolean RefractLocal(Vector3f wi, Vector3f &wo, Float eta) {
+inline Bool RefractLocal(Vector3f wi, Vector3f &wo, Float eta) {
     Float cosThetaI = wi.z;
     Float sin2ThetaI = Max(0, 1 - cosThetaI * cosThetaI);
     Float sin2ThetaT = eta * eta * sin2ThetaI;

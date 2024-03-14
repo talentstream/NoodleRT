@@ -22,15 +22,15 @@ enum BxDFFlag {
     EAll = EReflection | ETransmission | EDiffuse | EGlossy | ESpecular
 };
 
-inline Boolean IsDiffuse(BxDFFlag type) {
+inline Bool IsDiffuse(BxDFFlag type) {
     return (type & EDiffuse);
 }
 
-inline Boolean IsReflection(BxDFFlag type) {
+inline Bool IsReflection(BxDFFlag type) {
     return (type & EReflection);
 }
 
-inline Boolean IsTransmission(BxDFFlag type) {
+inline Bool IsTransmission(BxDFFlag type) {
     return (type & ETransmission);
 }
 

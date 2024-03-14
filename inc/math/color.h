@@ -120,11 +120,11 @@ public:
         return b;
     }
 
-    Boolean operator==(Color3f c) const {
+    Bool operator==(Color3f c) const {
         return r == c.r && g == c.g && b == c.b;
     }
 
-    Boolean operator!=(Color3f c) const {
+    Bool operator!=(Color3f c) const {
         return r != c.r || g != c.g || b != c.b;
     }
 
@@ -132,7 +132,7 @@ public:
         return {std::sqrt(r), std::sqrt(g), std::sqrt(b)};
     }
 
-    Boolean IsZero() const {
+    Bool IsZero() const {
         return r < Epsilon  && g < Epsilon && b < Epsilon;
     }
 

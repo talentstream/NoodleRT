@@ -16,8 +16,8 @@
 NAMESPACE_BEGIN
 
 GLFWwindow *window = nullptr;
-Integer windowWidth{};
-Integer windowHeight{};
+Int windowWidth{};
+Int windowHeight{};
 
 Application::Application() {
     Object *obj = LoadSceneXML("../res/materialball/materialball.xml");

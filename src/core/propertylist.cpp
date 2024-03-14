@@ -18,11 +18,11 @@ NAMESPACE_BEGIN
         mProperties[name] = value; \
     }
 
-PROPERTY_ACCESSOR(Integer, Integer)
+PROPERTY_ACCESSOR(Int, Int)
 
 PROPERTY_ACCESSOR(Float, Float)
 
-PROPERTY_ACCESSOR(Boolean, Boolean)
+PROPERTY_ACCESSOR(Bool, Bool)
 
 PROPERTY_ACCESSOR(String, std::string_view)
 
@@ -39,11 +39,11 @@ void PropertyList::PrintDebugInfo() const {
         std::print("{}: ", name);
         std::visit([](auto &&arg) {
             using T = std::decay_t<decltype(arg)>;
-            if constexpr (std::is_same_v<T, Integer>) {
+            if constexpr (std::is_same_v<T, Int>) {
                 std::print("{} ", arg);
             } else if constexpr (std::is_same_v<T, Float>) {
                 std::print("{} ", arg);
-            } else if constexpr (std::is_same_v<T, Boolean>) {
+            } else if constexpr (std::is_same_v<T, Bool>) {
                 std::print("{} ", arg);
             } else if constexpr (std::is_same_v<T, std::string_view>) {
                 std::print("{} ", arg);

@@ -17,7 +17,7 @@ class Bound2;
 template<typename T>
 class Bound3;
 
-using Bound2i = Bound2<Integer>;
+using Bound2i = Bound2<Int>;
 using Bound3f = Bound3<Float>;
 
 template<typename T>
@@ -63,9 +63,9 @@ public:
         return Bound3<T>{pMin + p, pMax + p};
     }
 
-    [[nodiscard]] Boolean IntersectP(const Ray &ray, Float tMax = INFINITY) const {
+    [[nodiscard]] Bool IntersectP(const Ray &ray, Float tMax = INFINITY) const {
         Float t0{Epsilon}, t1{tMax};
-        for (const Integer axis: {0, 1, 2}) {
+        for (const Int axis: {0, 1, 2}) {
             auto invD = 1 / ray.d[axis];
             auto o = ray.o[axis];
             auto tNear = (pMin[axis] - o) * invD;
@@ -114,7 +114,7 @@ inline Point3<T> Centroid(const Bound3<T> &b) {
 }
 
 template<typename T>
-inline Integer MaxDimension(const Bound3<T> &b) {
+inline Int MaxDimension(const Bound3<T> &b) {
     auto d = b.pMax - b.pMin;
     if (d.x > d.y && d.x > d.z) return 0;
     if (d.y > d.z) return 1;

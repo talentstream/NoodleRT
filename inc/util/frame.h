@@ -94,13 +94,13 @@ struct Frame {
         return Clamp(Sqr(w.x) / SinTheta2(w), 0.0f, 1.0f);
     }
 
-    Boolean operator==(const Frame &rhs) const {
+    Bool operator==(const Frame &rhs) const {
         return s == rhs.s &&
                t == rhs.t &&
                n == rhs.n;
     }
 
-    Boolean operator!=(const Frame &rhs) const {
+    Bool operator!=(const Frame &rhs) const {
         return !(rhs == *this);
     }
 };

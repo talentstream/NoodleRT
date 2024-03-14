@@ -27,7 +27,7 @@ class ThreadPool {
 public:
     NON_COPY(ThreadPool)
 
-    ThreadPool(const Integer threadCount = std::thread::hardware_concurrency()) {
+    ThreadPool(const Int threadCount = std::thread::hardware_concurrency()) {
         mPool = std::make_shared<Pool>();
         mThreads.reserve(threadCount);
         for (const auto i: std::views::iota(0, threadCount)) {
@@ -87,7 +87,7 @@ private:
         std::mutex mutex;
         std::condition_variable condVar;
         std::queue<FunctionType> tasks;
-        Boolean exit{false};
+        Bool exit{false};
     };
     std::shared_ptr<Pool> mPool;
     std::vector<ThreadType> mThreads;

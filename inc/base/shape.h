@@ -14,10 +14,10 @@ public:
     virtual
     ~Shape() = default;
 
-    virtual Boolean
+    virtual Bool
     Intersect(UInt32 idx, const Ray &ray, IntersectionRecord &si) const = 0;
 
-    virtual Boolean
+    virtual Bool
     IntersectP(UInt32 idx, const Ray &ray, Float tMax) const = 0;
 
     virtual void
@@ -37,7 +37,7 @@ public:
         return mBbox;
     }
 
-    Boolean
+    Bool
     IsEmitter() const {
         return pEmitter != nullptr;
     }

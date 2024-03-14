@@ -9,7 +9,7 @@
 NAMESPACE_BEGIN
 
 Scene::Scene(const PropertyList &propertyList) {
-    mSpp = propertyList.GetInteger("spp", 1);
+    mSpp = propertyList.GetInt("spp", 1);
     PRINT_DEBUG_INFO("Scene", "scene")
 }
 

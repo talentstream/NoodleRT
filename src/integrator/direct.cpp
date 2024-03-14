@@ -67,7 +67,7 @@ public:
         return L;
     }
 
-    inline Float Weight(Integer nA, Float pdfA, Integer nB, Float pdfB) const {
+    inline Float Weight(Int nA, Float pdfA, Int nB, Float pdfB) const {
         Float A = nA * pdfA;
         Float B = nB * pdfB;
         return (A * A) / (A * A + B * B);

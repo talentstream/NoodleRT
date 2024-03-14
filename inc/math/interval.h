@@ -24,11 +24,11 @@ public:
         return {l + v, r + v};
     }
 
-    Boolean InRange(Float v) const {
+    Bool InRange(Float v) const {
         return v >= l && v <= r;
     }
 
-    Boolean InRange(Interval i) const {
+    Bool InRange(Interval i) const {
         return l <= i.l && r >= i.r;
     }
 

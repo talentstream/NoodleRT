@@ -13,8 +13,8 @@ NAMESPACE_BEGIN
 class Film : public Object {
 public:
     explicit Film(const PropertyList &propertyList) {
-        width = propertyList.GetInteger("width", 400);
-        height = propertyList.GetInteger("height", 400);
+        width = propertyList.GetInt("width", 400);
+        height = propertyList.GetInt("height", 400);
         mSaveFileName = propertyList.GetString("saveFileName", "output.png");
         framebuffer.resize(width * height);
         PRINT_DEBUG_INFO("Film", "film")
@@ -22,7 +22,7 @@ public:
 
     virtual ~Film() = default;
 
-    void Update(Integer index, Color3f c) {
+    void Update(Int index, Color3f c) {
         framebuffer[index] += c;
     }
 
@@ -31,7 +31,7 @@ public:
         mCallback = std::move(callback);
     }
 
-    void Display(const Integer spp) const {
+    void Display(const Int spp) const {
         std::vector<Color3f> displayBuffer(framebuffer.size());
         std::ranges::transform(framebuffer, displayBuffer.begin(), [&](Color3f c) {
             return (c / spp).LinearToGamma();
@@ -46,8 +46,8 @@ public:
 
 
 public:
-    Integer width;
-    Integer height;
+    Int width;
+    Int height;
     std::vector<Color3f> framebuffer;
 private:
     std::function<void(const std::vector<Color3f> &)> mCallback;

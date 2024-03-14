@@ -19,7 +19,7 @@ public:
         PRINT_DEBUG_INFO("shape", "sphere")
     }
 
-    Boolean
+    Bool
     Intersect(UInt32 idx, const Ray &ray, IntersectionRecord &iRec) const override {
 
         Vector3f oc = ray.o - mCenter;
@@ -60,7 +60,7 @@ public:
     }
 
 
-    Boolean
+    Bool
     IntersectP(UInt32 idx, const Ray &ray, Float tMax) const override {
         Vector3f oc = ray.o - mCenter;
         Float a = LengthSquared(ray.d);

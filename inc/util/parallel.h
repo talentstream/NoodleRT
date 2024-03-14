@@ -11,10 +11,10 @@ NAMESPACE_BEGIN
 
 class Parallel {
 public:
-    static void For1D(Integer start, Integer end, const std::function<void(Integer)> &func);
+    static void For1D(Int start, Int end, const std::function<void(Int)> &func);
 
-    static void For2D(Integer startX, Integer endX, Integer startY, Integer endY,
-                      const std::function<void(Integer, Integer)> &func);
+    static void For2D(Int startX, Int endX, Int startY, Int endY,
+                      const std::function<void(Int, Int)> &func);
 };
 
 NAMESPACE_END

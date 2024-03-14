@@ -28,15 +28,15 @@ struct BVHNode {
         rightChildIdx = r;
     }
 
-    Boolean IsLeaf() const {
+    Bool IsLeaf() const {
         return size > 0;
     }
 
-    Boolean IsInner() const {
+    Bool IsInner() const {
         return size == 0;
     }
 
-    Boolean IsUnused() const {
+    Bool IsUnused() const {
         return size == 0 && rightChildIdx == 0;
     }
 };
@@ -63,11 +63,11 @@ public:
         RecursiveBuild(0, 0, size);
     }
 
-    Boolean
+    Bool
     Intersect(const Ray &ray, IntersectionRecord &iRec) const override {
         if (mNodes.empty()) return false;
 
-        Boolean foundIntersection{false};
+        Bool foundIntersection{false};
         UInt32 nodeIdx = 0;
         std::stack<UInt32> nodeIdxStack;
         while (true) {
@@ -107,7 +107,7 @@ public:
         return foundIntersection;
     }
 
-    Boolean
+    Bool
     UnOccluded(const Ray &ray, Float tMax) const override {
         UInt32 nodeIdx = 0;
         std::stack<UInt32> nodeIdxStack;

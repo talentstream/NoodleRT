@@ -18,11 +18,11 @@ enum class LightFlag {
     EInfinite
 };
 
-inline Boolean IsAreaLight(LightFlag type) {
+inline Bool IsAreaLight(LightFlag type) {
     return (type == LightFlag::EArea);
 }
 
-inline Boolean IsInfiniteLight(LightFlag type) {
+inline Bool IsInfiniteLight(LightFlag type) {
     return (type == LightFlag::EInfinite);
 }
 

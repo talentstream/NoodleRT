@@ -85,7 +85,7 @@ public:
 
     static void RegisterClass(std::string_view name, const Creator &creator);
 
-    static Object *CreateInstance(std::string_view name, const PropertyList &propertyList, Boolean manualInit = false);
+    static Object *CreateInstance(std::string_view name, const PropertyList &propertyList, Bool manualInit = false);
 
 
 private:

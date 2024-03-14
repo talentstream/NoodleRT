@@ -15,7 +15,7 @@
 NAMESPACE_BEGIN
 
 Integrator::Integrator(const PropertyList &propertyList) {
-    mSpp = propertyList.GetInteger("spp", 1);
+    mSpp = propertyList.GetInt("spp", 1);
     auto aggregateType = propertyList.GetString("aggregate", "bvh");
     pAggregate = dynamic_cast<Aggregate *>(ObjectFactory::CreateInstance(aggregateType, {}));
 }
@@ -58,8 +58,8 @@ void Integrator::Initialize() {
     pAggregate->Initialize();
 }
 
-static Integer currentSpp{0};
-static Integer waveLength{1};
+static Int currentSpp{0};
+static Int waveLength{1};
 static Timer renderingTimer;
 static Timer sppTimer;
 
@@ -68,10 +68,10 @@ void ImageTileIntegrator::Render() const {
     const auto width = film->width;
     const auto height = film->height;
 
-    static const Integer tileSizeX{8}, tileSizeY{8};
-    static const Integer tileHeight = Floor(static_cast<Float>(height) / static_cast<Float>(tileSizeY));
-    static const Integer tileWidth = Floor(static_cast<Float>(width) / static_cast<Float>(tileSizeX));
-    static auto RenderBlock = [&](Integer tileX, Integer tileY) {
+    static const Int tileSizeX{8}, tileSizeY{8};
+    static const Int tileHeight = Floor(static_cast<Float>(height) / static_cast<Float>(tileSizeY));
+    static const Int tileWidth = Floor(static_cast<Float>(width) / static_cast<Float>(tileSizeX));
+    static auto RenderBlock = [&](Int tileX, Int tileY) {
         auto beginY = tileY * tileHeight;
         auto endY = (tileY + 1) * tileHeight;
         endY = endY > height ? height : endY;
@@ -79,9 +79,9 @@ void ImageTileIntegrator::Render() const {
         auto endX = (tileX + 1) * tileWidth;
         endX = endX > width ? width : endX;
 
-        for (const Integer y: std::views::iota(beginY, endY)) {
+        for (const Int y: std::views::iota(beginY, endY)) {
             auto index = (height - y - 1) * width;
-            for (const Integer x: std::views::iota(beginX, endX)) {
+            for (const Int x: std::views::iota(beginX, endX)) {
                 auto ray = pCamera->GenerateRay(Point2f(x, y), pSampler->Next2D());
                 film->Update(index + x, Li(ray));
             }
@@ -94,10 +94,10 @@ void ImageTileIntegrator::Render() const {
             renderingTimer.Reset();
         }
         sppTimer.Reset();
-        Integer startSpp = currentSpp;
-        Integer endSpp = std::min(currentSpp + waveLength, mSpp);
+        Int startSpp = currentSpp;
+        Int endSpp = std::min(currentSpp + waveLength, mSpp);
         waveLength *= 2;
-        for (Integer spp = startSpp; spp < endSpp; spp++) {
+        for (Int spp = startSpp; spp < endSpp; spp++) {
             Parallel::For2D(0, tileSizeX, 0, tileSizeY, RenderBlock);
 
         }

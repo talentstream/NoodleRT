@@ -18,11 +18,11 @@ NAMESPACE_BEGIN
 using std::string_view;
 
 // Todo: more string check
-Boolean ToBoolean(string_view str) {
+Bool ToBoolean(string_view str) {
     return str == "true";
 }
 
-Integer ToInteger(string_view str) {
+Int ToInteger(string_view str) {
     return std::stoi(str.data());
 }
 
@@ -227,10 +227,10 @@ Object *LoadSceneXML(const string_view &filename) {
 
             switch (tag) {
                 case ETag::EBoolean:
-                    list.SetBoolean(name, ToBoolean((value)));
+                    list.SetBool(name, ToBoolean((value)));
                     break;
                 case ETag::EInteger:
-                    list.SetInteger(name, ToInteger((value)));
+                    list.SetInt(name, ToInteger((value)));
                     break;
                 case ETag::EFloat:
                     list.SetFloat(name, ToFloat((value)));

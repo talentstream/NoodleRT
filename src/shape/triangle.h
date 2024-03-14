@@ -12,9 +12,9 @@ NAMESPACE_BEGIN
 struct Triangle {
     Point3f p0, p1, p2;
     Normal3f n0, n1, n2;
-    Boolean hasNormal{false};
+    Bool hasNormal{false};
     Point2f uv0, uv1, uv2;
-    Boolean hasUV{false};
+    Bool hasUV{false};
 
     Triangle(Point3f p0, Point3f p1, Point3f p2)
             : p0{p0}, p1{p1}, p2{p2} {
@@ -47,7 +47,7 @@ struct Triangle {
         return (p0 + p1 + p2) / 3.f;
     }
 
-    Boolean
+    Bool
     Intersect(const Ray &ray, Float tMax, Float &u, Float &v, Float &t) const {
         Vector3f e1 = p1 - p0, e2 = p2 - p0;
         Vector3f pVec = Cross(ray.d, e2);
@@ -72,7 +72,7 @@ struct Triangle {
         return t > Epsilon && t < tMax;
     }
 
-    Boolean
+    Bool
     IntersectP(const Ray &ray, Float tMax) const {
         Float u, v, t;
 

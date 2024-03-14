@@ -14,7 +14,7 @@ void BitMap::SaveEXR(std::string_view filename) {
     // Todo:
 }
 
-void BitMap::SavePNG(std::string_view filename, Integer width, Integer height, std::vector<Float> data) {
+void BitMap::SavePNG(std::string_view filename, Int width, Int height, std::vector<Float> data) {
     stbi_write_png(filename.data(), width, height, 3, data.data(), width * 3);
 }
 

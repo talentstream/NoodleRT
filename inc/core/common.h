@@ -8,8 +8,8 @@
 #define NAMESPACE_END }
 
 using Float = float;
-using Integer = int;
-using Boolean = bool;
+using Int = int;
+using Bool = bool;
 using UInt8 = unsigned char;
 using UInt32 = unsigned int;
 

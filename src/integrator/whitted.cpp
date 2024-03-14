@@ -18,7 +18,7 @@ class WhittedIntegrator : public ImageTileIntegrator {
 public:
     explicit WhittedIntegrator(const PropertyList &propertyList)
             : ImageTileIntegrator(propertyList) {
-        mMaxDepth = propertyList.GetInteger("depth", 1);
+        mMaxDepth = propertyList.GetInt("depth", 1);
         PRINT_DEBUG_INFO("Integrator", "whitted")
     }
 
@@ -27,7 +27,7 @@ public:
     }
 
 private:
-    Color3f Trace(const Ray &ray, Integer depth) const {
+    Color3f Trace(const Ray &ray, Int depth) const {
         Color3f L{0.f};
 
         // find nearest intersection
@@ -86,14 +86,14 @@ private:
         }
     }
 
-    inline Float Weight(Integer nA, Float pdfA, Integer nB, Float pdfB) const {
+    inline Float Weight(Int nA, Float pdfA, Int nB, Float pdfB) const {
         Float A = nA * pdfA;
         Float B = nB * pdfB;
         return (A * A) / (A * A + B * B);
     }
 
 private:
-    Integer mMaxDepth;
+    Int mMaxDepth;
 };
 
 REGISTER_CLASS(WhittedIntegrator, "whitted")
