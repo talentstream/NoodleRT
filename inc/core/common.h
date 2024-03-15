@@ -6,6 +6,7 @@
 
 #define NAMESPACE_BEGIN namespace nrt {
 #define NAMESPACE_END }
+#define USING_NAMESPACE using namespace nrt;
 
 using Float = float;
 using Int = int;

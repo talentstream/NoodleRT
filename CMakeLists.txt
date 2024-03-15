@@ -4,8 +4,8 @@ project(NoodleRT)
 set(CMAKE_CXX_STANDARD 23)
 
 # 生成的dll 文件输出到与exe 同级
-set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 include(FetchContent)
 # stb
@@ -35,6 +35,11 @@ FetchContent_Declare(
         GIT_REPOSITORY https://github.com/tinyobjloader/tinyobjloader.git
         GIT_TAG release
 )
+FetchContent_Declare(
+        doctest
+        GIT_REPOSITORY https://github.com/doctest/doctest.git
+        GIT_TAG master
+)
 
 FetchContent_MakeAvailable(
         stb
@@ -42,6 +47,7 @@ FetchContent_MakeAvailable(
         glad
         pugixml
         tinyobjloader
+        doctest
 )
 
 
@@ -65,4 +71,27 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         glfw
         glad
         pugixml
+        #doctest
 )
+
+# tests
+file(GLOB_RECURSE TEST_FILES tests/*.cpp)
+
+add_executable(Tests
+        ${TEST_FILES}
+        ${HEADER_FILES}
+        src/core/propertylist.cpp
+)
+
+target_include_directories(Tests PRIVATE
+        inc
+        ${stb_SOURCE_DIR}
+        ${tinyobjloader_SOURCE_DIR}
+        ${doctest_SOURCE_DIR}/doctest
+)
+
+target_link_libraries(Tests PRIVATE
+        pugixml
+        doctest::doctest
+)
+

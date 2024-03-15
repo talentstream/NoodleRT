@@ -1,5 +1,4 @@
 #include "core/application.h"
-#include <print>
 #include <iostream>
 
 int main() {
